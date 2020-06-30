@@ -1,0 +1,51 @@
+$color-text: #FFFFFF;
+.header {
+  background: #ffa233;
+  
+  height: 5rem;
+
+  .navbar{
+    line-height: 3rem;
+
+    .text-logo{
+      font-weight: bold;
+      font-size: 40px;
+      color: $color-text;
+    }
+    img{
+      width: 20px;
+      height: 20px;
+    }
+    .collapse {
+      font-size: 20px;
+      a{
+        color: $color-text;
+        margin-left: 10px;
+      }
+      .navbar-text{
+        margin-right: 2px;
+        font-style: bold;
+        color: $color-text;
+        cursor: pointer;
+      }
+
+      .input-group{
+        width: 300px;
+        margin-right: 29px;
+      }
+    }
+  }
+
+  .dropdown-menu{
+    left: 10%;
+    background: #ffa233;
+
+    .dropdown-item{
+      color: $color-text;
+      font-weight: 500;
+    }
+    .dropdown-item:hover{
+      color: #333333;
+    }
+  }
+}
