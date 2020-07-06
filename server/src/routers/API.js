@@ -1,9 +1,10 @@
 const express = require('express')
-
 const router = express.Router()
 
-const initAPI = (app) => {
+const { authController } = require('../controllers/index')
 
+const initAPI = (app) => {
+  router.post("/api/auth/resister", authController.resister)
 
   return app.use('/', router)
 }

@@ -1,23 +1,34 @@
-const sequelize = require("../config/sequelize");
+const database = require('../../database')
 
-module.exports = (sequelize, DataTypes) => {
-    const Project = sequelize.define(
-      "User",
-      {
-        title: DataTypes.STRING,
-        imageUrl: DataTypes.STRING,
-        description: DataTypes.TEXT,
-        userId: DataTypes.INTEGER,
-      },
-      {}
-    );
-    // User.associate = function (models) {
-    //   // associations can be defined here
-    //   Project.belongsTo(models.User, {
-    //     foreignKey: "userId",
-    //     onDelete: "CASCADE",
-    //   });
-    // };
-    return Project;
-  };
-  
+let findAll = () => {
+    return database.user.findAll().then(data => {
+        console.log('[data]', data)
+    })
+}
+
+let create = async (infoUser) => {
+    return await database.user.create(infoUser)
+}
+
+let findUser = async (username) => {
+    return await database.user.findOne({
+        where: {
+            username: username,
+        },
+    });
+}
+let findUserMail = async (email) => {
+    return await database.user.findOne({
+        where: {
+            email: email,
+        },
+    });
+}
+
+
+module.exports = {
+    findAll: findAll,
+    create: create,
+    findUser: findUser,
+    findUserMail: findUserMail
+}

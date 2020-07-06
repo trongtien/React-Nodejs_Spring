@@ -1,4 +1,4 @@
-const authServices = require('./authServices')
+const authServices = require('./authService')
 
 module.exports = {
     authServices: authServices
