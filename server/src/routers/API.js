@@ -4,8 +4,12 @@ const router = express.Router()
 const { authController } = require('../controllers/index')
 
 const initAPI = (app) => {
+
+  router.post("/api/auth/login", authController.login)
   router.post("/api/auth/resister", authController.resister)
 
+  router.post("/api/auth/update-info", authController.updateInfo)
+  router.post("/api/auth/update-password", authController.updatePassword)
   return app.use('/', router)
 }
 
