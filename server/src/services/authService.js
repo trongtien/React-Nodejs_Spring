@@ -1,8 +1,14 @@
 const bcrypt = require('bcrypt')
 const uuid = require("uuid");
+const passport = require('passport')
+const jwt = require("jsonwebtoken")
+// const { checkPassword } = require('./../helperts/commant')
 const { transErrors } = require('../helperts/validateContent')
-const { transporter } = require('../helperts/mail')
-const user = require('../models/userModel')
+const { transporter } = require('./../helperts/mail')
+const userModel = require('../models/userModel');
+const { jwtOptions } = require('./../helperts/passport')
+
+
 
 const createNewUser = (fullname, username, password, email, phone, address) => {
     return new Promise(async (resolve, reject) => {
@@ -10,12 +16,12 @@ const createNewUser = (fullname, username, password, email, phone, address) => {
             if (!fullname || !username || !password || !phone || !address) {
                 return reject(transErrors.validate_form)
             }
-            let checkUser = await user.findUser(username)
+            let checkUser = await userModel.findUser(username)
             if (checkUser) {
                 return reject(`${transErrors.account_username_user}`)
             }
             if (email) {
-                let checkEmail = await user.findUserMail(email)
+                let checkEmail = await userModel.findUserMail(email)
                 if (checkEmail) {
                     return reject(`${transErrors.account_email_user}`)
                 }
@@ -30,7 +36,7 @@ const createNewUser = (fullname, username, password, email, phone, address) => {
                 phone: phone.trim(),
                 address: address.trim()
             }
-            let createUser = await user.create(infoUser)
+            let createUser = await userModel.create(infoUser)
             if (email) {
                 let mailOptions = {
                     from: 'FRUIT SHOP',
@@ -53,7 +59,7 @@ const createNewUser = (fullname, username, password, email, phone, address) => {
 }
 
 const checkLogin = (username, password) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             if (!username) {
                 return reject(`${transErrors.username_user}`)
@@ -61,19 +67,24 @@ const checkLogin = (username, password) => {
             if (!password) {
                 return reject(`${transErrors.password_user}`)
             }
-            return passport.authenticate('local', { session: false }, (err, passportUser, info) => {
-                if (err) {
-                    return next(err);
+            let userInfo = await userModel.findUser(username);
+            if (!userInfo) {
+                return reject(`${transErrors.err_check_username}`)
+            }
+            let Check = bcrypt.compareSync(password, userInfo.dataValues.password)
+            if (Check) {
+                let node_access_token = jwt.sign(userInfo.dataValues.user_id, jwtOptions.secretOrKey);
+                let payload = {
+                    user_id: userInfo.dataValues.user_id,
+                    fullname: userInfo.dataValues.fullname,
+                    node_access_token: node_access_token
                 }
-                if (passportUser) {
-                    const user = passportUser;
-                    user.token = passportUser.generateJWT();
-                    return resolve({ user: user.toAuthJSON() });
-                }
-                return status(400).info;
-            })(req, res, next);
+                return resolve(payload);
+            } else {
+                return reject({ msg: `${transErrors.err_check_pasword}` });
+            }
         } catch (error) {
-            reject(error)
+            return reject(error)
         }
     })
 }
@@ -92,14 +103,14 @@ const updateInfoUser = (user_id, fullname, email, phone, address) => {
                 if (!addresse)
                     address = user.address
                 let newInfo = {
-                    fullname: fullname,
+                    fullname: fullname.trim(),
                     username: user.username,
                     passport: user.passport,
-                    email: email,
-                    phone: phone,
-                    address: address
+                    email: email.trim(),
+                    phone: phone.trim(),
+                    address: address.trim()
                 }
-                let newInfoUser = await user.updateInfo(user_id, newInfo)
+                let newInfoUser = await userModel.updateInfo(user_id, newInfo)
                 return resolve(newInfoUser)
             }
             return reject(`${transErrors.err_product}`)
@@ -110,18 +121,19 @@ const updateInfoUser = (user_id, fullname, email, phone, address) => {
 }
 
 const updatePasswordUser = (user_id, password, passwordNew) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             if (!user_id) {
                 return reject(`${transErrors.err_product}`)
             }
-            let user = await user.findUserId(user_id)
-            let statusCheck = bcrypt.compareSync(password, user.password)
+            let user = await userModel.findUserId(user_id)
+            let statusCheck = bcrypt.compareSync(password, user.dataValues.password)
             if (statusCheck) {
                 let hashPasswordNew = bcrypt.hashSync(passwordNew.trim(), 10)
-                let newPassword = await user.updatePassword(hashPasswordNew)
+                let newPassword = await userModel.updatePassword(user_id, hashPasswordNew)
                 return resolve(newPassword)
             }
+            return reject(`${transErrors.err_product}`)
         } catch (error) {
             reject(error)
         }
