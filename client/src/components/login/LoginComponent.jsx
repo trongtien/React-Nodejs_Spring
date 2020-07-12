@@ -1,8 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Row, Col, Card, Button, FormGroup, Label, Input } from "reactstrap";
+import { Row, Col, Card, Button } from "reactstrap";
 import { Link } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { Formik, Form, FastField } from "formik";
+import inputField from '../formik/inputField'
 
 import "./style.scss";
 
@@ -15,13 +16,16 @@ LoginComponent.defaultProps = {
 
 function LoginComponent(props) {
   const { hanldeClickClose } = props;
+  const initialValues = {
+    username: '',
+    password: ''
+  }
 
   function hanldeClick() {
     if (hanldeClickClose) {
       hanldeClickClose();
     }
   }
-
   return (
     <div className="form-login">
       <Row>
@@ -30,39 +34,33 @@ function LoginComponent(props) {
             <div className="cart-body">
               <div className="login-title">
                 <h1>Login</h1>
-                <p
-                  onClick={() => {
-                    hanldeClick();
-                  }}
-                >
-                  x
-                </p>
+                <p onClick={() => { hanldeClick(); }} > x</p>
               </div>
-              <Formik>
-                {(formikProps) => {
-                  const { value, error } = formikProps;
+              <Formik
+                initialValues={initialValues}
+              >
+                {formikProps => {
+                  const { values, errors, touched } = formikProps
+                  console.log(values, errors, touched)
+
                   return (
-                    // <FastField
-                    // />
                     <Form>
-                      <FormGroup>
-                        <Label for="exampleEmail">Email</Label>
-                        <Input
-                          type="email"
-                          name="email"
-                          id="exampleEmail"
-                          placeholder="with a placeholder"
-                        />
-                      </FormGroup>
-                      <FormGroup>
-                        <Label for="examplePassword">Password</Label>
-                        <Input
-                          type="password"
-                          name="password"
-                          id="examplePassword"
-                          placeholder="password placeholder"
-                        />
-                      </FormGroup>
+                      <FastField
+                        name="username"
+                        component={inputField}
+
+                        label="username"
+                        placeholder="with a placeholder username"
+                      />
+
+                      <FastField
+                        name="password"
+                        component={inputField}
+
+                        label="password"
+                        placeholder="with a placeholder password"
+                      />
+
                       <div cart-body>
                         <Button>Đăng Nhập </Button>
                         <Link
@@ -75,7 +73,7 @@ function LoginComponent(props) {
                         </Link>
                       </div>
                     </Form>
-                  );
+                  )
                 }}
               </Formik>
             </div>

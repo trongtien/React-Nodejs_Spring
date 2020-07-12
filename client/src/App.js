@@ -14,13 +14,15 @@ function App() {
 
   function onClickCloseLogin() {
     let newIsShowLogin = isShowLogin;
-    if (newIsShowLogin === undefined) return;
-    setIsShowLogin(!newIsShowLogin);
+    if (newIsShowLogin === undefined)
+      return setIsShowLogin(!newIsShowLogin);
   }
   return (
     <div className="App">
       {isShowLogin === true ? (<LoginComponent hanldeClickClose={onClickCloseLogin} />) : ("")}
-      <HeaderComponent onClickLogin={handleLoginClick} />
+      <header>
+        <HeaderComponent onClickLogin={handleLoginClick} />
+      </header>
     </div>
   );
 }
