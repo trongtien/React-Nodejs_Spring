@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt')
 const uuid = require("uuid");
 const passport = require('passport')
 const jwt = require("jsonwebtoken")
-// const { checkPassword } = require('./../helperts/commant')
+const { checkPassword } = require('./../helperts/commant')
 const { transErrors } = require('../helperts/validateContent')
 const { transporter } = require('./../helperts/mail')
 const userModel = require('../models/userModel');
@@ -71,8 +71,8 @@ const checkLogin = (username, password) => {
             if (!userInfo) {
                 return reject(`${transErrors.err_check_username}`)
             }
-            let Check = bcrypt.compareSync(password, userInfo.dataValues.password)
-            if (Check) {
+            let check = checkPassword(password, userInfo.dataValues.password)
+            if (check) {
                 let node_access_token = jwt.sign(userInfo.dataValues.user_id, jwtOptions.secretOrKey);
                 let payload = {
                     user_id: userInfo.dataValues.user_id,
@@ -127,7 +127,7 @@ const updatePasswordUser = (user_id, password, passwordNew) => {
                 return reject(`${transErrors.err_product}`)
             }
             let user = await userModel.findUserId(user_id)
-            let statusCheck = bcrypt.compareSync(password, user.dataValues.password)
+            let statusCheck = checkPassword(password, user.dataValues.password)
             if (statusCheck) {
                 let hashPasswordNew = bcrypt.hashSync(passwordNew.trim(), 10)
                 let newPassword = await userModel.updatePassword(user_id, hashPasswordNew)

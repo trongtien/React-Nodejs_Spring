@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+
+import HeaderComponent from "./components/header/HeaderCoponent";
+import LoginComponent from "./components/login/LoginComponent";
 
 function App() {
+  const [isShowLogin, setIsShowLogin] = useState(false);
+
+  function handleLoginClick() {
+    let newShowLogin = isShowLogin;
+    if (newShowLogin === undefined) return;
+    setIsShowLogin(!newShowLogin);
+  }
+
+  function onClickCloseLogin() {
+    let newIsShowLogin = isShowLogin;
+    if (newIsShowLogin === undefined) return;
+    setIsShowLogin(!newIsShowLogin);
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {isShowLogin === true ? (<LoginComponent hanldeClickClose={onClickCloseLogin} />) : ("")}
+      <HeaderComponent onClickLogin={handleLoginClick} />
     </div>
   );
 }
