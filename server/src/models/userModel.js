@@ -5,9 +5,11 @@ let findAll = async () => {
         console.log('[data]', data)
     })
 }
+
 let create = async (infoUser) => {
     return await database.user.create(infoUser)
 }
+
 let findUser = async (username) => {
     return await database.user.findOne({
         where: {

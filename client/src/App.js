@@ -1,27 +1,18 @@
-import React, { useState } from "react";
-
+import React from "react";
+import { useRecoilValue } from 'recoil'
+import { statusAuthLogin } from './recoil/auth/authState'
 import HeaderComponent from "./components/header/HeaderCoponent";
 import LoginComponent from "./components/login/LoginComponent";
 
 function App() {
-  const [isShowLogin, setIsShowLogin] = useState(false);
 
-  function handleLoginClick() {
-    let newShowLogin = isShowLogin;
-    if (newShowLogin === undefined) return;
-    setIsShowLogin(!newShowLogin);
-  }
+  const isShowLogin = useRecoilValue(statusAuthLogin)
 
-  function onClickCloseLogin() {
-    let newIsShowLogin = isShowLogin;
-    if (newIsShowLogin === undefined)
-      return setIsShowLogin(!newIsShowLogin);
-  }
   return (
     <div className="App">
-      {isShowLogin === true ? (<LoginComponent hanldeClickClose={onClickCloseLogin} />) : ("")}
+      {isShowLogin === true ? (<LoginComponent />) : ("")}
       <header>
-        <HeaderComponent onClickLogin={handleLoginClick} />
+        <HeaderComponent />
       </header>
     </div>
   );
