@@ -1,5 +1,8 @@
-import { atom } from "recoil";
-
+import { atom, selector } from "recoil";
+/*
+* status form login
+* @params true open form login
+*/
 const statusAuthLogin = atom({
     key: 'AuthFormLogin',
     default: false
@@ -10,6 +13,10 @@ const useInfo = atom({
     default: " "
 })
 
+/*
+* status user login
+* @params true update view 
+*/
 const isLogin = atom({
     key: 'isLoginUser',
     default: false

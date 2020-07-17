@@ -1,7 +1,7 @@
-$color-text: #ffffff;
+/* $color-text: #ffffff;
+// $background: #ffa233
 
 .header {
-  background: #ffa233;
 
   height: 5rem;
 
@@ -49,13 +49,43 @@ $color-text: #ffffff;
       color: #333333;
     }
   }
-}
+} */
 
-.input-group-append {
+/* .navbar {
+  background: #ffa233;
+ } */
+
+
+.navbar {
+  background: #ffa233;
+  .text-logo {
+    font-size: 35px;
+    font-weight: bold;
+    color: #FFFFFFFF;
+  }
+  .navbar-nav{
+    font-size: 19px;
+    font-weight: 500;
+  }
+  .dropdown-menu {
+    left: 10%;
+    background: #ffa233;
+    margin-top: 17%;
+  }
+  .input-group{
+    width: 30%;
+  }
+} 
+
+.input-group-append  {
   input {
     width: 30px;
   }
   span {
     width: 9%;
   }
+}
+
+.isLogin .dropdown-menu{
+  left: -40%;
 }

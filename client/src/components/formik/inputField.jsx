@@ -36,7 +36,7 @@ function InputField(props) {
                 disabled={disabled}
                 invalid={showError}
             />
-            <ErrorMessage name={name} conponent={FormFeedback} />
+            <ErrorMessage name={name} conponent={FormFeedback} style={{ color: "red" }} />
         </FormGroup>
     )
 }

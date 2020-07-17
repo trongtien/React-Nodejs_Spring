@@ -7,10 +7,11 @@ import {
   DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar,
   NavbarBrand, NavbarToggler,
   NavItem,
-  UncontrolledDropdown
+  UncontrolledDropdown,
+  InputGroup, InputGroupAddon, Button, Input
 } from "reactstrap";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { statusAuthLogin, useInfo, isLogin, clearLocalStorageUser } from './../../recoil/auth/authState';
+import { useRecoilState } from "recoil";
+import { statusAuthLogin, useInfo, isLogin, clearLocalStorageUser } from '../../recoil/authState';
 import "./style.scss";
 
 // HeaderComponent.propTypes = {
@@ -30,6 +31,7 @@ function HeaderComponent(props) {
   const handlClicLogin = () => {
     setAuthFormLogin(!AuthFormLogin)
   }
+
   const handlLogOut = async () => {
     clearLocalStorageUser()
     let updateStatususe = isLoginUser
@@ -38,13 +40,16 @@ function HeaderComponent(props) {
     await setUserInfo(UserInfo)
     return <Redirect to='/' />
   }
+
   return (
     <div>
-      <Navbar fixed="top" color="light" light expand="md">
+      {/* fixed="top" */}
+      <Navbar light expand="lg">
         <NavbarBrand href="#" className="text-logo">
           FruitShop
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
+
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
             <Link className="nav-link" to="/">
@@ -60,7 +65,7 @@ function HeaderComponent(props) {
                 Blog
               </Link>
             </NavItem>
-            <UncontrolledDropdown nav inNavbar>
+            <UncontrolledDropdown nav inNavbar >
               <DropdownToggle nav caret>
                 Options
               </DropdownToggle>
@@ -73,6 +78,14 @@ function HeaderComponent(props) {
             </UncontrolledDropdown>
           </Nav>
 
+          <InputGroup className="search">
+            <Input />
+            <InputGroupAddon addonType="append">
+              <Button color="secondary">To </Button>
+            </InputGroupAddon>
+          </InputGroup>
+
+
           <Nav className="mr-right" navbar>
             <NavItem>
               <Link className="nav-link" to="/Introduction">
@@ -82,7 +95,7 @@ function HeaderComponent(props) {
             {
               isLoginUser === false ?
                 <NavItem>
-                  <Link className="nav-link" to="/Blog">
+                  <Link className="nav-link" to="/register">
                     Đăng ký
                   </Link>
                 </NavItem>
@@ -99,17 +112,16 @@ function HeaderComponent(props) {
             }
             {
               isLoginUser === true ?
-                <UncontrolledDropdown nav inNavbar>
+                <UncontrolledDropdown nav inNavbar className="isLogin">
                   <DropdownToggle nav caret>
-                    Options{}
+                    Options
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>Option 1</DropdownItem>
-                    <DropdownItem>Option 2</DropdownItem>
+                    <DropdownItem>Thông Tin cá nhân</DropdownItem>
+                    <DropdownItem>Thay đổi mật khẩu</DropdownItem>
                     <DropdownItem onClick={() => handlLogOut()}>Đăng Xuất</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>
-
                 : ""
             }
           </Nav>
