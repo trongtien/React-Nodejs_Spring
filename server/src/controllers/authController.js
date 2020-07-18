@@ -54,9 +54,23 @@ let updatePassword = async (request, response) => {
     }
 }
 
+let getUser = async (request, response) => {
+    try {
+        // console.log('[body]', request.body)
+        let user_id = request.body.user_id
+
+        console.log(request.body)
+
+        let user = await authServices.getInfoUser(user_id)
+        return response.status(200).json({ status: 200, message: 'get info user successfully', data: user })
+    } catch (error) {
+        return response.status(400).json({ status: 400, message: error })
+    }
+}
 module.exports = {
     resister: resister,
     login: login,
     updateInfo: updateInfo,
-    updatePassword: updatePassword
+    updatePassword: updatePassword,
+    getUser: getUser
 }

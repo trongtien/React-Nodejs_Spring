@@ -40,7 +40,6 @@ function LoginComponent(props) {
         localStorageAddUser(UserInfo)
       }
     })
-
   }
   /*
   * init state data null 

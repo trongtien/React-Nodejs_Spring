@@ -117,8 +117,18 @@ function HeaderComponent(props) {
                     Options
                   </DropdownToggle>
                   <DropdownMenu right>
-                    <DropdownItem>Thông Tin cá nhân</DropdownItem>
-                    <DropdownItem>Thay đổi mật khẩu</DropdownItem>
+                    {/* <DropdownItem>Thông Tin cá nhân</DropdownItem> */}
+                    <Link className="nav-link" to="/persional">
+                      Thông Tin cá nhân
+                    </Link>
+                    <Link className="nav-link" to="/changepassword">
+                      Thay đổi mật khẩu
+                    </Link>
+                    {/* <DropdownItem to="/changepassword">
+                
+                        Thay đổi mật khẩu
+    
+                    </DropdownItem> */}
                     <DropdownItem onClick={() => handlLogOut()}>Đăng Xuất</DropdownItem>
                   </DropdownMenu>
                 </UncontrolledDropdown>

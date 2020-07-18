@@ -5,11 +5,13 @@ import FooterComponent from "./components/footer/FooterComponent";
 import HeaderComponent from "./components/header/HeaderCoponent";
 import Loading from "./components/loading/Loading";
 import LoginComponent from "./components/login/LoginComponent";
-import SliderComponent from "./components/slider/SliderComponent";
+// import SliderComponent from "./components/slider/SliderComponent";
 import { statusAuthLogin } from './recoil/authState';
 
 const Home = lazy(() => import('./pages/home'))
 const Resister = lazy(() => import('./pages/resister'))
+const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'))
+const ChangePersional = lazy(() => import('./pages/changePersional/changePersional'))
 const Introduction = lazy(() => import('./pages/introduction'))
 
 function App() {
@@ -22,7 +24,7 @@ function App() {
       <header>
         <HeaderComponent />
       </header>
-      <SliderComponent />
+      {/* <SliderComponent /> */}
       <Switch>
 
         <Route exact path="/">
@@ -43,17 +45,17 @@ function App() {
           </Suspense>
         </Route>
 
-        {/* <Route path="/persional">
+        <Route path="/persional">
           <Suspense fallback={<Loading />}>
-            <Resister />
+            <ChangePersional />
           </Suspense>
-        </Route> */}
+        </Route>
 
-        {/* <Route path="/changepassword">
+        <Route path="/changepassword">
           <Suspense fallback={<Loading />}>
-            <Resister />
+            <ChangePassword />
           </Suspense>
-        </Route> */}
+        </Route>
 
         {/* <Route path="/card">
           <Suspense fallback={<Loading />}>

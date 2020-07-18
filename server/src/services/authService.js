@@ -140,10 +140,28 @@ const updatePasswordUser = (user_id, password, passwordNew) => {
     })
 }
 
+const getInfoUser = (user_id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!user_id) {
+                return reject(`${transErrors.err_product}`)
+            }
+            let user = await userModel.findUserId(user_id)
+            if (user) {
+                return resolve(user)
+            }
+            return reject(`${transErrors.err_product}`)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports = {
     createNewUser: createNewUser,
     checkLogin: checkLogin,
     updateInfoUser: updateInfoUser,
-    updatePasswordUser: updatePasswordUser
+    updatePasswordUser: updatePasswordUser,
+    getInfoUser: getInfoUser
 }
