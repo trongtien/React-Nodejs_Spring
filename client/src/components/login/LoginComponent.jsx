@@ -5,6 +5,7 @@ import { Button, Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import { useRecoilState } from "recoil";
 import * as Yup from 'yup';
 import { isLogin, localStorageAddUser, statusAuthLogin, useInfo } from '../../recoil/authState';
+import { showAlert, content } from '../../recoil/contant.js';
 import inputField from '../formik/inputField';
 import authApi from "./../../api/authApi";
 import "./style.scss";
@@ -14,6 +15,8 @@ function LoginComponent(props) {
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [UserInfo, setUserInfo] = useRecoilState(useInfo);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
+  const [showMsg, setShowMsg] = useRecoilState(showAlert);
+  const [msg, setMsg] = useRecoilState(content);
 
   function hanldeClick() {
     let isCloseLogin = AuthFormLogin
@@ -38,6 +41,12 @@ function LoginComponent(props) {
         let UserInfo = data
         await setUserInfo(UserInfo)
         localStorageAddUser(UserInfo)
+        /*
+        * show alert
+        * @params true show alert
+        */
+        await setMsg("Đăng nhập thành công")
+        await setShowMsg(!showMsg)
       }
     })
   }

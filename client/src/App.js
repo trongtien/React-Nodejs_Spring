@@ -5,8 +5,10 @@ import FooterComponent from "./components/footer/FooterComponent";
 import HeaderComponent from "./components/header/HeaderCoponent";
 import Loading from "./components/loading/Loading";
 import LoginComponent from "./components/login/LoginComponent";
+import AlterComponent from "./components/alert/ALertComponent"
 // import SliderComponent from "./components/slider/SliderComponent";
 import { statusAuthLogin } from './recoil/authState';
+import {showAlert} from './recoil/contant.js'
 
 const Home = lazy(() => import('./pages/home'))
 const Resister = lazy(() => import('./pages/resister'))
@@ -17,13 +19,17 @@ const Introduction = lazy(() => import('./pages/introduction'))
 function App() {
 
   const isShowLogin = useRecoilValue(statusAuthLogin)
-
+  const isShowAlert = useRecoilValue(showAlert)
   return (
     <div className="App">
       {isShowLogin === true ? (<LoginComponent />) : ("")}
+	  {isShowAlert === true ? (<AlterComponent />) : ("")}
       <header>
         <HeaderComponent />
       </header>
+
+      
+   
       {/* <SliderComponent /> */}
       <Switch>
 

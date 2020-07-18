@@ -27,8 +27,12 @@ const authAPI = {
     },
     getInfoUserById: (user_id) => {
         try {
-            const url = "/api/auth/get-user-byId"
-            return axiosClient.get(url, user_id)
+            const url = `/api/auth/get-user-byId/`
+            return axiosClient.get(url, {
+                params: {
+                    user_id: user_id
+                }
+            })
         } catch (error) {
             return error
         }

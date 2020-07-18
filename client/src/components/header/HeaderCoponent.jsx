@@ -1,25 +1,19 @@
-// import PropTypes from "prop-types";
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 // import Icons from "../../contants/icon";
 import {
-  Collapse,
-  DropdownItem, DropdownMenu, DropdownToggle, Nav, Navbar,
+  Button, Collapse,
+  DropdownItem, DropdownMenu, DropdownToggle,
+  Input, InputGroup, InputGroupAddon, Nav, Navbar,
   NavbarBrand, NavbarToggler,
   NavItem,
-  UncontrolledDropdown,
-  InputGroup, InputGroupAddon, Button, Input
+  UncontrolledDropdown
 } from "reactstrap";
 import { useRecoilState } from "recoil";
-import { statusAuthLogin, useInfo, isLogin, clearLocalStorageUser } from '../../recoil/authState';
+import { clearLocalStorageUser, isLogin, statusAuthLogin, useInfo } from '../../recoil/authState';
 import "./style.scss";
 
-// HeaderComponent.propTypes = {
 
-// };
-// HeaderComponent.defaultProps = {
-
-// };
 function HeaderComponent(props) {
   const [isOpen, setIsOpen] = useState(false);
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);

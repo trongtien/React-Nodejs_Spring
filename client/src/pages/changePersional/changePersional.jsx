@@ -13,27 +13,18 @@ function ChangePersional(props) {
     const [infoUser, setInfoUser] = useState({})
 
     useEffect(() => {
-        let user_id = JSON.stringify(Cookies.get('user_id'))
+        getUser()
+    }, []);
+    const getUser = () => {
+        // let user_id = JSON.stringify(Cookies.get('user_id'))
+        let user_id = Cookies.get('user_id')
         console.log(user_id)
         if (user_id) {
             authAPI.getInfoUserById(user_id).then(data => {
-                if (data) {
-                    setInfoUser(data)
-                }
+                setInfoUser(data)
             })
         }
-    });
-    // const getuser = () => {
-    //     let user_id = JSON.stringify(Cookies.get('user_id'))
-    //     console.log(user_id)
-    //     if (user_id) {
-    //         authAPI.getInfoUserById(user_id).then(data => {
-    //             if (data) {
-    //                 setInfoUser(data)
-    //             }
-    //         })
-    //     }
-    // }
+    }
     console.log('[info user]', infoUser)
 
     const initialValues = {
