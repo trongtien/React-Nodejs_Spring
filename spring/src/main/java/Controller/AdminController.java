@@ -11,23 +11,10 @@ import Repository.AdminRepository;
 public class AdminController {
 	@Autowired
 	private AdminRepository AdRepo;
-	
-	@GetMapping(value="/index")
-	public String listindex(Model model)
-	{
-		model.addAttribute("tc",AdRepo.findAll());
-		return "index";
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public AdminController() {
-	}
 
+	@GetMapping(value = "/all")
+	public String list(Model model) {
+		model.addAttribute("ADrepo", AdRepo.findAll());
+		return "test";
+	}
 }
