@@ -16,9 +16,11 @@ function ChangePassword(props) {
         isnewpassword: ""
     }
     const validateionSchema = Yup.object().shape({
-        password: Yup.string().required('Bạn chưa nhập thông tin'),
-        newpassword: Yup.string().required('Bạn chưa nhập thông tin'),
-        isnewpassword: Yup.string().required('Bạn chưa nhập thông tin')
+        password: Yup.string().required('Bạn chưa nhập thông tin').min(5, "Password must contain at least 8 characters"),
+        newpassword: Yup.string().required('Bạn chưa nhập thông tin').min(5, "Password must contain at least 8 characters"),
+        isnewpassword: Yup.string().required('Bạn chưa nhập thông tin').when('newpassword', (newpassword, schema) => {
+            if (newpassword) return schema.required('Confirm Password is required');
+        }).oneOf([Yup.ref('newpassword')], 'Passwords must match')
     })
 
     const hanldChangePassword = (values) => {

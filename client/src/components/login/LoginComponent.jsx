@@ -2,10 +2,10 @@ import { FastField, Form, Formik } from "formik";
 import React from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, Col, Row, Spinner } from "reactstrap";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import * as Yup from 'yup';
 import { isLogin, localStorageAddUser, statusAuthLogin, useInfo } from '../../recoil/authState';
-import { showAlert, content } from '../../recoil/contant.js';
+import { content, showAlert, showMessageAlert } from '../../recoil/contant.js';
 import inputField from '../formik/inputField';
 import authApi from "./../../api/authApi";
 import "./style.scss";
@@ -13,10 +13,10 @@ import "./style.scss";
 
 function LoginComponent(props) {
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
-  const [UserInfo, setUserInfo] = useRecoilState(useInfo);
+  const setUserInfo = useSetRecoilState(useInfo);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const [showMsg, setShowMsg] = useRecoilState(showAlert);
-  const [msg, setMsg] = useRecoilState(content);
+  const setMsg = useSetRecoilState(content);
 
   function hanldeClick() {
     let isCloseLogin = AuthFormLogin
@@ -45,11 +45,13 @@ function LoginComponent(props) {
         * show alert
         * @params true show alert
         */
-        await setMsg("Đăng nhập thành công")
-        await setShowMsg(!showMsg)
+        showMessageAlert("Đăng nhập thành công", setMsg, setShowMsg, showMsg)
       }
     })
   }
+
+
+
   /*
   * init state data null 
   */

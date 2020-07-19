@@ -16,9 +16,7 @@ function ChangePersional(props) {
         getUser()
     }, []);
     const getUser = () => {
-        // let user_id = JSON.stringify(Cookies.get('user_id'))
         let user_id = Cookies.get('user_id')
-        console.log(user_id)
         if (user_id) {
             authAPI.getInfoUserById(user_id).then(data => {
                 setInfoUser(data)
@@ -27,14 +25,15 @@ function ChangePersional(props) {
     }
     console.log('[info user]', infoUser)
 
-    const initialValues = {
-        fullname: '',
-        username: '',
-        email: '',
-        password: '',
-        phone: '',
-        address: ''
-    }
+    // const initialValues = {
+    //     fullname: '',
+    //     username: '',
+    //     email: '',
+    //     password: '',
+    //     phone: '',
+    //     address: ''
+    // }
+    const initialValues = { infoUser }
     // const validateionSchema = Yup.object().shape({
     //     password: Yup.string().required('Bạn chưa nhập thông tin'),
     //     newpassword: Yup.string().required('Bạn chưa nhập thông tin'),

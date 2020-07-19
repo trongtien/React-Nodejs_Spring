@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import Cookies from 'js-cookie';
 // import Icons from "../../contants/icon";
 import {
   Button, Collapse,
@@ -108,7 +109,7 @@ function HeaderComponent(props) {
               isLoginUser === true ?
                 <UncontrolledDropdown nav inNavbar className="isLogin">
                   <DropdownToggle nav caret>
-                    Options
+                    {Cookies.get('name')}
                   </DropdownToggle>
                   <DropdownMenu right>
                     {/* <DropdownItem>Thông Tin cá nhân</DropdownItem> */}
