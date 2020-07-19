@@ -1,5 +1,5 @@
-import { atom, selector } from "recoil";
-import { statusAuthLogin } from "./authState";
+import { atom } from "recoil";
+
 
 const showAlert = atom({
 	key: 'ALERT_ON',

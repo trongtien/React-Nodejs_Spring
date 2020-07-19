@@ -10,30 +10,32 @@ import './style.scss';
 
 
 function ChangePersional(props) {
-    const [infoUser, setInfoUser] = useState({})
-
     useEffect(() => {
+        const getUser = () => {
+            let user_id = Cookies.get('user_id')
+            if (user_id) {
+                authAPI.getInfoUserById(user_id).then((data) => {
+                    return setState(data.data)
+                })
+            }
+        };
         getUser()
-    }, []);
-    const getUser = () => {
-        let user_id = Cookies.get('user_id')
-        if (user_id) {
-            authAPI.getInfoUserById(user_id).then(data => {
-                setInfoUser(data)
-            })
-        }
-    }
-    console.log('[info user]', infoUser)
+    }, [])
+    const [state, setState] = useState([])
+
+
+    console.log(state.fullname)
 
     // const initialValues = {
-    //     fullname: '',
-    //     username: '',
-    //     email: '',
-    //     password: '',
-    //     phone: '',
-    //     address: ''
+
+    //     fullname: state.fullname,
+    //     // username: infoUser.username,
+    //     // email: infoUser.email,
+    //     // password: infoUser.password,
+    //     // phone: infoUser.phone,
+    //     // address: infoUser.address
     // }
-    const initialValues = { infoUser }
+    const initialValues = state
     // const validateionSchema = Yup.object().shape({
     //     password: Yup.string().required('Bạn chưa nhập thông tin'),
     //     newpassword: Yup.string().required('Bạn chưa nhập thông tin'),
