@@ -15,6 +15,6 @@ public class AdminController {
 	@GetMapping(value = "/sp")
 	public String list(Model model) {
 		model.addAttribute("ADrepo", AdRepo.findAll());
-		return "sanpham";
+		return "index";
 	}
 }

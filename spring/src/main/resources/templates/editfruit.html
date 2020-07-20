@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+ <meta charset="utf-8">
+<head th:replace="layout :: linkCss"></head>
+
+<body class="fix-header">
+        <div th:replace="layout :: svn"></div>
+    	<div th:replace="layout :: menu"></div>
+  
+    <div id="wrapper">  
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Sửa TC</h4>
+                    </div> 
+                </div>
+     
+                <div class="row" style="margin-left: 100px;">
+                    <div class="col-md-8 col-xs-12">
+                        <div class="white-box">
+                            <form class="form-horizontal form-material" action="#" th:object="${fedit}" method="post" >
+                                <div class="form-group">
+                                    <label class="col-md-12">ID Trái Cây</label>
+                                    <div class="col-md-12">
+                                        <input disabled="disabled" th:value="${fedit.getId()}" class="form-control form-control-line"/> 
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="col-md-12">Tên Trái Cây</label>
+	                                    <div class="col-md-12">
+	                                        <input type="text" th:field=*{ten} th:value="${fedit.getTen()}" class="form-control form-control-line"/>
+	                                   </div>
+                                </div>
+                                
+                                <div  class="form-group">
+                                    <label class="col-md-12">ID Loại</label>
+                                    <select  class="form-control form-control-line"  size="1" th:field=*{loaitraicay} >
+                                    	<option value=""> -- </option>
+                                        <option th:each="kind_of_fruit: ${LTC}" th:value="${kind_of_fruit.getId()}" th:text="${kind_of_fruit.getLoai()}" />
+                                    </select>
+                                </div>                            
+                                <div class="form-group">
+                                     <label class="col-md-12">Số lượng</label>
+                                     <div class="col-md-12">
+                                          <input type="text" th:field=*{so_luong} th:value="${fedit.getSo_luong()}" class="form-control form-control-line"/>
+                                     </div>
+                                </div>
+                                <!-- <div class="form-group">
+                                     <label class="col-md-12">Giá Nhập</label>
+                                     <div class="col-md-12">
+                                          <input type="text" th:field=*{gia_von} th:value="${fedit.getGia_von()}" class="form-control form-control-line"/>
+                                     </div>
+                                </div> -->
+                                <div class="form-group">
+                                     <label class="col-md-12">Giá Bán</label>
+                                     <div class="col-md-12">
+                                          <input type="text" th:field=*{gia_ban} th:value="${fedit.getGia_ban()}" class="form-control form-control-line"/>
+                                     </div>
+                                </div>
+                               <!--  <div class="form-group">
+                                     <label class="col-md-12">Status</label>
+                                     <div class="col-md-12">
+                                          <input type="number" th:field=*{status} th:value="${fedit.getStatus()}"  class="form-control form-control-line"/>
+                                     </div>
+                                </div> -->
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success" type="submit">Tạo</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /a.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+   
+</body>
+
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="layout :: linkCss">
+<meta charset="utf-8"></head>
+
+<body class="fix-header">
+    	<div th:replace="layout :: svn"></div>
+    	<div th:replace="layout :: menu"></div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+         <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Manage Type of Fruit</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                       
+                        <ol class="breadcrumb">
+                            <li><a href="/addfruit" class="btn btn-danger">Thêm Trái Cây</a></li>
+                            <li><a href="/addloai" class="btn btn-danger">Thêm Loại </a></li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /row -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Id Trái Cây</th>
+                                            <th>Tên Trái Cây</th>
+                                            <th>Loại</th>                                            
+                                            <th>Giá Bán</th>
+                                            <th>Status</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:fragment="fruit (fruit.getId())" th:each="fruit: ${TC}">
+                                            <td th:text="${fruit.getId()}" />
+                                            <td th:text="${fruit.getTen()}" />
+                                            <td th:text="${fruit.getLoaitraicay().getLoai()}"/>                                          
+                                            <td th:text="${fruit.getGia_ban()}" />                                        
+                                            <td><a th:href="@{/editfruit/{id}(id=${fruit.getId()})}" class="btn btn-danger">Sửa</a></td>
+                                            <td><a th:href="@{/deletefruit/{id}(id=${fruit.getId()})}" class="btn btn-danger ">Xóa</a></td>
+                                        </tr>
+                                       
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    
+</body>
+
+</html>
