@@ -38,13 +38,20 @@
 								<thead>
 									<tr>
 										<th>Id</th>
+										<th>Loại</th>
+										<th>Tên</th>
+										<th>Giá</th>
+										<th>Tình Trạng</th>
 									</tr>
 								</thead>
 								<tbody>
-									<tr th:fragment="ad (ad.getIdProduct())"
-										th:each="ad : ${Prepo}">
+									<tr th:each="ad : ${Prepo}">
 										<td th:text="${ad.getIdProduct()}" />
-										<!-- <td th:text="${fruit.getTen()}" />
+										<td th:text="${ad.getNameProduct()}" />
+										<td th:text="${ad.getPrice()}" />
+										<td th:text="${ad.getStatusProduct()}" />
+										
+											<!-- <td th:text="${fruit.getTen()}" />
                                             <td th:text="${fruit.getLoaitraicay().getLoai()}"/>                                          
                                             <td th:text="${fruit.getGia_ban()}" />                                        
                                             <td><a th:href="@{/editfruit/{id}(id=${fruit.getId()})}" class="btn btn-danger">Sửa</a></td>

@@ -1,4 +1,4 @@
-package Entity;
+package com.example.LVTN;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package Entity;
+package com.example.LVTN;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,18 +13,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "comments")
-public class comments {
+@Table(name = "categories")
+
+public class category {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private String idComment;
-	@Column(name = "product_id")
-	private String idProduct;
+	private int idCategory;
+	@Column(name = "name")
+	private String name;
 
-	@Column(name = "user_id")
-	private String userid;
-
-	public comments() {
+	public category() {
 		// TODO Auto-generated constructor stub
 	}
 
