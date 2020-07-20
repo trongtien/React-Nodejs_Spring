@@ -29,6 +29,54 @@ public class product {
 	@Column(name = "status_product")
 	private String statusProduct;
 
+	public String getIdProduct() {
+		return idProduct;
+	}
+
+	public void setIdProduct(String idProduct) {
+		this.idProduct = idProduct;
+	}
+
+	public int getIdLoai() {
+		return idLoai;
+	}
+
+	public void setIdLoai(int idLoai) {
+		this.idLoai = idLoai;
+	}
+
+	public String getNameProduct() {
+		return nameProduct;
+	}
+
+	public void setNameProduct(String nameProduct) {
+		this.nameProduct = nameProduct;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
+
+	public int getKm() {
+		return km;
+	}
+
+	public void setKm(int km) {
+		this.km = km;
+	}
+
+	public String getStatusProduct() {
+		return statusProduct;
+	}
+
+	public void setStatusProduct(String statusProduct) {
+		this.statusProduct = statusProduct;
+	}
+
 	public product() {
 		// TODO Auto-generated constructor stub
 	}

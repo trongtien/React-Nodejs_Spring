@@ -5,16 +5,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import Repository.AdminRepository;
+import Repository.ProductRepository;
 
 @Controller
-public class AdminController {
+public class ProductsController {
 	@Autowired
-	private AdminRepository AdRepo;
+	private ProductRepository ProductRepo;
 
-//	@GetMapping(value = "/sp")
-//	public String list(Model model) {
-//		model.addAttribute("ADrepo", AdRepo.findAll());
-//		return "fruit";
-//	}
+	@GetMapping(value = "/index")
+	public String list(Model model) {
+		model.addAttribute("Prepo", ProductRepo.findAll());
+		return "fruit";
+	}
 }
