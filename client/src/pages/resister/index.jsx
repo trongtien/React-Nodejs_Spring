@@ -1,13 +1,16 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isLogin, localStorageAddUser, useInfo } from '../../recoil/authState';
+import { content, showAlert, showMessageAlert } from '../../recoil/contant.js';
 import authAPI from './../../api/authApi';
 import ResisterForm from './component/resisterForm/ResisterForm';
 
 function Resister(props) {
-    const [UserInfo, setUserInfo] = useRecoilState(useInfo);
+    const setUserInfo = useSetRecoilState(useInfo);
     const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
+    const [showMsg, setShowMsg] = useRecoilState(showAlert);
+    const setMsg = useSetRecoilState(content);
 
     const handleSubmitResister = (values) => {
         authAPI.postResister(values).then(async (response) => {
@@ -22,6 +25,7 @@ function Resister(props) {
                 await setUserInfo(UserInfo)
                 localStorageAddUser(UserInfo)
                 props.history.push('/');
+                showMessageAlert("Đăng ký thành công", setMsg, setShowMsg, showMsg)
             }
         }).catch(err => {
             console.log(err)

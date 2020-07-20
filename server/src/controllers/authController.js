@@ -59,7 +59,7 @@ let getUser = async (request, response) => {
         // console.log('[body]', request.body)
         // let user_id = request.body.user_id
         let user_id = request.query.user_id
-        console.log(user_id)
+        console.log('[user_id]', user_id)
 
 
         let user = await authServices.getInfoUser(user_id)

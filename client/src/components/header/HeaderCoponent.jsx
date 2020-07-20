@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import Cookies from 'js-cookie';
 // import Icons from "../../contants/icon";
 import {
   Button, Collapse,
@@ -9,16 +10,16 @@ import {
   NavItem,
   UncontrolledDropdown
 } from "reactstrap";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { clearLocalStorageUser, isLogin, statusAuthLogin, useInfo } from '../../recoil/authState';
 import "./style.scss";
 
 
-function HeaderComponent(props) {
+function HeaderComponent() {
   const [isOpen, setIsOpen] = useState(false);
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
-  const [UserInfo, setUserInfo] = useRecoilState(useInfo);
+  const setUserInfo = useSetRecoilState(useInfo);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -108,22 +109,19 @@ function HeaderComponent(props) {
               isLoginUser === true ?
                 <UncontrolledDropdown nav inNavbar className="isLogin">
                   <DropdownToggle nav caret>
-                    Options
+                    {Cookies.get('name')}
                   </DropdownToggle>
                   <DropdownMenu right>
-                    {/* <DropdownItem>Thông Tin cá nhân</DropdownItem> */}
                     <Link className="nav-link" to="/persional">
                       Thông Tin cá nhân
                     </Link>
                     <Link className="nav-link" to="/changepassword">
                       Thay đổi mật khẩu
                     </Link>
-                    {/* <DropdownItem to="/changepassword">
-                
-                        Thay đổi mật khẩu
-    
-                    </DropdownItem> */}
-                    <DropdownItem onClick={() => handlLogOut()}>Đăng Xuất</DropdownItem>
+                    <Link className="nav-link" onClick={() => handlLogOut()}>
+                      Đăng Xuất
+                    </Link>
+                    {/* <DropdownItem onClick={() => handlLogOut()}>Đăng Xuất</DropdownItem> */}
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 : ""
