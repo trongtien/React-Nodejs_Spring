@@ -1,0 +1,28 @@
+.banner{
+    background: #ffa233;
+    text-align: center;
+    padding: 15px 10px 15px 10px;
+    color: #FFFFFF;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    img{
+        height: 150px;
+        width: 150px;
+    }
+}
+.banner-content{
+    display: flex;
+
+    .card-body{
+        padding: 40px 0px 0px 0px;
+    }
+    .card-title{
+        // margin-left: -90px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+    .card-text{
+        font-size: 15px;
+    }
+
+}

@@ -17,7 +17,6 @@ let capitalize = (str) => {
 
 let checkPassword = (userPassword, requestPassword) => {
     let statusCheck = bcrypt.compareSync(userPassword, requestPassword)
-    console.log('[chekc password command]', statusCheck)
     return statusCheck
 }
 

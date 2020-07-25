@@ -1,6 +1,6 @@
 import { FastField, Form, Formik } from "formik";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { Button, Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import * as Yup from 'yup';
@@ -46,11 +46,10 @@ function LoginComponent(props) {
         * @params true show alert
         */
         showMessageAlert("Đăng nhập thành công", setMsg, setShowMsg, showMsg)
+        props.history.push('/')
       }
     })
   }
-
-
 
   /*
   * init state data null 
@@ -87,7 +86,6 @@ function LoginComponent(props) {
                       <FastField
                         name="username"
                         component={inputField}
-
                         label="username"
                         placeholder="with a placeholder username"
                       />
@@ -125,4 +123,4 @@ function LoginComponent(props) {
     </div>
   );
 }
-export default LoginComponent;
+export default withRouter(LoginComponent);

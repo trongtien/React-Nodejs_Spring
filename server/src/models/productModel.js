@@ -1,9 +1,13 @@
 const database = require('../../database')
 
-let getAll = async (limit, page) => {
-    console.log(limit, page)
+let amountProduct = async () => {
+    return await database.product.findAll({})
+}
+
+let getAllPagination = async (limit, page) => {
     return await database.product.findAll({ limit: limit, offset: page })
 }
 module.exports = {
-    getAll: getAll
+    getAllPagination: getAllPagination,
+    amountProduct: amountProduct
 }

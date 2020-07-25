@@ -7,11 +7,11 @@ const initAPI = (app) => {
 
   router.post("/api/auth/login", authController.login)
   router.post("/api/auth/resister", authController.resister)
-  router.get("/api/product/get-all", productController.getProduct)
+  router.get("/api/product/get-all/:_limit/:_page", productController.getProduct)
 
   router.get("/api/auth/get-user-byId", authController.getUser)
-  router.post("/api/auth/update-info", authController.updateInfo)
-  router.post("/api/auth/update-password", authController.updatePassword)
+  router.put("/api/auth/update-info", authController.updateInfo)
+  router.put("/api/auth/update-password", authController.updatePassword)
   return app.use('/', router)
 }
 module.exports = initAPI

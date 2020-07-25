@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Switch } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import FooterComponent from "./components/footer/FooterComponent";
 import HeaderComponent from "./components/header/HeaderCoponent";
 import Loading from "./components/loading/Loading";
@@ -10,18 +10,37 @@ import AlterErrorComponent from "./components/alert/AlertErrorComponent"
 // import SliderComponent from "./components/slider/SliderComponent";
 import { statusAuthLogin } from './recoil/authState';
 import { showAlert, showAlertError } from './recoil/contant.js'
+import { listProductState, pagination } from './recoil/product.js'
+import productApi from './api/productApi'
 
-const Home = lazy(() => import('./pages/home'))
+import Home from "./pages/home"
+
+
+// const Home = lazy(() => import('./pages/home'))
 const Resister = lazy(() => import('./pages/resister'))
 const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'))
 const ChangePersional = lazy(() => import('./pages/changePersional/changePersional'))
 const Introduction = lazy(() => import('./pages/introduction'))
 
 function App() {
-
+  const setListProductState = useSetRecoilState(listProductState)
   const isShowLogin = useRecoilValue(statusAuthLogin)
   const isShowAlert = useRecoilValue(showAlert)
   const isShowAlertError = useRecoilValue(showAlertError)
+  const paginational = useRecoilValue(pagination)
+  React.useEffect(() => {
+    async function getAllProduct() {
+      try {
+        let resData = await productApi.getAll(paginational._limit, paginational._page)
+        let { data } = resData
+        console.log('data', data)
+        await setListProductState(data)
+      } catch (error) {
+        return error.message
+      }
+    }
+    getAllProduct()
+  }, [])
   return (
     <div className="App">
       {isShowLogin === true ? (<LoginComponent />) : ("")}

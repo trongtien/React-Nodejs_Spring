@@ -2,6 +2,7 @@ import axiosClient from './../contants/axiosClient'
 
 const authAPI = {
     postLogin: (userInfo) => {
+        console.log('[userinfo]', userInfo)
         try {
             const url = "/api/auth/login"
             return axiosClient.post(url, userInfo);
@@ -12,15 +13,15 @@ const authAPI = {
     postResister: (newUserInfo) => {
         try {
             const url = "/api/auth/resister"
-            return axiosClient.post(url, newUserInfo)
+            return axiosClient.put(url, newUserInfo)
         } catch (error) {
             return error
         }
     },
-    postchangePassword: (newPassword) => {
+    putchangePassword: (newPassword) => {
         try {
             const url = "/api/auth/update-password"
-            return axiosClient.post(url, newPassword)
+            return axiosClient.put(url, newPassword)
         } catch (error) {
             return error
         }

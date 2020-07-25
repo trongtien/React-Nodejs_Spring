@@ -62,13 +62,19 @@ function HeaderComponent() {
             </NavItem>
             <UncontrolledDropdown nav inNavbar >
               <DropdownToggle nav caret>
-                Options
+                Sản Phẩm
               </DropdownToggle>
               <DropdownMenu right>
-                <DropdownItem>Option 1</DropdownItem>
-                <DropdownItem>Option 2</DropdownItem>
-                <DropdownItem divider />
-                <DropdownItem>Reset</DropdownItem>
+                <Link className="nav-link" to="/Blog">
+                  Trái cây nhập khẩu
+                </Link>
+                <Link className="nav-link" to="/Blog">
+                  Trái cây nhập khẩu
+                </Link>
+                <Link className="nav-link" to="/Blog">
+                  Trái cây nhập khẩu
+                </Link>
+
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

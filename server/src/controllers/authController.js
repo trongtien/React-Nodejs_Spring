@@ -21,6 +21,7 @@ let login = async (request, response) => {
     try {
         let username = request.body.username
         let password = request.body.password
+
         let infoUserLogin = await authServices.checkLogin(username, password)
         return response.status(200).json({ status: 200, message: "login successfully", data: infoUserLogin })
     } catch (error) {
@@ -47,8 +48,12 @@ let updatePassword = async (request, response) => {
         let user_id = request.body.user_id
         let password = request.body.password
         let passwordNew = request.body.passwordNew
+        console.log('user_id', user_id)
+        console.log('password', password)
+        console.log('passwordNew', passwordNew)
         let updatePassword = await authServices.updatePasswordUser(user_id, password, passwordNew)
-        return response.status(200).json({ status: 200, message: 'update successfully', data: null })
+        console.log('updatePassword', updatePassword)
+        return response.status(200).json({ status: 200, message: 'update successfully', data: updatePassword })
     } catch (error) {
         return response.status(400).json({ status: 400, message: error })
     }

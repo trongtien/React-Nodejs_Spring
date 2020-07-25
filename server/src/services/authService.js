@@ -59,6 +59,7 @@ const createNewUser = (fullname, username, password, email, phone, address) => {
 }
 
 const checkLogin = (username, password) => {
+
     return new Promise(async (resolve, reject) => {
         try {
             if (!username) {
@@ -68,10 +69,12 @@ const checkLogin = (username, password) => {
                 return reject(`${transErrors.password_user}`)
             }
             let userInfo = await userModel.findUser(username);
+
             if (!userInfo) {
                 return reject(`${transErrors.err_check_username}`)
             }
             let check = checkPassword(password, userInfo.dataValues.password)
+
             if (check) {
                 let node_access_token = jwt.sign(userInfo.dataValues.user_id, jwtOptions.secretOrKey);
                 let payload = {

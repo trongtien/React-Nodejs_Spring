@@ -8,8 +8,12 @@ import * as Yup from 'yup';
 import './style.scss'
 import Cookies from 'js-cookie';
 import { withRouter } from 'react-router-dom';
+import { content, showAlert, showAlertError } from '../../recoil/contant.js';
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 function ChangePassword(props) {
+    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
+    const setMsg = useSetRecoilState(content);
     const initialValues = {
         passworrd: "",
         newpassword: "",
@@ -27,15 +31,24 @@ function ChangePassword(props) {
         let user_id = Cookies.get('user_id')
         if (values && user_id) {
             if (values.newpassword === values.isnewpassword) {
-
                 let newPassword = {
                     user_id: user_id,
                     password: values.password,
                     passwordNew: values.isnewpassword
                 }
-                authApi.postchangePassword(newPassword).then(async (data) => {
+                authApi.putchangePassword(newPassword).then(async (data) => {
+                    console.log('data check password', data)
                     if (data.status === 200) {
                         props.history.push('/');
+                    }
+                    if (data.status === 400) {
+                        setShowMsgErr("Mật khẩu không đúng vui lòng thử lại", setMsg, setShowMsgErr, showMsgErr)
+                        props.history.push('/changepassword')
+                    }
+                }).catch(error => {
+                    if (error) {
+                        setShowMsgErr("Có lõi mời thử lại", setMsg, setShowMsgErr, showMsgErr)
+                        props.history.push('/changepassword')
                     }
                 })
             }
