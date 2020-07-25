@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const product = sequelize.define("product", {
         product_id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
@@ -31,23 +31,16 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false
         },
         status_product: {
-            type: DataTypes.STRING,
+            type: DataTypes.INTEGER,
             allowNull: false
         },
         content: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        created_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        },
-        updated_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        }
+
+    }, {
+        timestamps: true
     });
     return product;
 };

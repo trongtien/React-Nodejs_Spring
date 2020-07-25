@@ -31,18 +31,9 @@ module.exports = (sequelize, Sequelize) => {
     address: {
       type: Sequelize.STRING,
       allowNull: false
-    },
-    created_at: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
-    },
-    updated_at: {
-      type: Sequelize.DATE,
-      defaultValue: Sequelize.NOW,
     }
   }, {
-    createdAt: false,
-    updatedAt: false,
+    timestamps: true
   });
   return user;
 };
