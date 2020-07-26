@@ -1,0 +1,15 @@
+.fast{
+    position: absolute;
+    z-index: 99;
+    right: 0 ;
+    bottom: 10%;
+    position: fixed;
+    .card{
+        width: 7%;
+        height: 7%;
+        border-radius: 50%;
+        float: right;
+        margin-right: 5%;
+    }
+}
+

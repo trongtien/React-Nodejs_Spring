@@ -7,6 +7,7 @@ import Loading from "./components/loading/Loading";
 import LoginComponent from "./components/login/LoginComponent";
 import AlterComponent from "./components/alert/ALertComponent"
 import AlterErrorComponent from "./components/alert/AlertErrorComponent"
+import FastComponent from './components/fast'
 // import SliderComponent from "./components/slider/SliderComponent";
 import { statusAuthLogin } from './recoil/authState';
 import { showAlert, showAlertError } from './recoil/contant.js'
@@ -46,7 +47,7 @@ function App() {
       {isShowLogin === true ? (<LoginComponent />) : ("")}
       {isShowAlert === true ? (<AlterComponent />) : ("")}
       {isShowAlertError === true ? (<AlterErrorComponent />) : ("")}
-
+      <FastComponent />
       <header>
         <HeaderComponent />
       </header>

@@ -8,10 +8,12 @@ import * as Yup from 'yup';
 import './style.scss'
 import Cookies from 'js-cookie';
 import { withRouter } from 'react-router-dom';
-import { content, showAlert, showAlertError } from '../../recoil/contant.js';
+import { content, showAlertError, showMessageErrorAlert } from '../../recoil/contant.js';
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { useState } from 'react';
 
 function ChangePassword(props) {
+    const [isSubmit, setIsSubmit] = useState(true)
     const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
     const initialValues = {
@@ -41,14 +43,10 @@ function ChangePassword(props) {
                     if (data.status === 200) {
                         props.history.push('/');
                     }
-                    if (data.status === 400) {
-                        setShowMsgErr("Mật khẩu không đúng vui lòng thử lại", setMsg, setShowMsgErr, showMsgErr)
-                        props.history.push('/changepassword')
-                    }
-                }).catch(error => {
+                }).catch(async error => {
                     if (error) {
-                        setShowMsgErr("Có lõi mời thử lại", setMsg, setShowMsgErr, showMsgErr)
-                        props.history.push('/changepassword')
+                        showMessageErrorAlert("Mật khẩu không đúng vui lòng thử lại", setMsg, setShowMsgErr, showMsgErr)
+                        await setIsSubmit(!isSubmit)
                     }
                 })
             }
@@ -96,7 +94,7 @@ function ChangePassword(props) {
                                             <div >
                                                 <Button>
                                                     Thay đổi mật khẩu
-                                                    {isSubmitting && <Spinner size="sm" />}
+                                                    {isSubmit === true ? isSubmitting && <Spinner size="sm" /> : ""}
 
                                                 </Button>
                                                 <Link to="/">Trở về cửa hàng</Link>

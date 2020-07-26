@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, withRouter } from "react-router-dom";
 import Cookies from 'js-cookie';
 // import Icons from "../../contants/icon";
 import {
   Button, Collapse,
-  DropdownItem, DropdownMenu, DropdownToggle,
+  DropdownMenu, DropdownToggle,
   Input, InputGroup, InputGroupAddon, Nav, Navbar,
   NavbarBrand, NavbarToggler,
   NavItem,
@@ -15,11 +15,16 @@ import { clearLocalStorageUser, isLogin, statusAuthLogin, useInfo } from '../../
 import "./style.scss";
 
 
-function HeaderComponent() {
+function HeaderComponent(props) {
+  const [scrolled, setScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const setUserInfo = useSetRecoilState(useInfo);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handlScroll)
+  })
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -27,19 +32,34 @@ function HeaderComponent() {
     setAuthFormLogin(!AuthFormLogin)
   }
 
+  const handlScroll = () => {
+    let offect = window.scrollY;
+    console.log('offect; ', offect)
+    if (offect > 110) {
+      setScrolled(true)
+    }
+    else {
+      setScrolled(false)
+    }
+  }
+
+
+
   const handlLogOut = async () => {
-    clearLocalStorageUser()
+    let url = window.location
+    await clearLocalStorageUser()
     let updateStatususe = isLoginUser
     await setisLoginUser(!updateStatususe)
     let UserInfo = " "
     await setUserInfo(UserInfo)
-    return <Redirect to='/' />
+    if (url.pathname === '/persional' || url.pathname === '/changepassword') {
+      props.history.push('/')
+    }
   }
 
   return (
     <div>
-      {/* fixed="top" */}
-      <Navbar light expand="lg">
+      <Navbar light expand="lg" className={scrolled === true ? "fixed-top" : ""}>
         <NavbarBrand href="#" className="text-logo">
           FruitShop
         </NavbarBrand>
@@ -127,7 +147,6 @@ function HeaderComponent() {
                     <Link className="nav-link" onClick={() => handlLogOut()}>
                       Đăng Xuất
                     </Link>
-                    {/* <DropdownItem onClick={() => handlLogOut()}>Đăng Xuất</DropdownItem> */}
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 : ""
@@ -139,4 +158,4 @@ function HeaderComponent() {
   );
 }
 
-export default HeaderComponent;
+export default withRouter(HeaderComponent);

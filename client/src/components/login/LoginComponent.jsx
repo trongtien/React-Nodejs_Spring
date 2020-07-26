@@ -5,7 +5,7 @@ import { Button, Card, CardBody, Col, Row, Spinner } from "reactstrap";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import * as Yup from 'yup';
 import { isLogin, localStorageAddUser, statusAuthLogin, useInfo } from '../../recoil/authState';
-import { content, showAlert, showMessageAlert } from '../../recoil/contant.js';
+import { content, showAlert, showMessageAlert, showAlertError, showMessageErrorAlert } from '../../recoil/contant.js';
 import inputField from '../formik/inputField';
 import authApi from "./../../api/authApi";
 import "./style.scss";
@@ -16,6 +16,7 @@ function LoginComponent(props) {
   const setUserInfo = useSetRecoilState(useInfo);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const [showMsg, setShowMsg] = useRecoilState(showAlert);
+  const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
   const setMsg = useSetRecoilState(content);
 
   function hanldeClick() {
@@ -25,10 +26,10 @@ function LoginComponent(props) {
 
   const login = (values) => {
     authApi.postLogin(values).then(async (data) => {
+      let url = Object.assign(props.location)
       if (data) {
         /*
         * update status form login
-        * @params true close form
         */
         let closeLogin = AuthFormLogin
         await setAuthFormLogin(!closeLogin)
@@ -43,10 +44,18 @@ function LoginComponent(props) {
         localStorageAddUser(UserInfo)
         /*
         * show alert
-        * @params true show alert
         */
         showMessageAlert("Đăng nhập thành công", setMsg, setShowMsg, showMsg)
-        props.history.push('/')
+        if (url.pathname === '/register') {
+          props.history.push('/')
+        }
+      }
+    }).catch(async error => {
+      if (error) {
+        showMessageErrorAlert("Đăng nhập thất bại Tài khoản hoặc mật khẩu sai", setMsg, setShowMsgErr, showMsgErr)
+        let closeLogin = AuthFormLogin
+        await setAuthFormLogin(!closeLogin)
+        await setAuthFormLogin(closeLogin)
       }
     })
   }
