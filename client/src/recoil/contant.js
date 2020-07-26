@@ -1,6 +1,5 @@
 import { atom } from "recoil";
 
-
 const showAlert = atom({
 	key: 'ALERT_ON',
 	default: false,
@@ -12,9 +11,10 @@ const showAlertError = atom({
 });
 
 const content = atom({
-	ket: 'content',
+	key: 'content',
 	default: "Thong bao"
 })
+
 
 const showMessageAlert = async (msg, setMsg, setShowMsg, showMsg) => {
 	await setMsg(msg)

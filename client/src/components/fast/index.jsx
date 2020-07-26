@@ -3,20 +3,23 @@ import {
     Card, CardImg,
 } from 'reactstrap';
 import Icon from '../../contants/icon'
-import './style.scss'
-import { useState } from 'react';
+import './style.scss';
 
 function Fast() {
-    const [scrolled, setScrolled] = useState(false)
+
+    const handlScrollTop = () => {
+        if (window.pageYOffset > 0) {
+            window.scroll(0, 0);
+        }
+    }
 
     return (
         <div className="fast">
             <Card>
-                <CardImg top width="100%" src={Icon.top} alt="Card image cap" />
+                <CardImg top width="100%" src={Icon.top} alt="Card image cap" onClick={() => handlScrollTop()} />
             </Card>
         </div>
     )
 }
-
 
 export default Fast

@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Route, Switch } from 'react-router-dom';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import FooterComponent from "./components/footer/FooterComponent";
@@ -16,20 +16,20 @@ import productApi from './api/productApi'
 
 import Home from "./pages/home"
 
-
-// const Home = lazy(() => import('./pages/home'))
 const Resister = lazy(() => import('./pages/resister'))
 const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'))
 const ChangePersional = lazy(() => import('./pages/changePersional/changePersional'))
 const Introduction = lazy(() => import('./pages/introduction'))
 
 function App() {
+  const [scrolled, setScrolled] = useState(false)
   const setListProductState = useSetRecoilState(listProductState)
   const isShowLogin = useRecoilValue(statusAuthLogin)
   const isShowAlert = useRecoilValue(showAlert)
   const isShowAlertError = useRecoilValue(showAlertError)
   const paginational = useRecoilValue(pagination)
   React.useEffect(() => {
+    window.addEventListener('scroll', handlScroll)
     async function getAllProduct() {
       try {
         let resData = await productApi.getAll(paginational._limit, paginational._page)
@@ -42,14 +42,29 @@ function App() {
     }
     getAllProduct()
   }, [])
+
+  const handlScroll = () => {
+    let offect = window.scrollY;
+    console.log('offect; ', offect)
+    if (offect > 110) {
+      setScrolled(true)
+    }
+    else {
+      setScrolled(false)
+    }
+  }
+
   return (
     <div className="App">
       {isShowLogin === true ? (<LoginComponent />) : ("")}
       {isShowAlert === true ? (<AlterComponent />) : ("")}
       {isShowAlertError === true ? (<AlterErrorComponent />) : ("")}
-      <FastComponent />
+      {scrolled === true ? (<FastComponent />) : ("")}
+
       <header>
-        <HeaderComponent />
+        <HeaderComponent
+          scrolled={scrolled}
+        />
       </header>
 
       {/* <SliderComponent /> */}

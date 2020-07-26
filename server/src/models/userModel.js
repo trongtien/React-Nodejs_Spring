@@ -31,11 +31,13 @@ let findUserMail = async (email) => {
         },
     });
 }
+
 let updateInfo = async (user_id, newInfo) => {
     return await database.user.update(
         newInfo, { where: { user_id: user_id } }
     )
 }
+
 let updatePassword = async (user_id, password) => {
     return await database.user.update(
         { password: password }, { where: { user_id: user_id } }

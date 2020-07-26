@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
 import Cookies from 'js-cookie';
 // import Icons from "../../contants/icon";
@@ -16,34 +16,16 @@ import "./style.scss";
 
 
 function HeaderComponent(props) {
-  const [scrolled, setScrolled] = useState(false)
   const [isOpen, setIsOpen] = useState(false);
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const setUserInfo = useSetRecoilState(useInfo);
-
-  useEffect(() => {
-    window.addEventListener('scroll', handlScroll)
-  })
 
   const toggle = () => setIsOpen(!isOpen);
 
   const handlClicLogin = () => {
     setAuthFormLogin(!AuthFormLogin)
   }
-
-  const handlScroll = () => {
-    let offect = window.scrollY;
-    console.log('offect; ', offect)
-    if (offect > 110) {
-      setScrolled(true)
-    }
-    else {
-      setScrolled(false)
-    }
-  }
-
-
 
   const handlLogOut = async () => {
     let url = window.location
@@ -59,7 +41,7 @@ function HeaderComponent(props) {
 
   return (
     <div>
-      <Navbar light expand="lg" className={scrolled === true ? "fixed-top" : ""}>
+      <Navbar light expand="lg" className={props.scrolled === true ? "fixed-top" : ""}>
         <NavbarBrand href="#" className="text-logo">
           FruitShop
         </NavbarBrand>
@@ -94,7 +76,6 @@ function HeaderComponent(props) {
                 <Link className="nav-link" to="/Blog">
                   Trái cây nhập khẩu
                 </Link>
-
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>

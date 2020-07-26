@@ -7,7 +7,17 @@ let amountProduct = async () => {
 let getAllPagination = async (limit, page) => {
     return await database.product.findAll({ limit: limit, offset: page })
 }
+
+let findProductById = async (product_id) => {
+    return await database.product.findOne({
+        where: {
+            product_id: product_id
+        },
+    });
+}
+
 module.exports = {
     getAllPagination: getAllPagination,
-    amountProduct: amountProduct
+    amountProduct: amountProduct,
+    findProductById: findProductById
 }
