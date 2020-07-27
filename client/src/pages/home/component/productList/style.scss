@@ -53,9 +53,9 @@
   }
   .out-of-stock{
     position: absolute;
-    left: 60%;
+    left: 55%;
     bottom: 1.3rem;
-    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+    padding: 0.1rem 0.1rem 0.1rem 0.1rem;
     // transform: rotate(-20deg);
     font-weight: 700;
     color: red;
@@ -64,9 +64,9 @@
   }
   .out-of-stock-active{
     position: absolute;
-    left: 60%;
-    bottom: 1.3rem;
-    padding: 0.3rem 0.3rem 0.3rem 0.3rem;
+    left: 61%;
+    bottom: -1.1rem;
+    padding:  0.1rem 0.1rem 0.1rem 0.1rem;
     // transform: rotate(-20deg);
     font-weight: 700;
     color: red;

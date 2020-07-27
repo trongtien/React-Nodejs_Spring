@@ -7,6 +7,8 @@ import deliveryTruck from '../assets/icon/delivery-truck.png';
 import deleteIcon from '../assets/icon/delete.png';
 import top from '../assets/icon/top.png'
 
+
+
 const Icons = {
     viewIcon: viewIcon,
     cartIcon: cartIcon,

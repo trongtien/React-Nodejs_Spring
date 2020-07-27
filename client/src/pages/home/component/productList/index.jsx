@@ -22,7 +22,7 @@ function Product() {
                         return (
                             <Col key={item.product_id}>
                                 <Card>
-                                    <CardImg width="50%" height="50%" src={item.image} alt="Card image cap" />
+                                    <CardImg width="50%" height="50%" src={require(`../../../../../../spring/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
                                         <CardTitle className={item.status_product === 1 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.product_name}</CardTitle>

@@ -8,7 +8,7 @@ const listProductState = atom({
 const pagination = atom({
     key: 'PAGINATION',
     default: {
-        _limit: 10,
+        _limit: 1,
         _page: 0
     }
 })

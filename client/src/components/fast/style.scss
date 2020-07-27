@@ -1,9 +1,11 @@
 .fast{
     position: absolute;
     z-index: 99;
-    right: 0 ;
+    right: 0;
     bottom: 10%;
     position: fixed;
+    cursor: pointer;
+
     .card{
         width: 7%;
         height: 7%;
