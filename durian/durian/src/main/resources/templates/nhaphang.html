@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: linkCss">
+
+<meta charset="utf-8">
+
+</head>
+
+<body class="fix-header">
+		<div th:replace="layout :: svn"></div>
+    	<div th:replace="layout :: menu"></div>
+  
+    <div id="wrapper">
+       
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Thêm TC</h4>
+                    </div>
+                    
+                </div>
+         
+                <div class="row" style="margin-left: 100px;">
+                    <div class="col-md-8 col-xs-12">
+                        <div class="white-box">
+                            <form class="form-horizontal form-material" action="#" th:action="@{/nhaphang}" th:object="${nhaphang}" method="post" >
+                                <div class="form-group">
+                                    <label class="col-md-12">ID </label>
+                                    <div class="col-md-12">
+                                        <input disabled="disabled" class="form-control form-control-line"/> </div>
+                                </div>
+                                <div  class="form-group">
+                                    <label class="col-md-12">Trái Cây</label>
+                                    <select  class="form-control form-control-line"  size="1" th:field=*{traicay} >
+                                    	<option value=""> -- </option>
+                                        <option th:each="fruit: ${TC}" th:value="${fruit.getId()}" th:text="${fruit.getTen()}" />
+                                    </select>
+                                </div>    
+                                <div  class="form-group">
+                                    <label  class="col-md-12">Nhà Cung Cấp</label>
+                                    <select  class="form-control form-control-line"  size="1" th:field=*{nhacungcap} >
+                                    	<option value=""> -- </option>
+                                        <option th:each="supplier: ${NCC}" th:value="${supplier.getId()}" th:text="${supplier.getTen()}" />
+                                    </select>
+                                </div>                            
+                                <div class="form-group">
+                                     <label class="col-md-12">Số lượng</label>
+                                     <div class="col-md-12">
+                                          <input type="text" th:field=*{so_luong} class="form-control form-control-line"/>
+                                     </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                     <label class="col-md-12">Ngày</label>
+                                     <div class="col-md-12">
+                                          <input type="date" th:field=*{ngay} class="form-control form-control-line"/>
+                                     </div>
+                                </div>
+                                <div class="form-group">
+                                     <label class="col-md-12">Giá Nhập</label>
+                                     <div class="col-md-12">
+                                          <input type="text" th:field=*{gia_von} value="1" min="0" max="1" class="form-control form-control-line"/>
+                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success" type="submit">Tạo</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- /a.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+   
+</body>
+
+</html>

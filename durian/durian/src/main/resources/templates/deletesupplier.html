@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="layout :: linkCss"></head>
+
+<body class="fix-header">
+		<div th:replace="layout :: svn"></div>
+    	<div th:replace="layout :: menu"></div>
+    
+    <div id="wrapper">
+       
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">DELETE NCC</h4>
+                    </div>
+                    
+                </div>
+                <!-- /.row -->
+                <!-- .row -->
+                <div class="row" style="margin-left: 100px;">
+                    <div class="col-md-8 col-xs-12">
+                        <div class="white-box">
+                        
+                            <form class="form-horizontal form-material" action="#" th:object="${sdelete}" method="post" >                            
+                            	<div class="form-group">
+                                    <label class="col-md-12">Id Nhà Cung Cấp</label>
+                                    <div  class="col-md-12" >
+                                        <input type="text"  th:value="${sdelete.getId()}" th:name="id" class="form-control form-control-line" />
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group" >
+                                    <label class="col-md-12">Tên Nhà Cung Cấp</label>
+                                    <div class="col-md-12">
+                                        <input type="text"  th:value="${sdelete.getTen()}" class="form-control form-control-line" />
+                                    </div>
+                                </div>
+                                <div class="form-group" >
+                                    <label for="example-email" class="col-md-12">Địa Chỉ</label>
+                                    <div class="col-md-12">
+                                        <input type="text" th:value="${sdelete.getDia_chi()}" class="form-control form-control-line" /> 
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                     <label class="col-md-12">Số Điện Thoại</label>
+                                     <div class="col-md-12">
+                                        <input type="text" th:value="${sdelete.getSo_dt()}" class="form-control form-control-line" />
+                                     </div>
+                                 </div>
+                                 <div class="form-group">
+                                     <label class="col-md-12">Số Điện Thoại</label>
+                                     <div class="col-md-12">
+                                        <input type="text" th:value="${sdelete.getStatus()}" class="form-control form-control-line" />
+                                     </div>
+                                 </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <button class="btn btn-success" type="submit" >DELETE</button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+   
+</body>
+
+</html>

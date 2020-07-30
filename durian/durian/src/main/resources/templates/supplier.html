@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" >
+<head th:replace="layout :: linkCss">
+<meta charset="utf-8">
+</head>
+
+<body class="fix-header">
+    	<div th:replace="layout :: svn"></div>
+    	<div th:replace="layout :: menu"></div>
+        <!-- ============================================================== -->
+        <!-- End Left Sidebar -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Page Content -->
+        <!-- ============================================================== -->
+         <div id="page-wrapper">
+            <div class="container-fluid">
+                <div class="row bg-title">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h4 class="page-title">Supplier</h4>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
+                       
+                        <ol class="breadcrumb">
+                            <li><a href="/addsupplier" class="btn btn-danger">Thêm Nhà Cung Cấp </a></li>
+                            <li><a href="/nhaphang" class="btn btn-danger">Nhập Hàng </a></li>
+                        </ol>
+                    </div>
+                    <!-- /.col-lg-12 -->
+                </div>
+                <!-- /row -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="white-box">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Id Ncc</th>
+                                            <th>Tên Nhà Cung Cấp</th>
+                                            <th>Địa Chỉ</th>
+                                            <th>Số Đt</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:fragment="supplier (supplier.getId())" th:each="supplier: ${NCC}">
+                                            <td th:text="${supplier.getId()}"/>
+                                            <td th:text="${supplier.getTen()}"/>
+                                            <td th:text="${supplier.getDia_chi()}"/>
+                                            <td th:text="${supplier.getSo_dt()}"/>
+                                            <td><a class="btn btn-danger" th:href="@{/editsupplier/{id}(id=${supplier.getId()})}">Sửa</a></td>
+                                            <td><a class="btn btn-danger" th:href="@{/deletesupplier/{id}(id=${supplier.getId()})}">Xóa</a></td>
+
+                                        </tr>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+        <!-- ============================================================== -->
+        <!-- End Page Content -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- jQuery -->
+    
+</body>
+
+</html>
