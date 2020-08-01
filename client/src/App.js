@@ -15,6 +15,7 @@ import { listProductState, pagination } from './recoil/product.js'
 import productApi from './api/productApi'
 
 import Home from "./pages/home"
+import ProductDetailts from './pages/productDetail'
 
 const Resister = lazy(() => import('./pages/resister'))
 const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'))
@@ -100,6 +101,10 @@ function App() {
           </Suspense>
         </Route>
 
+        <Route exact path="/products/:id">
+          <ProductDetailts />
+        </Route>
+
         {/* <Route path="/card">
           <Suspense fallback={<Loading />}>
             <Cart />
@@ -109,7 +114,7 @@ function App() {
       <footer>
         <FooterComponent />
       </footer>
-    </div>
+    </div >
   );
 }
 
