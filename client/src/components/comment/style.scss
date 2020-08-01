@@ -1,0 +1,30 @@
+.count-comment{
+    margin-top: 1%;
+    font-weight: bold;
+}
+
+.list-comment .card{
+    border: none;
+}
+.name-user{
+    font-weight: bold;
+}
+.time-content{
+    float: right;
+}
+.content{
+    margin-top: 4%;
+    margin-bottom: 5%;
+}
+.form-content{
+    border: 1px solid #ced4da;
+    .input-content{
+        height: 8em;
+    }
+    .submit-content{
+        float: right;
+        margin-top: 1em;
+        margin-right: 2em;
+    }
+
+}

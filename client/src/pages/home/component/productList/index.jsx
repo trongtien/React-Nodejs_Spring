@@ -4,6 +4,7 @@ import {
     CardTitle, CardSubtitle,
     CardText, Row
 } from 'reactstrap';
+import { Link } from 'react-router-dom'
 import './style.scss'
 import Icons from '../../../../contants/icon'
 import Images from '../../../../contants/image'
@@ -22,7 +23,7 @@ function Product() {
                         return (
                             <Col key={item.product_id}>
                                 <Card>
-                                    <CardImg width="50%" height="50%" src={require(`../../../../../../spring/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
+                                    <CardImg width="50%" height="50%" src={Images.hongxiem} alt="Card image cap" />
                                     <CardBody>
                                         <CardTitle className={item.status_product === 1 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.product_name}</CardTitle>
@@ -32,7 +33,7 @@ function Product() {
 
                                     <div className="card-footer">
                                         <div className="card-link">
-                                            <CardLink href="#"><img src={Icons.viewIcon} /></CardLink>
+                                            <Link to={`/products/${item.product_id}`}><img src={Icons.viewIcon} /></Link>
                                             <CardLink style={{ borderRight: '1px solid #333333' }}></CardLink>
                                             <CardLink href="#"><img src={Icons.cartIcon} /></CardLink>
                                         </div>
