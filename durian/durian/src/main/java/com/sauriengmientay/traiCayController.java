@@ -32,6 +32,11 @@ public class traiCayController {
 		model.addAttribute("addfruit", new traiCay());
 		return "addfruit";
 	}
+	@GetMapping("/icon")
+	public String iconget(Model model) {
+
+		return "icon";
+	}
 
 	@PostMapping("/addfruit")
 	public String addpost(@ModelAttribute("addfruit") @Valid traiCay newtraicay, Model model, BindingResult result) {
