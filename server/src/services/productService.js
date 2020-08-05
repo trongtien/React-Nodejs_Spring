@@ -21,7 +21,41 @@ const getAllProduct = (limit, page) => {
     })
 }
 
+const getProductById = (product_id, limit, page) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let productDetail = []
+            if (!product_id) {
+                reject(`${transErrors.err_product}`)
+            }
+            let product = await productModel.findProductById(product_id)
+            await productDetail.push(product)
+            let category_id = product.category_id
+            let productCategory = await productModel.findProductByCategory(category_id, limit, page)
+            return resolve({ productDetail, productCategory })
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
+const getProductByCategory = (category_id, limit, page) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if (!category_id) {
+                reject(`${transErrors.err_product}`)
+            }
+            let productCategory = await productModel.findProductByCategory(category_id, limit, page)
+            return resolve(productCategory)
+        } catch (error) {
+            reject(error)
+        }
+    })
+}
+
 
 module.exports = {
-    getAllProduct: getAllProduct
+    getAllProduct: getAllProduct,
+    getProductById: getProductById,
+    getProductByCategory: getProductByCategory
 }

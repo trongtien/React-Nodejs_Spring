@@ -8,12 +8,24 @@ const listProductState = atom({
 const pagination = atom({
     key: 'PAGINATION',
     default: {
-        _limit: 1,
+        _limit: 10,
         _page: 0
     }
 })
 
+const productDetail = atom({
+    key: "PRODUCT_DETAIL",
+    default: []
+})
+
+const listProductCategory = atom({
+    key: "LIST_PRODUCT_CATEGORY",
+    default: []
+})
+
 export {
     listProductState,
-    pagination
+    pagination,
+    productDetail,
+    listProductCategory
 }

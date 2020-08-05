@@ -37,6 +37,7 @@ function HeaderComponent(props) {
     if (url.pathname === '/persional' || url.pathname === '/changepassword') {
       props.history.push('/')
     }
+    window.location.reload();
   }
 
   return (
@@ -83,7 +84,7 @@ function HeaderComponent(props) {
           <InputGroup className="search">
             <Input />
             <InputGroupAddon addonType="append">
-              <Button color="secondary">To </Button>
+              <Button color="secondary">Search</Button>
             </InputGroupAddon>
           </InputGroup>
 
@@ -104,16 +105,19 @@ function HeaderComponent(props) {
                 : ""
             }
             {
-              isLoginUser === false ?
+              // isLoginUser === false ?
+              Cookies.get('name') ?
+                ""
+                :
                 <NavItem>
                   <Link className="nav-link" onClick={() => handlClicLogin()}>
                     Đăng Nhập
                     </Link>
                 </NavItem>
-                : ""
             }
             {
-              isLoginUser === true ?
+              // isLoginUser === true ?
+              Cookies.get('name') ?
                 <UncontrolledDropdown nav inNavbar className="isLogin">
                   <DropdownToggle nav caret>
                     {Cookies.get('name')}

@@ -6,7 +6,8 @@ const transErrors = {
     password_user: "Bạn chưa nhập password",
     err_product: "Có lõi xãy ra mời thử lại",
     err_check_username: "Không tìm thấy username",
-    err_check_pasword: "Password không đúng"
+    err_check_pasword: "Password không đúng",
+    err_server: "Co loi he thong"
 }
 
 module.exports = {

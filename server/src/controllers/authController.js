@@ -9,6 +9,7 @@ let resister = async (request, response) => {
         let email = request.body.email
         let phone = request.body.phone
         let address = request.body.address
+
         let createNewUser = await authServices.createNewUser(fullname, username, password, email, phone, address)
         return response.status(200).json({ status: 200, message: "create new user successfully", data: createNewUser })
     } catch (error) {
@@ -36,7 +37,9 @@ let updateInfo = async (request, response) => {
         let email = request.body.email
         let phone = request.body.phone
         let address = request.body.address
+
         let updateInfo = await authServices.updateInfoUser(user_id, fullname, email, phone, address)
+
         return response.status(200).json({ status: 200, message: "update succesfully", data: updateInfo })
     } catch (error) {
         return response.status(400).json({ status: 400, message: error })
@@ -48,11 +51,8 @@ let updatePassword = async (request, response) => {
         let user_id = request.body.user_id
         let password = request.body.password
         let passwordNew = request.body.passwordNew
-        console.log('user_id', user_id)
-        console.log('password', password)
-        console.log('passwordNew', passwordNew)
         let updatePassword = await authServices.updatePasswordUser(user_id, password, passwordNew)
-        console.log('updatePassword', updatePassword)
+
         return response.status(200).json({ status: 200, message: 'update successfully', data: updatePassword })
     } catch (error) {
         return response.status(400).json({ status: 400, message: error })
@@ -64,8 +64,6 @@ let getUser = async (request, response) => {
         // console.log('[body]', request.body)
         // let user_id = request.body.user_id
         let user_id = request.query.user_id
-        console.log('[user_id]', user_id)
-
 
         let user = await authServices.getInfoUser(user_id)
         return response.status(200).json({ status: 200, message: 'get info user successfully', data: user })

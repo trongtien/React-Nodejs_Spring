@@ -1,14 +1,12 @@
 const bcrypt = require('bcrypt')
 const uuid = require("uuid");
-const passport = require('passport')
+// const passport = require('passport')
 const jwt = require("jsonwebtoken")
 const { checkPassword } = require('./../helperts/commant')
 const { transErrors } = require('../helperts/validateContent')
 const { transporter } = require('./../helperts/mail')
 const userModel = require('../models/userModel');
 const { jwtOptions } = require('./../helperts/passport')
-
-
 
 const createNewUser = (fullname, username, password, email, phone, address) => {
     return new Promise(async (resolve, reject) => {

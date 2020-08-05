@@ -13,8 +13,8 @@ module.exports = (sequelize, DataTypes) => {
         },
 
     }, {
-        created_at: false,
-        update_at: false,
+        created_at: true,
+        update_at: true,
         timestamps: true
     });
     return category;

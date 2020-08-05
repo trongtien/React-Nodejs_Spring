@@ -22,20 +22,20 @@ const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'
 const ChangePersional = lazy(() => import('./pages/changePersional/changePersional'))
 const Introduction = lazy(() => import('./pages/introduction'))
 
-function App() {
+function App(props) {
   const [scrolled, setScrolled] = useState(false)
   const setListProductState = useSetRecoilState(listProductState)
   const isShowLogin = useRecoilValue(statusAuthLogin)
   const isShowAlert = useRecoilValue(showAlert)
   const isShowAlertError = useRecoilValue(showAlertError)
   const paginational = useRecoilValue(pagination)
+
   React.useEffect(() => {
     window.addEventListener('scroll', handlScroll)
     async function getAllProduct() {
       try {
         let resData = await productApi.getAll(paginational._limit, paginational._page)
         let { data } = resData
-        console.log('data', data)
         await setListProductState(data)
       } catch (error) {
         return error.message
@@ -44,9 +44,10 @@ function App() {
     getAllProduct()
   }, [])
 
+  /*  */
   const handlScroll = () => {
     let offect = window.scrollY;
-    console.log('offect; ', offect)
+
     if (offect > 110) {
       setScrolled(true)
     }
@@ -101,7 +102,7 @@ function App() {
           </Suspense>
         </Route>
 
-        <Route exact path="/products/:id">
+        <Route path="/:productId">
           <ProductDetailts />
         </Route>
 
