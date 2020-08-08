@@ -21,8 +21,6 @@ dotenv.config({ path: './.env' })
 
 const initRouter = require('./routers/API')
 
-
-
 initRouter(app)
 
 module.exports = app

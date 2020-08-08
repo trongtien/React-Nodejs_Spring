@@ -1,41 +1,50 @@
 import { FastField, Form, Formik } from "formik";
 import Cookies from 'js-cookie';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, withRouter } from "react-router-dom";
 import { Button, Card, Col, Row, Spinner } from 'reactstrap';
 import authAPI from "./../../api/authApi";
 import inputField from './../../components/formik/inputField';
+import { useRecoilState } from "recoil";
+import { user } from '../../recoil/authState';
 // import * as Yup from 'yup';
 import './style.scss';
 
 
 function ChangePersional(props) {
+    const [userInfo, setUserInfo] = useRecoilState(user);
+
     useEffect(() => {
-        const getUser = () => {
-            let user_id = Cookies.get('user_id')
-            if (user_id) {
-                authAPI.getInfoUserById(user_id).then((data) => {
-                    return setState(data.data)
-                })
+        async function getUser() {
+            try {
+                let user_id = await Cookies.get('user_id')
+                if (user_id) {
+                    await authAPI.getInfoUserById(user_id).then((data) => {
+                        console.log(data)
+                        return setUserInfo(data.data)
+                    })
+                }
+            } catch (error) {
+                return error.message
             }
-        };
+        }
+
         getUser()
     }, [])
-    const [state, setState] = useState([])
 
+    console.log('user', userInfo)
 
-    console.log(state.fullname)
 
     // const initialValues = {
 
-    //     fullname: state.fullname,
-    //     // username: infoUser.username,
-    //     // email: infoUser.email,
-    //     // password: infoUser.password,
-    //     // phone: infoUser.phone,
-    //     // address: infoUser.address
+    //     fullname: user.fullname,
+    //     username: user.username,
+    //     email: user.email,
+    //     password: user.password,
+    //     phone: user.phone,
+    //     address: user.address
     // }
-    const initialValues = state
+    const initialValues = userInfo
     // const validateionSchema = Yup.object().shape({
     //     password: Yup.string().required('Bạn chưa nhập thông tin'),
     //     newpassword: Yup.string().required('Bạn chưa nhập thông tin'),

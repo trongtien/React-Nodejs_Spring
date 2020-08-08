@@ -1,14 +1,11 @@
 const categoryModel = require('./../models/categoryModel')
 const { transErrors } = require('../helperts/validateContent')
 
-const getAllCategory = () => {
+const getCategory = () => {
     return new Promise(async (resolve, reject) => {
         try {
-            let product = await categoryModel.getAllCategory()
-            if (error.length > 0) {
-                return reject(error.message)
-            }
-            return resolve(product)
+            let category = await categoryModel.getAll()
+            return resolve(category)
         } catch (error) {
             reject(error)
         }
@@ -18,5 +15,5 @@ const getAllCategory = () => {
 
 
 module.exports = {
-    getAllCategory: getAllCategory
+    getCategory: getCategory
 }

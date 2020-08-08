@@ -1,9 +1,11 @@
 const database = require('../../database')
 
-let findAll = async (limit, page) => {
-    return await database.categpry.findAll()
+let getAll = async () => {
+    let dataCategory = await database.category.findAll()
+
+    return dataCategory
 }
 
 module.exports = {
-    findAll: findAll,
+    getAll: getAll,
 }

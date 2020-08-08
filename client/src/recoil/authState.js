@@ -11,7 +11,12 @@ const statusAuthLogin = atom({
 
 const useInfo = atom({
     key: 'UserInfo',
-    default: " "
+    default: ""
+})
+
+const user = atom({
+    key: "USER",
+    default: {}
 })
 
 /*
@@ -42,6 +47,7 @@ export {
     statusAuthLogin,
     useInfo,
     isLogin,
+    user,
     localStorageAddUser,
     clearLocalStorageUser
 }

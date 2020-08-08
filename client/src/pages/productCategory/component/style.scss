@@ -1,0 +1,127 @@
+.product-category{
+  margin-bottom: 5rem;
+}
+.product-kind-some{
+    margin-left: 5%;
+    .card-product-category{
+      margin-top: 15px;
+      width: 85%;
+      height: 85%;
+
+      .card-body{
+        position: relative;
+      }
+      
+      .card-subtitle{
+        font-weight: bold;
+        font-size: 18px;
+      }
+      .card-title{
+        font-size: 18px;
+      }
+      .price-sale-kind{
+        text-decoration: line-through;
+        font-size: 16px;
+        color: red;
+        font-weight: 600;
+      }
+     
+    }
+    .toggle-product{
+      text-align: center;
+      margin-top: 10px;
+      display: block;
+    }
+  }
+  .cart-body{
+    padding: 10% 0px 0px 3%;
+    position: relative;
+  }
+  
+
+  .a-center{
+    text-align: center;
+    box-sizing: border-box;
+    h2{
+      padding: 0;
+      margin: 0;
+      margin-bottom: 15px;
+      position: relative;
+      display: block;
+      line-height: normal;
+      font-size: 28px;
+      font-weight: 600;
+    }
+  
+    span{
+      display: inline-block;
+      border-radius: 20px;
+      background: #80bb35;
+      padding: 10.5px 20px;
+      margin: 0;
+      font-size: 16px;
+      color: #FFF;
+      font-weight: 600;
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+ 
+.a-center h2::before,  .a-center h2::after{
+  content: "";
+  height: 2px;
+  width: 50%;
+  background: #fe9705;
+  top: 50%;
+  z-index: -1;
+  position: absolute;
+}
+
+
+.a-center h2::before {
+  left: 0;
+}
+.a-center h2::after {
+  right: 0;
+}
+
+
+.card-footer-product-category{
+  text-align: center;
+  border-top: none;
+  background: #ffffff;
+  margin: 10px;
+  .card-link-product-category{
+   opacity: 0;
+  img{
+     width: 14%;
+     height: 14%;
+   }
+  }
+}
+.card-product-category:hover .card-link-product-category{
+opacity: 1;
+transition: 0.6s;
+}
+.out-of-stock-product-category{
+  position: absolute;
+  left: 55%;
+  bottom: 1.9rem;
+  padding: 0.1rem 0.1rem 0.1rem 0.1rem;
+  // transform: rotate(-20deg);
+  font-weight: 700;
+  color: red;
+  border: 1px solid red;
+  display: none;
+}
+.out-of-stock-product-category-active{
+  position: absolute;
+  left: 61%;
+  bottom: 3.9rem;
+  padding:  0.1rem 0.1rem 0.1rem 0.1rem;
+  // transform: rotate(-20deg);
+  font-weight: 700;
+  color: red;
+  border: 1px solid red;
+  display: block;
+}

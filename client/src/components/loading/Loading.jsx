@@ -5,9 +5,7 @@ import './style.scss'
 function Loading() {
     return (
         <div className="loading">
-            <Spinner type="grow" color="primary" />
-            <Spinner type="grow" color="success" />
-            <Spinner type="grow" color="danger" />
+            <Spinner style={{ width: '3rem', height: '3rem' }} color="primary" />{' '}
         </div>
     )
 }

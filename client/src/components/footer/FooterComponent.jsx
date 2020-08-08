@@ -4,7 +4,7 @@ import "./style.scss";
 
 function FooterComponent(props) {
   return (
-    <div className="container-fluid footer">
+    <div className="container-fluid footer" >
       <Row xs="1" sm="1" md="1" lg="2" xl="3">
         <Col>
           <CardTitle>THÔNG TIN LIÊN HỆ</CardTitle>

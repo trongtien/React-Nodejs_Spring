@@ -17,18 +17,30 @@ let findProductById = async (product_id) => {
 }
 
 let findProductByCategory = async (category_id, limit, page) => {
+    console.log('model', category_id, limit, page)
+    let skipPage = page - 1
     return await database.product.findAll({
         where: {
             category_id: category_id
         },
         limit: limit,
-        offset: page
+        offset: skipPage
     });
 }
+
+let totalProductByCategory = async (category_id) => {
+    return await database.product.findAll({
+        where: {
+            category_id: category_id
+        },
+    });
+}
+
 
 module.exports = {
     getAllPagination: getAllPagination,
     amountProduct: amountProduct,
     findProductById: findProductById,
-    findProductByCategory: findProductByCategory
+    findProductByCategory: findProductByCategory,
+    totalProductByCategory: totalProductByCategory
 }

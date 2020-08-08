@@ -7,13 +7,26 @@ import {
 import { Link } from 'react-router-dom'
 import './style.scss'
 import Icons from '../../../../contants/icon'
-// import Images from '../../../../contants/image'
+import { content, showAlert, showMessageAlert } from '../../../../recoil/contant';
+
 import { listProductState } from './../../../../recoil/product'
-import { useRecoilValue } from 'recoil'
+import { cardState, addToCart } from './../../../../recoil/card'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 
 function Product() {
     const dataProduct = useRecoilValue(listProductState)
+    const [stateCard, setStatCard] = useRecoilState(cardState)
+    const [showMsg, setShowMsg] = useRecoilState(showAlert);
+    const setMsg = useSetRecoilState(content);
     const { data } = dataProduct
+
+
+    function handleAddToCard(item) {
+        const newCart = addToCart(stateCard, item);
+        setStatCard(newCart);
+        localStorage.setItem('listCard', JSON.stringify(newCart))
+        showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+    }
 
     return (
         <Row xs="2" sm="2" md="3" lg="4" xl="4" >
@@ -33,9 +46,8 @@ function Product() {
 
                                     <div className="card-footer">
                                         <div className="card-link">
-                                            <Link to={`/${item.product_id}`}><img src={Icons.viewIcon} /></Link>
-                                            <CardLink style={{ borderRight: '1px solid #333333' }}></CardLink>
-                                            <CardLink href="#"><img src={Icons.cartIcon} /></CardLink>
+                                            <Link to={`/product/${item.product_id}`}><img src={Icons.viewIcon} /></Link>
+                                            <CardLink onClick={() => handleAddToCard(item)}><img src={Icons.cartIcon} /></CardLink>
                                         </div>
                                     </div>
                                 </Card>
@@ -44,11 +56,6 @@ function Product() {
                     })
             }
         </Row >
-        // <Row xs="12" className="toggle-product">
-        //   <Col >
-        //     <Button color="primary">Xem Thêm</Button>
-        //   </Col>
-        // </Row>
     )
 }
 

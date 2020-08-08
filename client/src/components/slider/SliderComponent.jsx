@@ -6,6 +6,7 @@ import {
     CarouselItem,
     CarouselControl,
     CarouselIndicators,
+    CardImg
     // CarouselCaption
 } from 'reactstrap';
 
@@ -52,7 +53,7 @@ const SliderComponent = (props) => {
                 onExited={() => setAnimating(false)}
                 key={item.src}
             >
-                <img className="img-slider" src={item.src} />
+                <CardImg className="img-slider" src={item.src} />
             </CarouselItem>
         );
     });

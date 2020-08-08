@@ -9,7 +9,8 @@ const pagination = atom({
     key: 'PAGINATION',
     default: {
         _limit: 10,
-        _page: 0
+        _page: 1,
+        _totalRows: 0
     }
 })
 
@@ -22,6 +23,7 @@ const listProductCategory = atom({
     key: "LIST_PRODUCT_CATEGORY",
     default: []
 })
+
 
 export {
     listProductState,

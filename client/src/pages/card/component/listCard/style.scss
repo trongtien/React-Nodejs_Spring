@@ -1,0 +1,35 @@
+thead, tbody{
+    text-align: center;
+}
+
+.list-cart-product th {
+    padding: 10px 10px 10px 10px;
+    line-height: 74px;
+}
+.list-cart-product td {
+    padding: 10px 10px 10px 10px;
+    line-height: 74px;
+    text-align: center;
+}
+.list-cart-product td input{
+    width: 3rem;
+    text-align: center;
+}
+.image-cart{
+    width: 5rem;
+    height: 5rem;
+}
+.icon-cart{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+}
+// .input-count{
+//     margin-top: 8%;
+// }
+.input-count .form-control{
+    margin-left: 40%;
+}
+.card-title-count{
+    text-align: center;
+}

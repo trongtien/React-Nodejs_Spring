@@ -22,6 +22,7 @@ const getAllProduct = (limit, page) => {
 }
 
 const getProductById = (product_id, limit, page) => {
+    console.log('service ', product_id, limit, page)
     return new Promise(async (resolve, reject) => {
         try {
             let productDetail = []
@@ -29,24 +30,31 @@ const getProductById = (product_id, limit, page) => {
                 reject(`${transErrors.err_product}`)
             }
             let product = await productModel.findProductById(product_id)
+
             await productDetail.push(product)
+
             let category_id = product.category_id
+
             let productCategory = await productModel.findProductByCategory(category_id, limit, page)
-            return resolve({ productDetail, productCategory })
+
+            let dataToltalPage = await productModel.totalProductByCategory(category_id)
+            console.log('service produce', dataToltalPage)
+            let totalProductCategory = dataToltalPage.length
+
+            return resolve({ productDetail, productCategory, totalProductCategory })
         } catch (error) {
             reject(error)
         }
     })
 }
 
+
 const getProductByCategory = (category_id, limit, page) => {
     return new Promise(async (resolve, reject) => {
         try {
-            if (!category_id) {
-                reject(`${transErrors.err_product}`)
-            }
             let productCategory = await productModel.findProductByCategory(category_id, limit, page)
-            return resolve(productCategory)
+            let totalProductCategory = productCategory.length
+            return resolve({ productCategory, totalProductCategory })
         } catch (error) {
             reject(error)
         }

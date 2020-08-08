@@ -10,8 +10,9 @@ import {
   NavItem,
   UncontrolledDropdown
 } from "reactstrap";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { clearLocalStorageUser, isLogin, statusAuthLogin, useInfo } from '../../recoil/authState';
+import { listCategoryState } from '../../recoil/category';
 import "./style.scss";
 
 
@@ -20,6 +21,7 @@ function HeaderComponent(props) {
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const setUserInfo = useSetRecoilState(useInfo);
+  const listCategory = useRecoilValue(listCategoryState);
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -38,6 +40,11 @@ function HeaderComponent(props) {
       props.history.push('/')
     }
     window.location.reload();
+  }
+
+  function handlCategory(idCatefory) {
+    console.log('1')
+    console.log(idCatefory)
   }
 
   return (
@@ -64,20 +71,27 @@ function HeaderComponent(props) {
               </Link>
             </NavItem>
             <UncontrolledDropdown nav inNavbar >
+
               <DropdownToggle nav caret>
                 Sản Phẩm
               </DropdownToggle>
               <DropdownMenu right>
-                <Link className="nav-link" to="/Blog">
-                  Trái cây nhập khẩu
-                </Link>
-                <Link className="nav-link" to="/Blog">
-                  Trái cây nhập khẩu
-                </Link>
-                <Link className="nav-link" to="/Blog">
-                  Trái cây nhập khẩu
-                </Link>
+                {
+                  listCategory === undefined ? "" :
+                    listCategory.map(item => {
+                      return (
+                        <Link className="nav-link"
+                          to={`/category/${item.category_id}`}
+                          key={item.category_id}
+                        >
+                          {item.name}
+                        </Link>
+                      )
+                    })
+                }
               </DropdownMenu>
+
+
             </UncontrolledDropdown>
           </Nav>
 
@@ -91,7 +105,7 @@ function HeaderComponent(props) {
 
           <Nav className="mr-right" navbar>
             <NavItem>
-              <Link className="nav-link" to="/Introduction">
+              <Link className="nav-link" to="/card">
                 Giỏ hàng
               </Link>
             </NavItem>

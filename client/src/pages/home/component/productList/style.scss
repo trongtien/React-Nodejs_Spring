@@ -76,7 +76,7 @@
 
   .a-center{
     text-align: center;
-    box-sizing: border-box;
+    // box-sizing: border-box;
     h2{
       padding: 0;
       margin: 0;
@@ -101,6 +101,11 @@
       text-align: center;
     }
   }
+
+.card-link a{
+  cursor: pointer;
+  padding: 1px 25px 1px 1px;
+}
 
 .a-center h2::before,  .a-center h2::after{
   content: "";

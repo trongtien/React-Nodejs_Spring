@@ -8,23 +8,29 @@ import LoginComponent from "./components/login/LoginComponent";
 import AlterComponent from "./components/alert/ALertComponent"
 import AlterErrorComponent from "./components/alert/AlertErrorComponent"
 import FastComponent from './components/fast'
-// import SliderComponent from "./components/slider/SliderComponent";
+import SliderComponent from "./components/slider/SliderComponent";
 import { statusAuthLogin } from './recoil/authState';
 import { showAlert, showAlertError } from './recoil/contant.js'
 import { listProductState, pagination } from './recoil/product.js'
+import { listCategoryState } from './recoil/category.js'
 import productApi from './api/productApi'
+import categoryApi from './api/categoryApi'
 
 import Home from "./pages/home"
-import ProductDetailts from './pages/productDetail'
+// import ProductDetailts from './pages/productDetail'
 
 const Resister = lazy(() => import('./pages/resister'))
 const ChangePassword = lazy(() => import('./pages/changePassword/ChangePassword'))
 const ChangePersional = lazy(() => import('./pages/changePersional/changePersional'))
 const Introduction = lazy(() => import('./pages/introduction'))
+const ProductCategory = lazy(() => import('./pages/productCategory/index'))
+const ProductDetailts = lazy(() => import('./pages/productDetail'))
+const Card = lazy(() => import('./pages/card'))
 
 function App(props) {
   const [scrolled, setScrolled] = useState(false)
   const setListProductState = useSetRecoilState(listProductState)
+  const setListCategory = useSetRecoilState(listCategoryState)
   const isShowLogin = useRecoilValue(statusAuthLogin)
   const isShowAlert = useRecoilValue(showAlert)
   const isShowAlertError = useRecoilValue(showAlertError)
@@ -36,12 +42,27 @@ function App(props) {
       try {
         let resData = await productApi.getAll(paginational._limit, paginational._page)
         let { data } = resData
+
         await setListProductState(data)
       } catch (error) {
         return error.message
       }
     }
+
     getAllProduct()
+  }, [])
+
+  React.useEffect(() => {
+    async function getAllCategory() {
+      try {
+        let category = await categoryApi.getAll()
+        let { data } = category
+        await setListCategory(data)
+      } catch (error) {
+        return error.message
+      }
+    }
+    getAllCategory()
   }, [])
 
   /*  */
@@ -69,7 +90,7 @@ function App(props) {
         />
       </header>
 
-      {/* <SliderComponent /> */}
+      <SliderComponent />
       <Switch>
 
         <Route exact path="/">
@@ -102,15 +123,23 @@ function App(props) {
           </Suspense>
         </Route>
 
-        <Route path="/:productId">
-          <ProductDetailts />
+        <Route path="/product/:productId">
+          <Suspense fallback={<Loading />}>
+            <ProductDetailts />
+          </Suspense>
         </Route>
 
-        {/* <Route path="/card">
+        <Route path="/category/:category_id">
           <Suspense fallback={<Loading />}>
-            <Cart />
+            <ProductCategory />
           </Suspense>
-        </Route> */}
+        </Route>
+
+        <Route path="/card">
+          <Suspense fallback={<Loading />}>
+            <Card />
+          </Suspense>
+        </Route>
       </Switch>
       <footer>
         <FooterComponent />

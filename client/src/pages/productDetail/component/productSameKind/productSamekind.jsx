@@ -8,20 +8,41 @@ import {
   CardText, CardTitle, Col,
   Row
 } from "reactstrap";
+
 import PaginationComponent from "./../../../../components/pagination/PaginationComponent";
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { pagination } from './../../../../recoil/product'
+import { useRecoilState } from 'recoil';
 import { productDetail, listProductCategory } from '../../../../recoil/product';
-
-
-import productApi from './../../../../api/productApi'
+// import productApi from './../../../../api/productApi'
 import Icons from "./../../../../contants/icon";
 import "./style.scss";
+import PropTypes from 'prop-types';
+
+ProductSameKindComponent.propTypes = {
+  pagination: PropTypes.object.isRequired,
+  onPageChangeDetail: PropTypes.func,
+}
+
+ProductSameKindComponent.defaulttProps = {
+  onPageChangeDetail: null,
+}
+
 
 function ProductSameKindComponent(props) {
-  const [product, setProduct] = useRecoilState(productDetail);
+  // const [product, setProduct] = useRecoilState(productDetail);
   const [listProduct, setListProduct] = useRecoilState(listProductCategory);
-  const paginational = useRecoilValue(pagination)
+  const { pagination, onPageChangeDetail } = props
+  // const [pagination, setPagination] = useRecoilValue(paginationState)
+
+  async function handlClick(product_id) {
+
+    console.log("product_id", product_id)
+  }
+
+  function handlPageChangeSamekind(newPage) {
+    if (onPageChangeDetail) {
+      onPageChangeDetail(newPage)
+    }
+  }
 
   return (
     <div className="product-kind-some">
@@ -49,7 +70,7 @@ function ProductSameKindComponent(props) {
 
                     <div className="card-footer-kind">
                       <div className="card-link-same-kind">
-                        <Link to={`/${item.product_id}`} > <img src={Icons.viewIcon} /></Link>
+                        <Link to={`/product/${item.product_id}`} onClick={() => handlClick(item.product_id)} > <img src={Icons.viewIcon} /></Link>
                         <CardLink
                           classstyle={{ borderRight: "1px solid #333333" }}
                         ></CardLink>
@@ -63,7 +84,10 @@ function ProductSameKindComponent(props) {
               )
             })
         }
-        <PaginationComponent />
+        <PaginationComponent
+          pagination={pagination}
+          onPageChange={handlPageChangeSamekind}
+        />
       </Row>
     </div >
   );

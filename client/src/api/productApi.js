@@ -26,6 +26,30 @@ const productApi = {
         } catch (error) {
             return error
         }
+    },
+    getTotalPageProductCategory: (product_id) => {
+        try {
+            const url = `/api/product/count-product-by-category`
+            return axiosClient.get(url, product_id)
+        } catch (error) {
+            return error
+        }
+    },
+
+    getProductByCategory: (category_id, _limit, _page) => {
+
+        let product = {
+            category_id: category_id,
+            _limit: _limit,
+            _page: _page
+        }
+        console.log('product', product)
+        try {
+            const url = `/api/product/get-by-category`
+            return axiosClient.post(url, product);
+        } catch (error) {
+            return error
+        }
     }
 }
 
