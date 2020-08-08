@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import {
@@ -8,14 +9,14 @@ import {
   CardText, CardTitle, Col,
   Row
 } from "reactstrap";
-
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import { listProductCategory } from '../../../../recoil/product';
 import PaginationComponent from "./../../../../components/pagination/PaginationComponent";
-import { useRecoilState } from 'recoil';
-import { productDetail, listProductCategory } from '../../../../recoil/product';
-// import productApi from './../../../../api/productApi'
 import Icons from "./../../../../contants/icon";
+import { addToCart, cardState } from './../../../../recoil/card';
 import "./style.scss";
-import PropTypes from 'prop-types';
+
 
 ProductSameKindComponent.propTypes = {
   pagination: PropTypes.object.isRequired,
@@ -31,6 +32,10 @@ function ProductSameKindComponent(props) {
   // const [product, setProduct] = useRecoilState(productDetail);
   const [listProduct, setListProduct] = useRecoilState(listProductCategory);
   const { pagination, onPageChangeDetail } = props
+  const [stateCard, setStatCard] = useRecoilState(cardState)
+  const [showMsg, setShowMsg] = useRecoilState(showAlert);
+  const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
+  const setMsg = useSetRecoilState(content);
   // const [pagination, setPagination] = useRecoilValue(paginationState)
 
   async function handlClick(product_id) {
@@ -41,6 +46,17 @@ function ProductSameKindComponent(props) {
   function handlPageChangeSamekind(newPage) {
     if (onPageChangeDetail) {
       onPageChangeDetail(newPage)
+    }
+  }
+
+  function handleAddToCard(item) {
+    if (item.status_product === 0) {
+      showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+    } else {
+      const newCart = addToCart(stateCard, item);
+      setStatCard(newCart);
+      localStorage.setItem('listCard', JSON.stringify(newCart))
+      showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
     }
   }
 
@@ -74,7 +90,7 @@ function ProductSameKindComponent(props) {
                         <CardLink
                           classstyle={{ borderRight: "1px solid #333333" }}
                         ></CardLink>
-                        <CardLink href="#">
+                        <CardLink onClick={() => handleAddToCard(item)}>
                           <img src={Icons.cartIcon} />
                         </CardLink>
                       </div>

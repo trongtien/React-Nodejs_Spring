@@ -25,7 +25,6 @@ const createNewUser = (fullname, username, password, email, phone, address) => {
                 }
             }
             let infoUser = {
-                user_id: uuid.v4(),
                 level: process.env.BrandUser,
                 fullname: fullname.trim(),
                 username: username.toLowerCase().trim(),
@@ -90,31 +89,24 @@ const checkLogin = (username, password) => {
     })
 }
 
-const updateInfoUser = (user_id, fullname, email, phone, address) => {
+const updateInfoUser = (user_id, fullname, username, email, password, phone, address) => {
+    console.log(user_id, fullname, username, email, password, phone, address)
     return new Promise(async (resolve, reject) => {
         try {
-            if (user_id) {
-                let user = await user.findUserId(user_id)
-                if (!fullname)
-                    fullname = user.fullname
-                if (!email)
-                    email = user.email
-                if (!phone)
-                    phone = user.phone
-                if (!addresse)
-                    address = user.address
-                let newInfo = {
-                    fullname: fullname.trim(),
-                    username: user.username,
-                    passport: user.passport,
-                    email: email.trim(),
-                    phone: phone.trim(),
-                    address: address.trim()
-                }
-                let newInfoUser = await userModel.updateInfo(user_id, newInfo)
-                return resolve(newInfoUser)
+            let user = await userModel.findUserId(user_id)
+            console.log('user', user)
+            let newInfo = {
+                fullname: fullname.trim(),
+                username: username.trim(),
+                passport: password.trim(),
+                email: email.trim(),
+                phone: phone.trim(),
+                address: address.trim()
             }
-            return reject(`${transErrors.err_product}`)
+            console.log('newinfo', newInfo)
+            let newInfoUser = await userModel.updateInfo(user_id, newInfo)
+            return resolve(newInfoUser)
+
         } catch (error) {
             reject(error)
         }

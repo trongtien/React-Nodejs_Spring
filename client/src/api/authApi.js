@@ -25,6 +25,14 @@ const authAPI = {
             return error
         }
     },
+    putchangePersional: (newInfo) => {
+        try {
+            const url = "/api/auth/update-info"
+            return axiosClient.put(url, newInfo)
+        } catch (error) {
+            return error
+        }
+    },
     getInfoUserById: (user_id) => {
         try {
             const url = `/api/auth/get-user-byId/`

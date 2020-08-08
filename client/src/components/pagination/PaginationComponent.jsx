@@ -1,12 +1,10 @@
+import PropTypes from 'prop-types';
 import React from "react";
 import {
-  Pagination,
+  Col, Pagination,
   PaginationItem,
-  PaginationLink,
-  Row,
-  Col,
+  PaginationLink
 } from "reactstrap";
-import PropTypes from 'prop-types';
 import "./style.scss";
 
 
@@ -57,7 +55,7 @@ function PaginationComponent(props) {
         {items}
         <PaginationItem>
           <PaginationLink next
-            disabled={_page == totalPages}
+            disabled={_page === totalPages}
             onClick={() => handlePageChange(_page + 1)}
           />
         </PaginationItem>

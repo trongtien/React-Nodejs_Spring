@@ -1,12 +1,20 @@
 module.exports = (sequelize, DataTypes) => {
     const order = sequelize.define("order", {
         order_id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
+        product_id: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
         user_id: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        content: {
             type: DataTypes.STRING,
             allowNull: false
         },
@@ -14,16 +22,8 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        created_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        },
-        updated_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        }
+    }, {
+        timestamps: true
     });
     return order;
 };

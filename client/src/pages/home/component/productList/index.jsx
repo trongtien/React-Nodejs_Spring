@@ -7,7 +7,7 @@ import {
 import { Link } from 'react-router-dom'
 import './style.scss'
 import Icons from '../../../../contants/icon'
-import { content, showAlert, showMessageAlert } from '../../../../recoil/contant';
+import { content, showAlert, showMessageAlert, showAlertError, showMessageErrorAlert } from '../../../../recoil/contant';
 
 import { listProductState } from './../../../../recoil/product'
 import { cardState, addToCart } from './../../../../recoil/card'
@@ -17,15 +17,20 @@ function Product() {
     const dataProduct = useRecoilValue(listProductState)
     const [stateCard, setStatCard] = useRecoilState(cardState)
     const [showMsg, setShowMsg] = useRecoilState(showAlert);
+    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
     const { data } = dataProduct
 
 
     function handleAddToCard(item) {
-        const newCart = addToCart(stateCard, item);
-        setStatCard(newCart);
-        localStorage.setItem('listCard', JSON.stringify(newCart))
-        showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+        if (item.status_product === 0) {
+            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+        } else {
+            const newCart = addToCart(stateCard, item);
+            setStatCard(newCart);
+            localStorage.setItem('listCard', JSON.stringify(newCart))
+            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+        }
     }
 
     return (

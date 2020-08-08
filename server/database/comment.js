@@ -1,8 +1,8 @@
 module.exports = (sequelize, DataTypes) => {
     const comment = sequelize.define("comment", {
         comment_id: {
-            type: DataTypes.UUID,
-            defaultValue: DataTypes.UUIDV4,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
@@ -17,17 +17,9 @@ module.exports = (sequelize, DataTypes) => {
         content: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        },
-        updated_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
         }
+    }, {
+        timestamps: true
     });
     return comment;
 };

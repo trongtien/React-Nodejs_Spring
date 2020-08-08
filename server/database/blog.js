@@ -1,28 +1,31 @@
+
 module.exports = (sequelize, DataTypes) => {
-    const orderdetail = sequelize.define("orderdetail", {
-        order_id: {
+    const blog = sequelize.define("blog", {
+        blog_id: {
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        product_id: {
-            type: DataTypes.STRING,
-            allowNull: false
-        },
-        amount: {
+        categoryblog_id: {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        price: {
-            type: DataTypes.INTEGER,
+        title: {
+            type: DataTypes.STRING,
             allowNull: false
         },
-        note: {
+        content: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: false
         },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+
     }, {
         timestamps: true
     });
-    return orderdetail;
+    return blog;
 };

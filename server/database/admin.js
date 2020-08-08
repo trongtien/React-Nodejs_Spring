@@ -1,18 +1,14 @@
 module.exports = (sequelize, DataTypes) => {
     const admin = sequelize.define("admin", {
         admin_id: {
-            type: DataTypes.UUID,
+            type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
         level: {
             type: DataTypes.INTEGER,
             allowNull: false
-        },
-        avartar: {
-            type: DataTypes.STRING,
-            defaultValue: DataTypes.allowNull,
-            allowNull: true
         },
         fullname: {
             type: DataTypes.STRING,
@@ -42,20 +38,9 @@ module.exports = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        created_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
-        },
-        updated_at: {
-            type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
-            allowNull: false
         }
     }, {
-        createdAt: true,
-        updatedAt: true,
+        timestamps: true
     });
     return admin;
 };

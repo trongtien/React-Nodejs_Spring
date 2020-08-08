@@ -8,15 +8,15 @@ import {
     CardText, CardTitle, Col,
     Row
 } from "reactstrap";
-import productApi from './../../../api/productApi'
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../recoil/contant';
 import { listProductCategory, pagination } from '../../../recoil/product';
-
+import productApi from './../../../api/productApi';
 import Icons from "./../../../contants/icon";
 // import PaginationComponent from "./../../../components/pagination/PaginationComponent";
-import { cardState, addToCart } from './../../../recoil/card'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
-import { content, showAlert, showMessageAlert } from '../../../recoil/contant';
+import { addToCart, cardState } from './../../../recoil/card';
 import "./style.scss";
+
 // import PropTypes from 'prop-types';
 
 // ListProductCategory.propTypes = {
@@ -34,6 +34,7 @@ function ListProductCategory(props) {
     const [paginational, setPaginational] = useRecoilState(pagination);
     const [stateCard, setStatCard] = useRecoilState(cardState)
     const [showMsg, setShowMsg] = useRecoilState(showAlert);
+    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
     React.useEffect(() => {
         async function getProductCateory() {
@@ -51,10 +52,14 @@ function ListProductCategory(props) {
     }, [])
 
     function handleAddToCard(item) {
-        const newCart = addToCart(stateCard, item);
-        setStatCard(newCart);
-        localStorage.setItem('listCard', JSON.stringify(newCart))
-        showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+        if (item.status_product === 0) {
+            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+        } else {
+            const newCart = addToCart(stateCard, item);
+            setStatCard(newCart);
+            localStorage.setItem('listCard', JSON.stringify(newCart))
+            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+        }
     }
 
 

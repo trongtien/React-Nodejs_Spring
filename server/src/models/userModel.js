@@ -2,7 +2,6 @@ const database = require('../../database')
 
 let findAll = async () => {
     return await database.user.findAll().then(data => {
-        console.log('[data]', data)
     })
 }
 

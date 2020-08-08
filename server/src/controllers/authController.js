@@ -34,11 +34,13 @@ let updateInfo = async (request, response) => {
     try {
         let user_id = request.body.user_id
         let fullname = request.body.fullname
+        let username = request.body.username
         let email = request.body.email
+        let password = request.body.password
         let phone = request.body.phone
         let address = request.body.address
 
-        let updateInfo = await authServices.updateInfoUser(user_id, fullname, email, phone, address)
+        let updateInfo = await authServices.updateInfoUser(user_id, fullname, username, email, password, phone, address)
 
         return response.status(200).json({ status: 200, message: "update succesfully", data: updateInfo })
     } catch (error) {
