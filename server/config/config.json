@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "luanvan",
+    "database": "database_luanVan",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false

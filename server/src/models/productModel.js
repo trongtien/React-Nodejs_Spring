@@ -5,7 +5,13 @@ let amountProduct = async () => {
 }
 
 let getAllPagination = async (limit, page) => {
-    return await database.product.findAll({ limit: limit, offset: page })
+    let skipPage = page - 1
+    return await database.product.findAll({
+        where: {
+            status_product: 1
+        }, limit: limit, offset: skipPage
+    })
+
 }
 
 let findProductById = async (product_id) => {

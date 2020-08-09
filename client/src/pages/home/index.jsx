@@ -5,10 +5,25 @@ import Banner from './../../components/banner/Banner'
 import {
   Row, Col,
   Button,
-  Container
+  Container,
+  PaginationItem, PaginationLink
 } from 'reactstrap';
+import { paginationPageHome } from '../../recoil/product';
+import { withRouter } from 'react-router-dom'
+import { useRecoilState } from "recoil";
 
+import PaginationComponent from "./../../components/pagination/PaginationComponent";
 function Home(props) {
+  const [paginationalPageHome, setPaginationalPageHome] = useRecoilState(paginationPageHome);
+
+
+  function handlPageChangeSamekind(newPage) {
+    setPaginationalPageHome({
+      ...paginationalPageHome,
+      _page: newPage
+    })
+  }
+  console.log('paginationalPageHome._totalRows', paginationalPageHome._totalRows)
   return (
     <div className="home-page">
       <Container className="product " fluid={true} style={{ marginTop: '10px' }}>
@@ -18,7 +33,19 @@ function Home(props) {
         <ProductList />
         <Row xs="12" className="toggle-product">
           <Col >
-            <Button color="primary">Xem Thêm</Button>
+
+            {
+              Math.ceil(paginationalPageHome._totalRows / paginationalPageHome._limit) === 1 ?
+                ""
+                :
+
+                <PaginationComponent
+                  pagination={paginationalPageHome}
+                  onPageChange={handlPageChangeSamekind}
+                />
+            }
+
+
           </Col>
         </Row>
       </Container>
@@ -44,4 +71,4 @@ function Home(props) {
   );
 }
 
-export default Home;
+export default withRouter(Home);

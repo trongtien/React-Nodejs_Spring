@@ -9,15 +9,15 @@ export const cardState = atom({
 export const billState = atom({
     key: "BILL",
     default: {
-        countProduct: 0,
-        totalMonney: 0
+        countProduct: null,
+        totalMonney: null
     }
 })
 
 
 export const addToCart = (cart, item) => {
     const newCart = [...cart];
-    const foundIndex = cart.findIndex(x => x.id === item.id);
+    const foundIndex = cart.findIndex(x => x.product_id === item.product_id);
 
     if (foundIndex >= 0) {
         newCart[foundIndex] = {

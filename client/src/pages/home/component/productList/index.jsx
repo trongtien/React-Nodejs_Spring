@@ -9,17 +9,23 @@ import './style.scss'
 import Icons from '../../../../contants/icon'
 import { content, showAlert, showMessageAlert, showAlertError, showMessageErrorAlert } from '../../../../recoil/contant';
 
-import { listProductState } from './../../../../recoil/product'
+import { productPageHome } from './../../../../recoil/product'
+
 import { cardState, addToCart } from './../../../../recoil/card'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 
 function Product() {
-    const dataProduct = useRecoilValue(listProductState)
+
     const [stateCard, setStatCard] = useRecoilState(cardState)
     const [showMsg, setShowMsg] = useRecoilState(showAlert);
     const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
-    const { data } = dataProduct
+
+
+    // const dataProduct = useRecoilValue(listProductState)
+    const dataProductHome = useRecoilValue(productPageHome)
+    const { data } = dataProductHome
+
 
 
     function handleAddToCard(item) {
@@ -28,6 +34,7 @@ function Product() {
         } else {
             const newCart = addToCart(stateCard, item);
             setStatCard(newCart);
+
             localStorage.setItem('listCard', JSON.stringify(newCart))
             showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
         }
@@ -43,7 +50,7 @@ function Product() {
                                 <Card>
                                     <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
-                                        <CardTitle className={item.status_product === 1 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
+                                        <CardTitle className={item.amount > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.product_name}</CardTitle>
                                         <CardSubtitle>{item.price} /kg</CardSubtitle>
                                         <CardText className="price-sale">{item.discount === undefined ? "" : item.discount}</CardText>

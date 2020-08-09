@@ -1,5 +1,19 @@
 import { atom } from "recoil";
 
+const productPageHome = atom({
+    key: 'PRODUCTPAGEHOME',
+    default: []
+})
+
+const paginationPageHome = atom({
+    key: 'PAGINATIONPAGEHOME',
+    default: {
+        _limit: 8,
+        _page: 1,
+        _totalRows: 0
+    }
+})
+
 const listProductState = atom({
     key: 'LIST_PRODUCT',
     default: []
@@ -26,6 +40,8 @@ const listProductCategory = atom({
 
 
 export {
+    productPageHome,
+    paginationPageHome,
     listProductState,
     pagination,
     productDetail,

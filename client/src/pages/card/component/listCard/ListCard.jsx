@@ -21,6 +21,7 @@ function ListCardComponent() {
           totalMonney: totalMonney
         })
       }
+
     }
     getCard()
   }, [])

@@ -8,7 +8,7 @@ import { user } from '../../recoil/authState';
 import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../recoil/contant.js';
 import authAPI from "./../../api/authApi";
 import inputField from './../../components/formik/inputField';
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
 import './style.scss';
 
 
@@ -21,12 +21,7 @@ function ChangePersional(props) {
     useEffect(() => {
         async function getUser() {
             try {
-                let user_id = await Cookies.get('user_id')
-                if (user_id) {
-                    await authAPI.getInfoUserById(user_id).then((data) => {
-                        return setUserInfo(data.data)
-                    })
-                }
+                await getInfo()
             } catch (error) {
                 return error.message
             }
@@ -34,8 +29,14 @@ function ChangePersional(props) {
         getUser()
     }, [])
 
-    console.log('user', userInfo)
-
+    async function getInfo() {
+        let user_id = await Cookies.get('user_id')
+        if (user_id) {
+            await authAPI.getInfoUserById(user_id).then((data) => {
+                return setUserInfo(data.data)
+            })
+        }
+    }
 
     const initialValues = {
 
@@ -46,13 +47,13 @@ function ChangePersional(props) {
         phone: userInfo.phone,
         address: userInfo.address
     }
-    // const initialValues = userInfo
-
-    // const validateionSchema = Yup.object().shape({
-    //     password: Yup.string().required('Bạn chưa nhập thông tin'),
-    //     newpassword: Yup.string().required('Bạn chưa nhập thông tin'),
-    //     isnewpassword: Yup.string().required('Bạn chưa nhập thông tin')
-    // })
+    const validateionSchema = Yup.object().shape({
+        fullname: Yup.string().required('This is field is required'),
+        username: Yup.string().required('This is field is required'),
+        password: Yup.string().required('This is field is required'),
+        phone: Yup.number().required('This is field is required'),
+        address: Yup.string().required('This is field is required')
+    })
 
     const hanldChangePersional = (values) => {
         let persionalUpdate = {
@@ -67,9 +68,9 @@ function ChangePersional(props) {
         if (persionalUpdate) {
             authAPI.putchangePersional(persionalUpdate).then(async (data) => {
                 if (data.status === 200) {
-                    window.location.reload(true)
-                    props.history.push('/');
                     showMessageAlert("Cập nhật thông tin thành công", setMsg, setShowMsg, showMsg)
+                    props.history.push('/')
+                    await getInfo()
                 }
             }).catch(async error => {
                 if (error) {
@@ -89,7 +90,7 @@ function ChangePersional(props) {
                             <h1>Thông Tin Cá Nhân</h1>
                             <Formik
                                 initialValues={initialValues}
-                                // validationSchema={validateionSchema}
+                                validationSchema={validateionSchema}
                                 onSubmit={values => hanldChangePersional(values)}
                             >
                                 {formikProps => {

@@ -14,7 +14,8 @@ import './style.scss'
 import CommentComponent from './../../../../components/comment/comment'
 import ProductSameKindComponent from './../productSameKind/productSamekind'
 import { productDetail, listProductCategory, pagination } from '../../../../recoil/product';
-
+import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import { addToCart, cardState } from './../../../../recoil/card';
 import productApi from './../../../../api/productApi'
 
 
@@ -25,7 +26,11 @@ function Product(props) {
     const setListProduct = useSetRecoilState(listProductCategory);
     const [activeTab, setActiveTab] = React.useState('1');
     const [paginational, setPaginational] = useRecoilState(pagination);
-
+    const [stateCard, setStatCard] = useRecoilState(cardState)
+    const [showMsg, setShowMsg] = useRecoilState(showAlert);
+    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
+    const setMsg = useSetRecoilState(content);
+    const [id_url, setId_url] = React.useState(null)
 
     const toggle = tab => {
         if (activeTab !== tab) setActiveTab(tab);
@@ -43,22 +48,37 @@ function Product(props) {
     React.useEffect(() => {
         async function getProductById() {
             try {
-                const product_id = await parseInt(Object.assign(props.match.params.productId))
-                let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
+                // const product_id = await parseInt(Object.assign(props.match.params.productId))
+                url()
+                let resData = await productApi.getById(id_url, paginational._limit, paginational._page)
+                // let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
                 let { data } = await resData
+
+                console.log('count detail', data)
                 await setProduct(data.productDetail)
                 await setListProduct(data.productCategory)
+
             } catch (error) {
                 return error.message
             }
         }
         getProductById()
-    }, [paginational])
+    }, [paginational, id_url])
+
+    async function url() {
+        const product_id = await parseInt(Object.assign(props.match.params.productId))
+        return setId_url(product_id)
+    }
+
+    async function onChangeUrl(product_id) {
+        return setId_url(product_id)
+    }
+
 
     React.useEffect(() => {
         async function getProduct() {
             try {
-                const product_id = await parseInt(Object.assign(props.match.params.productId))
+                let product_id = await parseInt(Object.assign(props.match.params.productId))
                 let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
                 let { data } = await resData
                 await setPaginational({
@@ -71,6 +91,18 @@ function Product(props) {
         }
         getProduct()
     }, [])
+
+    function handleAddToCard(item) {
+        if (item.amount === 0) {
+            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+        } else {
+            const newCart = addToCart(stateCard, item);
+            setStatCard(newCart);
+            localStorage.setItem('listCard', JSON.stringify(newCart))
+            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+        }
+    }
+
 
     return (
         <div>
@@ -116,9 +148,9 @@ function Product(props) {
                                                 fontSize: "16px",
                                                 fontWeight: "normal",
                                                 verticalAlign: "top"
-                                            }}> {item.status_product === 1 ? "Còn hàng" : "Hết hàng"} </CardTitle>
+                                            }}> {item.amount > 0 ? "Còn hàng" : "Hết hàng"} </CardTitle>
 
-                                            <Button color="danger">ĐẶT MUA SẢN PHẨM</Button>
+                                            <Button color="danger" onClick={() => handleAddToCard(item)}>ĐẶT MUA SẢN PHẨM</Button>
                                         </Col>
                                     </Row>
 
@@ -161,10 +193,14 @@ function Product(props) {
                 <Col className="title-name">
                     <CardTitle>Sản phẩm cùng loại</CardTitle>
                 </Col>
+
                 <ProductSameKindComponent
                     pagination={paginational}
                     onPageChangeDetail={onPagechange}
+                    onProductIdChane={onChangeUrl}
                 />
+
+
             </Card>
         </div >
     )

@@ -1,10 +1,13 @@
 import { atom } from "recoil";
 
-const listCategoryState = atom({
+export const listCategoryState = atom({
     key: 'LIST_CATEGORY',
     default: []
 });
 
-export {
-    listCategoryState
-}
+export const urlId = atom({
+    key: "URLID",
+    default: null
+})
+
+
