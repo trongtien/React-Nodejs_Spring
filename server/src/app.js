@@ -16,10 +16,15 @@ passport.use(strategy)
 app.use(passport.initialize())
 app.use(passport.session())
 
-
 dotenv.config({ path: './.env' })
 
+const CardRouter = require('./card/router.config')
+const CommentRouter = require('./comment/router.config')
+
 const initRouter = require('./routers/API')
+
+CardRouter.routerConfig(app)
+CommentRouter.routerConfig(app)
 
 initRouter(app)
 
