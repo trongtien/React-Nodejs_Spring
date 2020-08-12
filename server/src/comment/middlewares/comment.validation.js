@@ -7,6 +7,7 @@ exports.validComment = (req, res, next) => {
 };
 
 exports.validGetComment = (req, res, next) => {
+    console.log('valid get comment', req.body)
     if (req.body.product_id) {
         return next();
     } else {

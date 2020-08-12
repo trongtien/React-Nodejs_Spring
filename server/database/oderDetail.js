@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.INTEGER,
             allowNull: false
         },
-        product_name: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
+        // product_name: {
+        //     type: DataTypes.STRING,
+        //     allowNull: true
+        // },
         amount: {
             type: DataTypes.INTEGER,
             allowNull: false

@@ -23,7 +23,7 @@ let findProductById = async (product_id) => {
 }
 
 let findProductByCategory = async (category_id, limit, page) => {
-    console.log('model', category_id, limit, page)
+    // console.log('model', category_id, limit, page)
     let skipPage = page - 1
     return await database.product.findAll({
         where: {

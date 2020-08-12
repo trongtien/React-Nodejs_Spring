@@ -1,6 +1,5 @@
 const database = require('../../../database')
 
-
 exports.createCard = (newCard) => {
     return database.order.create(newCard)
 }
@@ -14,7 +13,6 @@ exports.createDetailCard = async (order_id, arrProduct) => {
                     product_id: parseInt(arrProduct[i].product_id),
                     amount: parseInt(arrProduct[i].amount),
                     price: parseInt(arrProduct[i].price),
-                    product_name: arrProduct[i].product_name
                 })
             }
             resolve('sucess')
@@ -26,7 +24,7 @@ exports.createDetailCard = async (order_id, arrProduct) => {
 
 exports.findByUserIdOrder = async (user_id, limit, page) => {
     let skipPage = parseInt(page) - 1
-    return await database.order.findAll({
+    let data = await database.order.findAll({
         where: {
             user_id: parseInt(user_id)
         },
@@ -36,6 +34,7 @@ exports.findByUserIdOrder = async (user_id, limit, page) => {
             ['order_id', 'DESC']
         ]
     });
+    console.log('data', data)
 }
 
 exports.findByUserIdOrderDetail = async (order_id) => {
@@ -43,5 +42,12 @@ exports.findByUserIdOrderDetail = async (order_id) => {
         where: {
             order_id: parseInt(order_id)
         },
+        include: {
+            model: database.product,
+            // attributes: ['product_name'],
+            // required: true
+            as: 'product_name',
+        },
+        attributes:['roleId']
     });
 }

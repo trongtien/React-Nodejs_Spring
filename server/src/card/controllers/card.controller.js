@@ -4,12 +4,13 @@ exports.insert = async (req, res) => {
     try {
         let newOrder = {
             user_id: req.body.user_id,
-            content: req.body.content,
+            content: (req.body.content === undefined ? " " : req.body.content),
             status_order: 1
         }
-        let order = await CardModel.createCard(newOrder)
         let arrProduct = req.body.arrProduct
+        let order = await CardModel.createCard(newOrder)
         await CardModel.createDetailCard(order.dataValues.order_id, arrProduct)
+
         return res.status(200).json({ status: 200, message: "create new order successfull", oder: order.dataValues });
     } catch (error) {
         return res.status(500).json({ status: 500, message: error });

@@ -7,7 +7,7 @@ exports.routerConfig = function (app) {
         CommentController.insert
     ])
 
-    app.get('/api/comment', [
+    app.post('/api/list-comment', [
         ValidationMiddleware.validGetComment,
         CommentController.list
     ])
