@@ -2,7 +2,10 @@ import React from 'react'
 import { Row, Col, CardTitle, CardText, Card, Form, FormGroup, Input, Button, CardBody } from 'reactstrap';
 import './style.scss'
 
+
+
 function Comment(props) {
+
     return (
         <div>
             <Row>

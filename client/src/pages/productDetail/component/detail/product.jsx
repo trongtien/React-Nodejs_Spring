@@ -14,9 +14,11 @@ import './style.scss'
 import CommentComponent from './../../../../components/comment/comment'
 import ProductSameKindComponent from './../productSameKind/productSamekind'
 import { productDetail, listProductCategory, pagination } from '../../../../recoil/product';
+import { listComment, paginationComment } from '../../../../recoil/comment';
 import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
-import { addToCart, cardState } from './../../../../recoil/card';
+import { addToCart, cardState, totalMoney } from './../../../../recoil/card';
 import productApi from './../../../../api/productApi'
+import commentAPI from './../../../../api/commentApi'
 
 
 
@@ -24,6 +26,9 @@ import productApi from './../../../../api/productApi'
 function Product(props) {
     const [product, setProduct] = useRecoilState(productDetail);
     const setListProduct = useSetRecoilState(listProductCategory);
+    const [commentList, setListComment] = useRecoilState(listComment);
+    // const setListComment = useSetRecoilState(listComment);
+    const [commentPagination, setCommentPagination] = useRecoilState(paginationComment);
     const [activeTab, setActiveTab] = React.useState('1');
     const [paginational, setPaginational] = useRecoilState(pagination);
     const [stateCard, setStatCard] = useRecoilState(cardState)
@@ -51,12 +56,19 @@ function Product(props) {
                 // const product_id = await parseInt(Object.assign(props.match.params.productId))
                 url()
                 let resData = await productApi.getById(id_url, paginational._limit, paginational._page)
+                let resComment = await commentAPI.getById(id_url, commentPagination._limit, commentPagination._page)
+                console.log('res comment', resComment)
                 // let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
                 let { data } = await resData
-
-                console.log('count detail', data)
+                let { dataComment } = await resComment
+                console.log('dataComment', dataComment)
                 await setProduct(data.productDetail)
                 await setListProduct(data.productCategory)
+                await setListComment({
+                    totalComment: dataComment.totalComment,
+                    dataComment: dataComment.data
+                })
+
 
             } catch (error) {
                 return error.message
@@ -64,6 +76,7 @@ function Product(props) {
         }
         getProductById()
     }, [paginational, id_url])
+    console.log('list comment', commentList)
 
     async function url() {
         const product_id = await parseInt(Object.assign(props.match.params.productId))

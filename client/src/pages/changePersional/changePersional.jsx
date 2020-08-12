@@ -106,6 +106,7 @@ function ChangePersional(props) {
                                                 name="username"
                                                 component={inputField}
                                                 label="Username"
+                                                disabled
                                                 placeholder="with a placeholder username"
                                             />
                                             <FastField
@@ -120,6 +121,7 @@ function ChangePersional(props) {
                                                 component={inputField}
                                                 label="Password"
                                                 type="password"
+                                                disabled
                                                 placeholder="with a placeholder password"
                                             />
                                             <FastField

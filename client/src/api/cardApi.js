@@ -15,7 +15,7 @@ const cardApi = {
     },
     postCard: (newCard) => {
         try {
-            const url = "/api/comment"
+            const url = "/api/card"
             return axiosClient.post(url, newCard);
         } catch (error) {
             return error

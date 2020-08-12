@@ -16,11 +16,9 @@ function CartBill(props) {
 
   function handlePay() {
     let verity = Cookies.get('node_access_token')
-    console.log('verity', verity)
     if (verity) {
       props.history.push("/pay")
     } else {
-      console.log('no login')
       showMessageErrorAlert("Đăng nhập để thanh toán", setMsg, setShowMsgErr, showMsgErr)
       setAuthFormLogin(!AuthFormLogin)
     }
