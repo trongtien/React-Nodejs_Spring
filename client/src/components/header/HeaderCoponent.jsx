@@ -143,6 +143,9 @@ function HeaderComponent(props) {
                     <Link className="nav-link" to="/changepassword">
                       Thay đổi mật khẩu
                     </Link>
+                    <Link className="nav-link" to="/userCard">
+                      Đơn hàng
+                    </Link>
                     <Link className="nav-link" onClick={() => handlLogOut()}>
                       Đăng Xuất
                     </Link>

@@ -28,3 +28,10 @@
     }
 
 }
+
+.form-group textarea{
+    border: none;
+}
+.form-content:focus textarea{
+    border: none;
+}

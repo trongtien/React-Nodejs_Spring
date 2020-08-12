@@ -6,6 +6,8 @@ import calendar from '../assets/icon/calendar.png';
 import deliveryTruck from '../assets/icon/delivery-truck.png';
 import deleteIcon from '../assets/icon/delete.png';
 import top from '../assets/icon/top.png'
+import check from '../assets/icon/tick.png'
+import error from '../assets/icon/close-icon.png'
 
 
 
@@ -17,7 +19,9 @@ const Icons = {
     calendarIcon: calendar,
     deliveryTruck: deliveryTruck,
     deleteIcon: deleteIcon,
-    top: top
+    top: top,
+    check: check,
+    error: error
 }
 
 export default Icons;

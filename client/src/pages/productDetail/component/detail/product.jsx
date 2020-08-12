@@ -26,8 +26,8 @@ import commentAPI from './../../../../api/commentApi'
 function Product(props) {
     const [product, setProduct] = useRecoilState(productDetail);
     const setListProduct = useSetRecoilState(listProductCategory);
-    const [commentList, setListComment] = useRecoilState(listComment);
     // const setListComment = useSetRecoilState(listComment);
+    const [commentList, setListComment] = useRecoilState(listComment);
     const [commentPagination, setCommentPagination] = useRecoilState(paginationComment);
     const [activeTab, setActiveTab] = React.useState('1');
     const [paginational, setPaginational] = useRecoilState(pagination);
@@ -43,7 +43,7 @@ function Product(props) {
 
     /* onClick pagination */
     function onPagechange(newPage) {
-        console.log('newPage', newPage)
+
         setPaginational({
             ...paginational,
             _page: newPage
@@ -56,19 +56,16 @@ function Product(props) {
                 // const product_id = await parseInt(Object.assign(props.match.params.productId))
                 url()
                 let resData = await productApi.getById(id_url, paginational._limit, paginational._page)
-                let resComment = await commentAPI.getById(id_url, commentPagination._limit, commentPagination._page)
-                console.log('res comment', resComment)
-                // let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
+                let resComment = await commentAPI.getById(id_url, paginational._limit, paginational._page)
+
                 let { data } = await resData
                 let { dataComment } = await resComment
-                console.log('dataComment', dataComment)
-                await setProduct(data.productDetail)
-                await setListProduct(data.productCategory)
                 await setListComment({
                     totalComment: dataComment.totalComment,
                     dataComment: dataComment.data
                 })
-
+                await setProduct(data.productDetail)
+                await setListProduct(data.productCategory)
 
             } catch (error) {
                 return error.message
@@ -76,7 +73,27 @@ function Product(props) {
         }
         getProductById()
     }, [paginational, id_url])
-    console.log('list comment', commentList)
+
+    React.useEffect(() => {
+        async function getProduct() {
+            try {
+                let product_id = await parseInt(Object.assign(props.match.params.productId))
+                let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
+                let resComment = await commentAPI.getById(id_url, commentPagination._limit, commentPagination._page)
+                let { data } = await resData
+                let { dataComment } = await resComment
+
+                await setPaginational({
+                    ...paginational,
+                    _totalRows: data.totalProductCategory
+                })
+
+            } catch (error) {
+                return error.message
+            }
+        }
+        getProduct()
+    }, [])
 
     async function url() {
         const product_id = await parseInt(Object.assign(props.match.params.productId))
@@ -88,23 +105,6 @@ function Product(props) {
     }
 
 
-    React.useEffect(() => {
-        async function getProduct() {
-            try {
-                let product_id = await parseInt(Object.assign(props.match.params.productId))
-                let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
-                let { data } = await resData
-                await setPaginational({
-                    ...paginational,
-                    _totalRows: data.totalProductCategory
-                })
-            } catch (error) {
-                return error.message
-            }
-        }
-        getProduct()
-    }, [])
-
     function handleAddToCard(item) {
         if (item.amount === 0) {
             showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
@@ -114,6 +114,22 @@ function Product(props) {
             localStorage.setItem('listCard', JSON.stringify(newCart))
             showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
         }
+    }
+
+
+
+    function onHanleChangeComment(newComment) {
+        console.log('product comment', newComment)
+        commentAPI.postComment(newComment).then(async (result) => {
+
+            let { data } = result
+
+            await setListComment({
+                ...commentList.dataComment,
+                dataComment: data
+
+            })
+        })
     }
 
 
@@ -195,7 +211,7 @@ function Product(props) {
                                             </Row>
                                         </TabPane>
                                         <TabPane tabId="2">
-                                            <CommentComponent />
+                                            <CommentComponent id_url={id_url} onChangeComment={onHanleChangeComment} />
                                         </TabPane>
                                     </TabContent>
 

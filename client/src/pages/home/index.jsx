@@ -11,11 +11,23 @@ import {
 import { paginationPageHome } from '../../recoil/product';
 import { withRouter } from 'react-router-dom'
 import { useRecoilState } from "recoil";
-
 import PaginationComponent from "./../../components/pagination/PaginationComponent";
+import { productViewState } from './../../recoil/product'
+import { useSetRecoilState } from 'recoil'
+
 function Home(props) {
   const [paginationalPageHome, setPaginationalPageHome] = useRecoilState(paginationPageHome);
+  const setViewProduct = useSetRecoilState(productViewState)
 
+  React.useState(() => {
+    async function getViewProduct() {
+      let dataViewProduct = await JSON.parse(localStorage.getItem('viewProduct'))
+      if (dataViewProduct) {
+        setViewProduct(dataViewProduct)
+      }
+    }
+    getViewProduct()
+  }, [])
 
   function handlPageChangeSamekind(newPage) {
     setPaginationalPageHome({

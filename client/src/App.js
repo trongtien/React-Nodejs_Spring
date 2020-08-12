@@ -27,6 +27,7 @@ const ProductCategory = lazy(() => import('./pages/productCategory/index'))
 const ProductDetailts = lazy(() => import('./pages/productDetail'))
 const Card = lazy(() => import('./pages/card'))
 const Pay = lazy(() => import('./pages/pay'))
+const UserCard = lazy(() => import('./pages/userCard'))
 
 function App(props) {
   const [scrolled, setScrolled] = useState(false)
@@ -173,6 +174,12 @@ function App(props) {
         <Route path="/pay">
           <Suspense fallback={<Loading />}>
             <Pay />
+          </Suspense>
+        </Route>
+
+        <Route path="/userCard">
+          <Suspense fallback={<Loading />}>
+            <UserCard />
           </Suspense>
         </Route>
 

@@ -27,8 +27,10 @@ function ListCardComponent() {
     getCard()
   }, [])
 
-  function handleDelete(item) {
+  async function handleDelete(item) {
     const newCart = deleteCard(card, item)
+    let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
+
     setCard(newCart);
     let global = localStorage.setItem('listCard', JSON.stringify(newCart))
     if (global === undefined) {
@@ -43,6 +45,10 @@ function ListCardComponent() {
         totalMonney: totalMoney(global)
       })
     }
+    if (getCardLocal.length <= 1) {
+      await localStorage.clear('listCard')
+    }
+
   }
 
   return (

@@ -16,9 +16,15 @@ function CartBill(props) {
 
   function handlePay() {
     let verity = Cookies.get('node_access_token')
-    if (verity) {
+    let verityData = localStorage.getItem('listCard')
+    console.log('verityData', verityData)
+
+    if (verity && verityData) {
       props.history.push("/pay")
-    } else {
+    } else if (verity && !verityData) {
+      showMessageErrorAlert("Không có sản phẩm trong giỏ hàng", setMsg, setShowMsgErr, showMsgErr)
+    }
+    else {
       showMessageErrorAlert("Đăng nhập để thanh toán", setMsg, setShowMsgErr, showMsgErr)
       setAuthFormLogin(!AuthFormLogin)
     }

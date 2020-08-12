@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from "react-router-dom";
 import {
@@ -11,7 +12,8 @@ import {
 } from "reactstrap";
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../recoil/contant';
-import { listProductCategory, pagination } from '../../../recoil/product';
+import { listProductCategory, pagination, addViewCard, productViewState } from '../../../recoil/product';
+
 import productApi from './../../../api/productApi';
 import Icons from "./../../../contants/icon";
 import PaginationComponent from "./../../../components/pagination/PaginationComponent";
@@ -25,12 +27,9 @@ ListProductCategory.propTypes = {
 
 }
 
-
-
-
-
 function ListProductCategory(props) {
     const { url_state } = props
+    const [productView, setProductView] = useRecoilState(productViewState);
     const [listProduct, setListProduct] = useRecoilState(listProductCategory);
     const [paginational, setPaginational] = useRecoilState(pagination);
     const [stateCard, setStatCard] = useRecoilState(cardState)
@@ -89,6 +88,13 @@ function ListProductCategory(props) {
             showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
         }
     }
+    async function handleClick(item) {
+        const viewCard = addViewCard(productView, item);
+        setProductView(viewCard)
+        await Cookies.set('viewProduct', JSON.stringify(viewCard))
+        localStorage.setItem('viewProduct', JSON.stringify(viewCard))
+        console.log('handleClick', viewCard)
+    }
 
     return (
         <Row xs="2" sm="2" md="3" lg="4" xl="4" >
@@ -108,7 +114,7 @@ function ListProductCategory(props) {
 
                                     <div className="card-footer-product-category">
                                         <div className="card-link-product-category">
-                                            <Link to={`/product/${item.product_id}`} > <img src={Icons.viewIcon} /></Link>
+                                            <Link to={`/product/${item.product_id}`} onClick={() => handleClick(item)}> <img src={Icons.viewIcon} /></Link>
                                             <CardLink
                                                 classstyle={{ borderRight: "1px solid #333333" }}
                                             ></CardLink>
