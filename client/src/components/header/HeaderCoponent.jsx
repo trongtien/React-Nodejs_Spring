@@ -36,7 +36,7 @@ function HeaderComponent(props) {
     await setisLoginUser(!updateStatususe)
     let UserInfo = " "
     await setUserInfo(UserInfo)
-    if (url.pathname === '/persional' || url.pathname === '/changepassword') {
+    if (url.pathname === '/persional' || url.pathname === '/changepassword' || url.pathname === '/pay') {
       props.history.push('/')
     }
     window.location.reload();

@@ -13,7 +13,7 @@ import './style.scss'
 // import Images from '../../../../contants/image'
 import CommentComponent from './../../../../components/comment/comment'
 import ProductSameKindComponent from './../productSameKind/productSamekind'
-import { productDetail, listProductCategory, pagination } from '../../../../recoil/product';
+import { productDetail, listProductCategory, pagination, addViewCard, productViewState } from '../../../../recoil/product';
 import { listComment, paginationComment } from '../../../../recoil/comment';
 import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
 import { addToCart, cardState, totalMoney } from './../../../../recoil/card';
@@ -24,6 +24,7 @@ import commentAPI from './../../../../api/commentApi'
 
 
 function Product(props) {
+    const [productView, setProductView] = useRecoilState(productViewState);
     const [product, setProduct] = useRecoilState(productDetail);
     const setListProduct = useSetRecoilState(listProductCategory);
     // const setListComment = useSetRecoilState(listComment);
@@ -99,8 +100,16 @@ function Product(props) {
         const product_id = await parseInt(Object.assign(props.match.params.productId))
         return setId_url(product_id)
     }
+    /* add view hitory */
+    // async function handleClickViewproduct(item) {
+    //     const viewCard = addViewCard(productView, item);
+    //     setProductView(viewCard)
+    //     localStorage.setItem('viewProduct', JSON.stringify(viewCard))
+    //     console.log('handleClick', viewCard)
+    // }
 
     async function onChangeUrl(product_id) {
+
         return setId_url(product_id)
     }
 

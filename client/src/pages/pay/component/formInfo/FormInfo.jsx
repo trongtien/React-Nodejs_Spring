@@ -64,7 +64,7 @@ function FormInfo(props) {
             content: values.content,
             arrProduct: arrProduct
         }
-        console.log('new card', newCard)
+
         if (newCard) {
             cardAPI.postCard(newCard).then(async (data) => {
                 if (data.status === 200) {
@@ -100,7 +100,6 @@ function FormInfo(props) {
                                                 name="fullname"
                                                 component={inputField}
                                                 label="FullName"
-                                                disabled
                                                 placeholder="with a placeholder fullname"
 
                                             />
@@ -110,7 +109,6 @@ function FormInfo(props) {
                                                 component={inputField}
                                                 label="Email"
                                                 type="email"
-                                                disabled
                                                 placeholder="with a placeholder email"
                                             />
 

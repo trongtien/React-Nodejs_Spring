@@ -8,7 +8,7 @@ function Pay(props) {
     return (
         <Container fluid={true} style={{ marginTop: '10px' }}>
             <Row className="pay">
-                <Col xs="12" sm="12" md="9" lg="6" xl="6" ><CardSelected /></Col>
+                <Col xs="12" sm="12" md="9" lg="6" xl="6" style={{ marginTop: "2rem" }}><CardSelected /></Col>
                 <Col xs="12" sm="12" md="3" lg="6" xl="6"><FormInfo /></Col>
             </Row>
         </Container>
