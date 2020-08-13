@@ -27,8 +27,8 @@ function FormInfo(props) {
                 // await getInfo()
                 let user_id = await Cookies.get('user_id')
                 if (user_id) {
-                    await authAPI.getInfoUserById(user_id).then((data) => {
-                        return setUserInfo(data.data)
+                    await authAPI.getInfoUserById(user_id).then(async (data) => {
+                        return await setUserInfo(data.data)
                     })
                 }
                 console.log('userInfo', userInfo)
@@ -56,7 +56,7 @@ function FormInfo(props) {
         address: userInfo.address,
         note: ""
     }
-
+    /* onSubmit send data card */
     const hanldChangePersional = async (values) => {
         let arrProduct = await JSON.parse(localStorage.getItem('listCard'))
         let newCard = {
