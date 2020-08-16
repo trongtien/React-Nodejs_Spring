@@ -2,6 +2,7 @@ import { FastField, Form, Formik } from "formik";
 import Cookies from 'js-cookie';
 import PropTypes from 'prop-types';
 import React from 'react';
+import moment from 'moment'
 import { withRouter } from 'react-router-dom';
 import { Button, Card, CardText, CardTitle, Col, Row } from 'reactstrap';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
@@ -11,8 +12,6 @@ import { content, showAlertError, showMessageErrorAlert } from '../../recoil/con
 import commentAPI from './../../api/commentApi';
 import inputField from './../../components/formik/inputField';
 import './style.scss';
-
-
 
 Comment.propTypes = {
     id_url: PropTypes.object.isRequired,
@@ -83,7 +82,7 @@ function Comment(props) {
                                         <CardTitle>
                                             <Row>
                                                 <Col className="name-user">Tên người bình luận</Col>
-                                                <Col className="time-content">{item.updatedAt}</Col>
+                                                <Col className="time-content">{moment(item.updatedAt).format('MM/DD/YYYY,  h:mm a')}</Col>
                                             </Row>
                                         </CardTitle>
                                         <CardText>

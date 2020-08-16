@@ -40,7 +40,6 @@ function ListProductCategory(props) {
     React.useEffect(() => {
         async function getProductCateory() {
             try {
-                // let category_id = await parseInt(Object.assign(props.match.params.category_id))
                 let resData = await productApi.getProductByCategory(url_state, paginational._limit, paginational._page)
                 let { data } = await resData
 
@@ -55,7 +54,6 @@ function ListProductCategory(props) {
     React.useEffect(() => {
         async function getProductCateory() {
             try {
-                // let category_id = await parseInt(Object.assign(props.match.params.category_id))
                 let resData = await productApi.getProductByCategory(url_state, paginational._limit, paginational._page)
                 let { data } = await resData
 
@@ -108,8 +106,15 @@ function ListProductCategory(props) {
                                     <CardBody>
                                         <CardTitle className={item.amount > 0 ? "out-of-stock-product-category" : "out-of-stock-product-category-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.product_name}</CardTitle>
-                                        <CardSubtitle>{item.price} /kg</CardSubtitle>
-                                        <CardText className="price-sale">{item.discount === undefined ? "" : item.discount}</CardText>
+                                        <CardSubtitle
+                                            style={{ fontWeight: "600" }}
+                                        >{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
+                                        <CardText style={{
+                                            textDecoration: "line-through",
+                                            fontSize: "16px",
+                                            color: "red",
+                                            fontWeight: "600"
+                                        }}>{item.discount === null ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>
 
                                     <div className="card-footer-product-category">

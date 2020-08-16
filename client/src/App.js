@@ -70,6 +70,7 @@ function App(props) {
       try {
         let resData = await productApi.getAll(paginationalHome._limit, paginationalHome._page)
         let { data } = resData
+
         await setPaginationHome({
           ...paginationalHome,
           _totalRows: data.amount
@@ -88,6 +89,7 @@ function App(props) {
         let category = await categoryApi.getAll()
         let { data } = category
         await setListCategory(data)
+        
       } catch (error) {
         return error.message
       }

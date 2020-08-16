@@ -19,6 +19,7 @@ exports.insert = async (req, res) => {
 
 exports.list = async (req, res) => {
     try {
+        console.log(req.body)
         let listOrder = await CardModel.findByUserIdOrder(req.body.user_id, req.body._limit, req.body._page)
 
         return res.status(200).json({ status: 200, message: "Get list order successfull", data: listOrder });
@@ -33,6 +34,16 @@ exports.getByIdCard = async (req, res) => {
             req.params.order_id
         )
         return res.status(200).json({ status: 200, message: "Get list order successfull", data: listCardById });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error });
+    }
+}
+
+exports.delete = async (req, res) => {
+    try {
+        console.log('req.body.order_id cart', req.body.order_id)
+        await CardModel.deletUserIdOrder(req.body.order_id)
+        return res.status(200).json({ status: 200, message: "Delete order successfull", data: null });
     } catch (error) {
         return res.status(500).json({ status: 500, message: error });
     }

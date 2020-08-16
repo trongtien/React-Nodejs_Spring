@@ -19,6 +19,7 @@ export const paginationPageHome = atom({
     }
 })
 
+
 export const listProductState = atom({
     key: 'LIST_PRODUCT',
     default: []

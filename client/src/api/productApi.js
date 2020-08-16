@@ -50,7 +50,8 @@ const productApi = {
         } catch (error) {
             return error
         }
-    }
+    },
+
 }
 
 export default productApi;

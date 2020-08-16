@@ -22,20 +22,31 @@ exports.createDetailCard = async (order_id, arrProduct) => {
     });
 }
 
-exports.findByUserIdOrder = async (user_id, limit, page) => {
-    let skipPage = parseInt(page) - 1
-    let data = await database.order.findAll({
-        where: {
-            user_id: parseInt(user_id)
-        },
-        limit: parseInt(limit),
-        offset: skipPage,
-        order: [
-            ['order_id', 'DESC']
-        ]
-    });
-    console.log('data', data)
+exports.findByUserIdOrder = (user_id, limit, page) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let skipPage = parseInt(page) - 1
+            let data = await database.order.findAll({
+                where: {
+
+                    user_id: parseInt(user_id),
+                    status_order: [1, 2]
+
+
+                },
+                limit: parseInt(limit),
+                offset: skipPage,
+                order: [
+                    ['order_id', 'DESC']
+                ]
+            });
+            resolve(data)
+        } catch (error) {
+            reject(error)
+        }
+    })
 }
+
 
 exports.findByUserIdOrderDetail = async (order_id) => {
     return await database.orderdetail.findAll({
@@ -44,10 +55,15 @@ exports.findByUserIdOrderDetail = async (order_id) => {
         },
         include: {
             model: database.product,
-            // attributes: ['product_name'],
-            // required: true
             as: 'product_name',
         },
-        attributes:['roleId']
+        attributes: ['roleId']
     });
+}
+
+exports.deletUserIdOrder = async (order_id) => {
+    return await database.order.update(
+        { status_order: 3 },
+        { where: { order_id: order_id } }
+    )
 }

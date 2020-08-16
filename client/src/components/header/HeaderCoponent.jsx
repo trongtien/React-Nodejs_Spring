@@ -12,12 +12,15 @@ import {
 } from "reactstrap";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { clearLocalStorageUser, isLogin, statusAuthLogin, useInfo } from '../../recoil/authState';
+// import productAPI from './../../api/productApi'
+import { productPageHome } from "./../../recoil/product"
 import { listCategoryState } from '../../recoil/category';
 import "./style.scss";
 
 
 function HeaderComponent(props) {
   const [isOpen, setIsOpen] = useState(false);
+  const dataProduct = useRecoilValue(productPageHome)
   const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const setUserInfo = useSetRecoilState(useInfo);
@@ -84,7 +87,7 @@ function HeaderComponent(props) {
                           to={`/category/${item.category_id}`}
                           key={item.category_id}
                         >
-                          {item.name}
+                          {item.name} (1)
                         </Link>
                       )
                     })

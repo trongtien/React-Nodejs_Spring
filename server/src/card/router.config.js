@@ -7,7 +7,7 @@ exports.routerConfig = function (app) {
         ValidationMiddleware.validOrderDetailt,
         CardController.insert
     ])
-    app.get('/api/card', [
+    app.post('/api/card-new', [
         ValidationMiddleware.validOrder,
         ValidationMiddleware.validPagination,
         CardController.list
@@ -15,5 +15,9 @@ exports.routerConfig = function (app) {
     app.get('/api/card/:order_id', [
         ValidationMiddleware.validGetByIdOrder,
         CardController.getByIdCard
+    ])
+    app.post('/api/card-delete', [
+        ValidationMiddleware.validDeleteOrder,
+        CardController.delete
     ])
 }

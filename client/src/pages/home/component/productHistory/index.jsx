@@ -1,33 +1,28 @@
-import React from 'react'
-import Cookies from 'js-cookie';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import {
-    Col, Card, CardImg, CardBody, CardLink,
-    CardTitle, CardSubtitle,
-    CardText, Row
+    Card, CardBody, CardImg, CardLink,
+    CardSubtitle,
+    CardText, CardTitle, Col,
+
+    Row
 } from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom'
-import './style.scss'
-import Icons from '../../../../contants/icon'
-import { content, showAlert, showMessageAlert, showAlertError, showMessageErrorAlert } from '../../../../recoil/contant';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import Icons from '../../../../contants/icon';
+import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import { addToCart, cardState } from './../../../../recoil/card';
+import { productViewState } from './../../../../recoil/product';
+import './style.scss';
 
-import { productPageHome, addViewCard, productViewState } from './../../../../recoil/product'
 
-import { cardState, addToCart } from './../../../../recoil/card'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 
-function Product() {
-    const [productView, setProductView] = useRecoilState(productViewState);
+function ProductHistory() {
+
+    const [productHistory, setProductHistory] = useRecoilState(productViewState);
     const [stateCard, setStatCard] = useRecoilState(cardState)
     const [showMsg, setShowMsg] = useRecoilState(showAlert);
     const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
-
-
-    // const dataProduct = useRecoilValue(listProductState)
-    const dataProductHome = useRecoilValue(productPageHome)
-    const { data } = dataProductHome
-
-
 
     function handleAddToCard(item) {
         if (item.status_product === 0) {
@@ -35,26 +30,15 @@ function Product() {
         } else {
             const newCart = addToCart(stateCard, item);
             setStatCard(newCart);
-
-            localStorage.setItem('listCard', JSON.stringify(newCart))
             showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
         }
-    }
-
-    /* hitory view card */
-    async function handleClick(item) {
-        const viewCard = addViewCard(productView, item);
-        setProductView(viewCard)
-        await Cookies.set('viewProduct', JSON.stringify(viewCard))
-        localStorage.setItem('viewProduct', JSON.stringify(viewCard))
-        console.log('handleClick', viewCard)
     }
 
     return (
         <Row xs="2" sm="2" md="3" lg="4" xl="4" >
             {
-                data === undefined ? "" :
-                    data.map(item => {
+                productHistory === undefined ? "" :
+                    productHistory.map((item, index) => {
                         return (
                             <Col key={item.product_id} >
                                 <Card>
@@ -68,7 +52,7 @@ function Product() {
 
                                     <div className="card-footer">
                                         <div className="card-link">
-                                            <Link to={`/product/${item.product_id}`} onClick={() => handleClick(item)}><img src={Icons.viewIcon} /></Link>
+                                            <Link to={`/product/${item.product_id}`} ><img src={Icons.viewIcon} /></Link>
                                             <CardLink onClick={() => handleAddToCard(item)}><img src={Icons.cartIcon} /></CardLink>
                                         </div>
                                     </div>
@@ -81,4 +65,4 @@ function Product() {
     )
 }
 
-export default withRouter(Product);
+export default withRouter(ProductHistory);

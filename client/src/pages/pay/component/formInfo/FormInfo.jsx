@@ -24,13 +24,7 @@ function FormInfo(props) {
     React.useEffect(() => {
         async function getUser() {
             try {
-                // await getInfo()
-                let user_id = await Cookies.get('user_id')
-                if (user_id) {
-                    await authAPI.getInfoUserById(user_id).then(async (data) => {
-                        return await setUserInfo(data.data)
-                    })
-                }
+                await getInfo()
                 console.log('userInfo', userInfo)
             } catch (error) {
                 return error.message

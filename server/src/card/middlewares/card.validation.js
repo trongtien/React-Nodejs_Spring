@@ -29,3 +29,12 @@ exports.validOrderDetailt = (req, res, next) => {
         return res.status(400).send({ error: 'need to pass data' });
     }
 }
+
+exports.validDeleteOrder = (req, res, next) => {
+    console.log(req.body.order_id)
+    if (req.body.order_id) {
+        return next()
+    } else {
+        return res.status(400).send({ error: 'need to pass data' });
+    }
+}

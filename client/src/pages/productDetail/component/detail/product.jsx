@@ -44,7 +44,6 @@ function Product(props) {
 
     /* onClick pagination */
     function onPagechange(newPage) {
-
         setPaginational({
             ...paginational,
             _page: newPage
@@ -54,7 +53,6 @@ function Product(props) {
     React.useEffect(() => {
         async function getProductById() {
             try {
-                // const product_id = await parseInt(Object.assign(props.match.params.productId))
                 url()
                 let resData = await productApi.getById(id_url, paginational._limit, paginational._page)
                 let resComment = await commentAPI.getById(id_url, paginational._limit, paginational._page)
@@ -109,7 +107,6 @@ function Product(props) {
     // }
 
     async function onChangeUrl(product_id) {
-
         return setId_url(product_id)
     }
 
@@ -128,11 +125,9 @@ function Product(props) {
 
 
     function onHanleChangeComment(newComment) {
-        console.log('product comment', newComment)
+
         commentAPI.postComment(newComment).then(async (result) => {
-
             let { data } = result
-
             await setListComment({
                 ...commentList.dataComment,
                 dataComment: data
@@ -180,7 +175,12 @@ function Product(props) {
                                             <CardTitle style={{
                                                 fontSize: "30px",
                                                 color: "#f57224"
-                                            }}>{item.price} đ</CardTitle>
+                                            }}>{item.discount === null ? item.price : item.discount} đ</CardTitle>
+                                            <CardTitle style={{
+                                                fontSize: "20px",
+                                                color: "#f57224",
+                                                textDecoration: "line-through"
+                                            }}>{item.discount === null ? "" : `${item.price} /kg`}</CardTitle>
                                             <CardTitle style={{
                                                 color: "#757575",
                                                 fontSize: "16px",
@@ -237,7 +237,6 @@ function Product(props) {
                     onPageChangeDetail={onPagechange}
                     onProductIdChane={onChangeUrl}
                 />
-
 
             </Card>
         </div >
