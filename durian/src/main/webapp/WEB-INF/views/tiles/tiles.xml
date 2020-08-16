@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration
+3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- Base Definition -->
+	<definition name="base-definition"
+		template="/WEB-INF/views/tiles/layouts/defaultLayout.jsp">
+		<put-attribute name="title" value="" />
+		<put-attribute name="header"
+			value="/WEB-INF/views/tiles/template/defaultHeader.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/views/tiles/template/defaultMenu.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer"
+			value="/WEB-INF/views/tiles/template/defaultFooter.jsp" />
+	</definition>
+	<!-- Home Page -->
+	<definition name="home" extends="base-definition">
+		<put-attribute name="title" value="Welcome" />
+		<put-attribute name="body"
+			value="/WEB-INF/views/home.jsp" />
+	</definition>
+	<definition name="userList" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/userList.jsp" />
+	</definition>
+	<definition name="categoryList" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/categoryList.jsp" />
+	</definition>
+	<definition name="addCat" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/addCat.jsp" />
+	</definition>
+	<definition name="cusOrder" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/cusOrder.jsp" />
+	</definition>
+	<definition name="editCat" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/editCat.jsp" />
+	</definition>
+	<definition name="orderDetail" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/orderDetail.jsp" />
+	</definition>
+	<definition name="productList" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/productList.jsp" />
+	</definition>
+	<definition name="editPro" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/editPro.jsp" />
+	</definition>
+	<definition name="addPro" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/addPro.jsp" />
+	</definition>
+	<definition name="decentralization"
+		extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/decentralization.jsp" />
+	</definition>
+
+	<definition name="createUser" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/createUser.jsp" />
+	</definition>
+
+	<definition name="editUser" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/editUser.jsp" />
+	</definition>
+	<definition name="searchPage" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/searchPage.jsp" />
+	</definition>
+	<definition name="admin404" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/admin404.jsp" />
+	</definition>
+	<definition name="importPro" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/importPro.jsp" />
+	</definition>
+	<definition name="selectSupplier" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/selectSupplier.jsp" />
+	</definition>
+	<definition name="viewImport" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/viewImport.jsp" />
+	</definition>
+	<definition name="viewSupplier" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/viewSupplier.jsp" />
+	</definition>
+	<definition name="trash" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/trash.jsp" />
+	</definition>
+	<definition name="catTrash" extends="base-definition">
+		<put-attribute name="body"
+			value="/WEB-INF/views/catTrash.jsp" />
+	</definition>
+</tiles-definitions>
