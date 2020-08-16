@@ -21,4 +21,27 @@
     "host": "localhost",
     "dialect": "mysql"
   }
+}{
+  "development": {
+    "username": "root",
+    "password": null,
+    "database": "database_luanVan",
+    "host": "localhost",
+    "dialect": "mysql",
+    "logging": false
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_luanVan",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_luanVan",
+    "host": "localhost",
+    "dialect": "mysql"
+  }
 }

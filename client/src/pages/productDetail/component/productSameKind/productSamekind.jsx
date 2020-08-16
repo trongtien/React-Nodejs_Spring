@@ -21,26 +21,30 @@ import "./style.scss";
 ProductSameKindComponent.propTypes = {
   pagination: PropTypes.object.isRequired,
   onPageChangeDetail: PropTypes.func,
+  onProductIdChane: PropTypes.func,
 }
 
 ProductSameKindComponent.defaulttProps = {
   onPageChangeDetail: null,
+  onProductIdChane: null,
 }
 
 
 function ProductSameKindComponent(props) {
   // const [product, setProduct] = useRecoilState(productDetail);
+
   const [listProduct, setListProduct] = useRecoilState(listProductCategory);
-  const { pagination, onPageChangeDetail } = props
+  const { pagination, onPageChangeDetail, onProductIdChane } = props
   const [stateCard, setStatCard] = useRecoilState(cardState)
   const [showMsg, setShowMsg] = useRecoilState(showAlert);
   const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
   const setMsg = useSetRecoilState(content);
-  // const [pagination, setPagination] = useRecoilValue(paginationState)
+
 
   async function handlClick(product_id) {
-
-    console.log("product_id", product_id)
+    if (onProductIdChane) {
+      onProductIdChane(product_id)
+    }
   }
 
   function handlPageChangeSamekind(newPage) {
@@ -49,8 +53,9 @@ function ProductSameKindComponent(props) {
     }
   }
 
+  /* onSubmit add to cart */
   function handleAddToCard(item) {
-    if (item.status_product === 0) {
+    if (item.amount === 0) {
       showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
     } else {
       const newCart = addToCart(stateCard, item);
@@ -60,10 +65,20 @@ function ProductSameKindComponent(props) {
     }
   }
 
+  /* add view hitory */
+  // async function handleClickViewproduct(item) {
+  //   const viewCard = addViewCard(productView, item);
+  //   setProductView(viewCard)
+  //   await Cookies.set('viewProduct', JSON.stringify(viewCard))
+  //   localStorage.setItem('viewProduct', JSON.stringify(viewCard))
+  //   console.log('handleClick', viewCard)
+  // }
+
   return (
     <div className="product-kind-some">
       <Row xs="2" sm="2" md="2" lg="3" xl="3">
         {
+
           listProduct === undefined ? "" :
             listProduct.map(item => {
               return (
@@ -76,7 +91,7 @@ function ProductSameKindComponent(props) {
                       alt="Card image cap"
                     />
                     <CardBody>
-                      <CardTitle className={item.status_product === 1 ? "out-of-stock" : "out-of-stock-kind-active"}>
+                      <CardTitle className={item.amount > 0 ? "out-of-stock" : "out-of-stock-kind-active"}>
                         Hết hàng
                     </CardTitle>
                       <CardTitle>{item.product_name}</CardTitle>
@@ -100,10 +115,13 @@ function ProductSameKindComponent(props) {
               )
             })
         }
-        <PaginationComponent
-          pagination={pagination}
-          onPageChange={handlPageChangeSamekind}
-        />
+        {
+          Math.ceil(pagination._totalRows / pagination._limit) === 1 ? "" :
+            <PaginationComponent
+              pagination={pagination}
+              onPageChange={handlPageChangeSamekind}
+            />
+        }
       </Row>
     </div >
   );

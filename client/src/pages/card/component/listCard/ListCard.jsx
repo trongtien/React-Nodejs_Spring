@@ -11,22 +11,26 @@ function ListCardComponent() {
 
   React.useEffect(() => {
     async function getCard() {
-      let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
-      if (getCardLocal.length > 0) {
-        await setCard(getCardLocal)
-        let countProduct = await countAllProduct(card)
-        let totalMonney = await totalMoney(card)
-        await setbill({
-          countProduct: countProduct,
-          totalMonney: totalMonney
-        })
+      if (localStorage.getItem('listCard')) {
+        let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
+        if (getCardLocal.length > 0) {
+          await setCard(getCardLocal)
+          let countProduct = await countAllProduct(card)
+          let totalMonney = await totalMoney(card)
+          await setbill({
+            countProduct: countProduct,
+            totalMonney: totalMonney
+          })
+        }
       }
     }
     getCard()
   }, [])
 
-  function handleDelete(item) {
+  async function handleDelete(item) {
     const newCart = deleteCard(card, item)
+    let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
+
     setCard(newCart);
     let global = localStorage.setItem('listCard', JSON.stringify(newCart))
     if (global === undefined) {
@@ -41,6 +45,10 @@ function ListCardComponent() {
         totalMonney: totalMoney(global)
       })
     }
+    if (getCardLocal.length <= 1) {
+      await localStorage.clear('listCard')
+    }
+
   }
 
   return (
@@ -67,8 +75,8 @@ function ListCardComponent() {
                   <td> <CardImg center width="100%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${cardItem.image}`)} className="image-cart" /></td>
                   <td>{cardItem.product_name}</td>
                   <td>{cardItem.discount === null ? cardItem.price : cardItem.discount}</td>
-                  <td><div className="input-count"> <span>{cardItem.quantity}</span></div></td>
-                  <td>{cardItem.discount === null ? cardItem.price * cardItem.quantity : cardItem.discount * cardItem.quantity}</td>
+                  <td><div className="input-count"> <span>{cardItem.amount}</span></div></td>
+                  <td>{cardItem.discount === null ? cardItem.price * cardItem.amount : cardItem.discount * cardItem.amount}</td>
                   <td><CardImg center width="100%" src={Icon.deleteIcon} className="icon-cart" onClick={() => handleDelete(cardItem)} /></td>
                 </tr>
               </tbody>

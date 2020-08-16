@@ -1,14 +1,23 @@
 module.exports = (sequelize, DataTypes) => {
     const orderdetail = sequelize.define("orderdetail", {
-        order_id: {
+        orderdetailt_id: {
             type: DataTypes.INTEGER,
+            autoIncrement: true,
             primaryKey: true,
             allowNull: false
         },
-        product_id: {
-            type: DataTypes.STRING,
+        order_id: {
+            type: DataTypes.INTEGER,
             allowNull: false
         },
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        // product_name: {
+        //     type: DataTypes.STRING,
+        //     allowNull: true
+        // },
         amount: {
             type: DataTypes.INTEGER,
             allowNull: false
@@ -16,11 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         price: {
             type: DataTypes.INTEGER,
             allowNull: false
-        },
-        note: {
-            type: DataTypes.STRING,
-            allowNull: true
-        },
+        }
     }, {
         timestamps: true
     });

@@ -32,7 +32,6 @@ let verifyToken = (token, secretKey) => {
             if (error) {
                 return reject(error)
             }
-            // rồi ok, giờ cái req thay bằng gì để lấy nó
             resolve(decoded)
         })
     })

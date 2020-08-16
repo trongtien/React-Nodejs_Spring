@@ -34,7 +34,7 @@ let getProductByCategory = async (request, response) => {
         let category_id = request.body.category_id
         let limit = parseInt(request.body._limit)
         let page = parseInt(request.body._page)
-        console.log(category_id, limit, page)
+        // console.log(category_id, limit, page)
         let data = await productService.getProductByCategory(category_id, limit, page)
 
         return response.status(200).json({ status: 200, message: "Get product successfull", data: data })
@@ -46,10 +46,10 @@ let getProductByCategory = async (request, response) => {
 let getCountProductCategory = async (request, response) => {
     try {
         let category_id = request.body.category_id
-        console.log('category_id', category_id)
+        // console.log('category_id', category_id)
         let data = await productService.getProductByCategory(category_id)
 
-        console.log('data', data)
+        // console.log('data', data)
 
         return response.status(200).json({ status: 200, message: "Get product successfull", data: data })
     } catch (error) {

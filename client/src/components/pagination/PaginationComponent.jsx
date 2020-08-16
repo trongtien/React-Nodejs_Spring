@@ -28,7 +28,7 @@ function PaginationComponent(props) {
       onPageChange(newPage)
     }
   }
-
+  console.log('totalPages', totalPages)
   let active;
   let items = [];
   for (let i = 0; i <= pagination._totalRows; i++) {

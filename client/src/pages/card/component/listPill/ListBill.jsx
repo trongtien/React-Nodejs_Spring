@@ -1,11 +1,34 @@
-import React from 'react'
-import './style.scss'
-import { Table, Button, Col } from 'reactstrap';
-import { useRecoilValue } from "recoil";
-import { billState } from '../../../../recoil/card';
+import Cookies from 'js-cookie';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { Button, Table } from 'reactstrap';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { statusAuthLogin } from '../../../../recoil/authState';
+import { cardState, totalMoney } from '../../../../recoil/card';
+import { content, showAlertError, showMessageErrorAlert } from '../../../../recoil/contant';
+import './style.scss';
 
-function CartBill() {
-  const bill = useRecoilValue(billState);
+function CartBill(props) {
+  const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
+  const card = useRecoilValue(cardState);
+  const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
+  const setMsg = useSetRecoilState(content);
+
+  function handlePay() {
+    let verity = Cookies.get('node_access_token')
+    let verityData = localStorage.getItem('listCard')
+    console.log('verityData', verityData)
+
+    if (verity && verityData) {
+      props.history.push("/pay")
+    } else if (verity && !verityData) {
+      showMessageErrorAlert("Không có sản phẩm trong giỏ hàng", setMsg, setShowMsgErr, showMsgErr)
+    }
+    else {
+      showMessageErrorAlert("Đăng nhập để thanh toán", setMsg, setShowMsgErr, showMsgErr)
+      setAuthFormLogin(!AuthFormLogin)
+    }
+  }
   return (
     <div>
       <Table bordered>
@@ -18,17 +41,17 @@ function CartBill() {
         <tbody>
           <tr>
             <th scope="row"> Tổng số sản phẩm</th>
-            <td>{bill.countProduct}</td>
+            <td>{card.length}</td>
           </tr>
           <tr>
-            <th scope="row">TỔNG Tiền</th>
-            <td>{bill.totalMonney}</td>
+            <th scope="row">Tổng Tiền</th>
+            <td>{totalMoney(card)}</td>
           </tr>
         </tbody>
       </Table>
-      <Button color="danger">Thanh toán</Button>
+      <Button color="danger" onClick={() => handlePay()}>Thanh toán</Button>
     </div>
   )
 }
 
-export default CartBill
+export default withRouter(CartBill)

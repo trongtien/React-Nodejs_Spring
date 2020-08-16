@@ -1,0 +1,28 @@
+.title-name{
+
+    .card-title{
+        float: left;
+        background: #61B000;
+        padding: 0px 20px;
+        min-width: 170px;
+        height: 37px;
+        position: relative;
+        color: #FFFFFF;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    .card-title::before{    
+        position: absolute;
+        right: -37px;
+        top: 0px;
+        height: 0;
+        width: 0;
+        content: '';
+        border-top: 37px solid transparent;
+        border-left: 37px solid #61B000;
+    }
+}
+
+.list-group-item a{
+    padding: 0;
+}

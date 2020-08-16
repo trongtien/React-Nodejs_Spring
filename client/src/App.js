@@ -1,22 +1,22 @@
 import React, { lazy, Suspense, useState } from "react";
 import { Route, Switch } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import categoryApi from './api/categoryApi';
+import productApi from './api/productApi';
+import AlterComponent from "./components/alert/ALertComponent";
+import AlterErrorComponent from "./components/alert/AlertErrorComponent";
+import FastComponent from './components/fast';
 import FooterComponent from "./components/footer/FooterComponent";
 import HeaderComponent from "./components/header/HeaderCoponent";
 import Loading from "./components/loading/Loading";
 import LoginComponent from "./components/login/LoginComponent";
-import AlterComponent from "./components/alert/ALertComponent"
-import AlterErrorComponent from "./components/alert/AlertErrorComponent"
-import FastComponent from './components/fast'
 import SliderComponent from "./components/slider/SliderComponent";
+import Home from "./pages/home";
 import { statusAuthLogin } from './recoil/authState';
-import { showAlert, showAlertError } from './recoil/contant.js'
-import { listProductState, pagination } from './recoil/product.js'
-import { listCategoryState } from './recoil/category.js'
-import productApi from './api/productApi'
-import categoryApi from './api/categoryApi'
+import { listCategoryState } from './recoil/category.js';
+import { showAlert, showAlertError } from './recoil/contant.js';
+import { listProductState, pagination, paginationPageHome, productPageHome } from './recoil/product.js';
 
-import Home from "./pages/home"
 // import ProductDetailts from './pages/productDetail'
 
 const Resister = lazy(() => import('./pages/resister'))
@@ -26,31 +26,62 @@ const Introduction = lazy(() => import('./pages/introduction'))
 const ProductCategory = lazy(() => import('./pages/productCategory/index'))
 const ProductDetailts = lazy(() => import('./pages/productDetail'))
 const Card = lazy(() => import('./pages/card'))
+const Pay = lazy(() => import('./pages/pay'))
+const UserCard = lazy(() => import('./pages/userCard'))
 
 function App(props) {
   const [scrolled, setScrolled] = useState(false)
-  const setListProductState = useSetRecoilState(listProductState)
   const setListCategory = useSetRecoilState(listCategoryState)
+
   const isShowLogin = useRecoilValue(statusAuthLogin)
   const isShowAlert = useRecoilValue(showAlert)
   const isShowAlertError = useRecoilValue(showAlertError)
-  const paginational = useRecoilValue(pagination)
+
+  const [productHome, setProductHome] = useRecoilState(productPageHome)
+  const [paginationalHome, setPaginationHome] = useRecoilState(paginationPageHome)
+
 
   React.useEffect(() => {
     window.addEventListener('scroll', handlScroll)
+
     async function getAllProduct() {
       try {
-        let resData = await productApi.getAll(paginational._limit, paginational._page)
+        let resData = await productApi.getAll(paginationalHome._limit, paginationalHome._page)
         let { data } = resData
 
-        await setListProductState(data)
+        await setProductHome(data)
+
+        // await setPaginationHome({
+        //   ...paginationalHome,
+        //   _totalRows: data.amount
+        // })
+
       } catch (error) {
         return error.message
       }
     }
 
     getAllProduct()
+
+  }, [paginationalHome])
+
+  React.useEffect(() => {
+    async function getAllProduct() {
+      try {
+        let resData = await productApi.getAll(paginationalHome._limit, paginationalHome._page)
+        let { data } = resData
+
+        await setPaginationHome({
+          ...paginationalHome,
+          _totalRows: data.amount
+        })
+      } catch (error) {
+        return error.message
+      }
+    }
+    getAllProduct()
   }, [])
+
 
   React.useEffect(() => {
     async function getAllCategory() {
@@ -58,6 +89,7 @@ function App(props) {
         let category = await categoryApi.getAll()
         let { data } = category
         await setListCategory(data)
+        
       } catch (error) {
         return error.message
       }
@@ -140,6 +172,19 @@ function App(props) {
             <Card />
           </Suspense>
         </Route>
+
+        <Route path="/pay">
+          <Suspense fallback={<Loading />}>
+            <Pay />
+          </Suspense>
+        </Route>
+
+        <Route path="/userCard">
+          <Suspense fallback={<Loading />}>
+            <UserCard />
+          </Suspense>
+        </Route>
+
       </Switch>
       <footer>
         <FooterComponent />
