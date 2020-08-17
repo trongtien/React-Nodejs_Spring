@@ -17,7 +17,7 @@
   "production": {
     "username": "root",
     "password": null,
-    "database": "database_luanVan",
+    "database": "lvtn",
     "host": "localhost",
     "dialect": "mysql"
   }
