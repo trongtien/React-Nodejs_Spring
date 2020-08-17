@@ -19,6 +19,18 @@ exports.findById = async (product_id, limit, page) => {
                 ],
             })
 
+            // let data = await database.comment.findAll({
+            //     where: {
+            //         product_id: parseInt(product_id)
+            //     },
+            //     include: [{
+            //         model: user,
+            //         through: {
+            //             attributes: ["user_id", "user_id"]
+            //         }
+            //     }]
+            // })
+
             let totalComment = data.length
 
             resolve({ data, totalComment })

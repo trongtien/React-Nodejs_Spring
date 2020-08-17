@@ -31,7 +31,7 @@ function PaginationComponent(props) {
   console.log('totalPages', totalPages)
   let active;
   let items = [];
-  for (let i = 0; i <= pagination._totalRows; i++) {
+  for (let i = 1; i <= totalPages; i++) {
     items.push(
       <PaginationItem>
         <PaginationLink key={i} active={i === active} > {i}</PaginationLink>

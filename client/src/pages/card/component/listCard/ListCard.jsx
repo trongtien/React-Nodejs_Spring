@@ -73,10 +73,10 @@ function ListCardComponent() {
                 <tr className="list-cart-product" key={cardItem.product_id}>
                   <th scope="row">{index + 1}</th>
                   <td> <CardImg center width="100%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${cardItem.image}`)} className="image-cart" /></td>
-                  <td>{cardItem.product_name}</td>
-                  <td>{cardItem.discount === null ? cardItem.price : cardItem.discount}</td>
-                  <td><div className="input-count"> <span>{cardItem.amount}</span></div></td>
-                  <td>{cardItem.discount === null ? cardItem.price * cardItem.amount : cardItem.discount * cardItem.amount}</td>
+                  <td>{cardItem.name}</td>
+                  <td>{cardItem.discount === 0 ? cardItem.price : cardItem.discount}</td>
+                  <td><div className="input-count"> <span>{cardItem.quantity}</span></div></td>
+                  <td>{cardItem.discount === 0 ? cardItem.price * cardItem.quantity : cardItem.discount * cardItem.quantity}</td>
                   <td><CardImg center width="100%" src={Icon.deleteIcon} className="icon-cart" onClick={() => handleDelete(cardItem)} /></td>
                 </tr>
               </tbody>

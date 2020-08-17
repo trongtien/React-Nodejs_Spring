@@ -77,7 +77,7 @@ function ListProductCategory(props) {
 
 
     function handleAddToCard(item) {
-        if (item.amount === 0) {
+        if (item.quantity === 0) {
             showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
         } else {
             const newCart = addToCart(stateCard, item);
@@ -91,7 +91,6 @@ function ListProductCategory(props) {
         setProductView(viewCard)
         await Cookies.set('viewProduct', JSON.stringify(viewCard))
         localStorage.setItem('viewProduct', JSON.stringify(viewCard))
-        console.log('handleClick', viewCard)
     }
 
     return (
@@ -104,8 +103,8 @@ function ListProductCategory(props) {
                                 <Card className="card-product-category" key={item.product_id}>
                                     <CardImg width="50%" height="50%" src={require(`./../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
-                                        <CardTitle className={item.amount > 0 ? "out-of-stock-product-category" : "out-of-stock-product-category-active"}>Hết hàng</CardTitle>
-                                        <CardTitle>{item.product_name}</CardTitle>
+                                        <CardTitle className={item.quantity > 0 ? "out-of-stock-product-category" : "out-of-stock-product-category-active"}>Hết hàng</CardTitle>
+                                        <CardTitle>{item.name}</CardTitle>
                                         <CardSubtitle
                                             style={{ fontWeight: "600" }}
                                         >{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>

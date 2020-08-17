@@ -11,7 +11,7 @@ exports.createDetailCard = async (order_id, arrProduct) => {
                 await database.orderdetail.create({
                     order_id: parseInt(order_id),
                     product_id: parseInt(arrProduct[i].product_id),
-                    amount: parseInt(arrProduct[i].amount),
+                    amount: parseInt(arrProduct[i].quantity),
                     price: parseInt(arrProduct[i].price),
                 })
             }
@@ -28,11 +28,8 @@ exports.findByUserIdOrder = (user_id, limit, page) => {
             let skipPage = parseInt(page) - 1
             let data = await database.order.findAll({
                 where: {
-
                     user_id: parseInt(user_id),
                     status_order: [1, 2]
-
-
                 },
                 limit: parseInt(limit),
                 offset: skipPage,

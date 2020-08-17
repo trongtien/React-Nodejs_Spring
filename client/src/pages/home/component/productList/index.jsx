@@ -26,11 +26,10 @@ function Product() {
     // const dataProduct = useRecoilValue(listProductState)
     const dataProductHome = useRecoilValue(productPageHome)
     const { data } = dataProductHome
-
-
+    console.log('data product home', data)
 
     function handleAddToCard(item) {
-        if (item.status_product === 0) {
+        if (item.quantity === 0) {
             showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
         } else {
             const newCart = addToCart(stateCard, item);
@@ -58,10 +57,10 @@ function Product() {
                         return (
                             <Col key={item.product_id} >
                                 <Card>
-                                    <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
+                                    {/* <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" /> */}
                                     <CardBody>
-                                        <CardTitle className={item.amount > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
-                                        <CardTitle>{item.product_name}</CardTitle>
+                                        <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
+                                        <CardTitle>{item.name}</CardTitle>
                                         <CardSubtitle>{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
                                         <CardText className="price-sale">{item.discount === null ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>

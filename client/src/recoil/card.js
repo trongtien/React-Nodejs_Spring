@@ -22,7 +22,7 @@ export const addToCart = (cart, item) => {
     if (foundIndex >= 0) {
         newCart[foundIndex] = {
             ...cart[foundIndex],
-            amount: cart[foundIndex].amount + 1,
+            quantity: cart[foundIndex].quantity + 1,
         };
         return newCart;
     }
@@ -33,8 +33,8 @@ export const addToCart = (cart, item) => {
         discount: item.discount,
         price: item.price,
         image: item.image,
-        product_name: item.product_name,
-        amount: 1,
+        name: item.name,
+        quantity: 1,
     });
 
     return newCart;
@@ -53,7 +53,7 @@ export const deleteCard = (cart, item) => {
 export const countAllProduct = (card) => {
     let countAll = 0;
     for (let i = 0; i < card.length; i++) {
-        card[i].amount === undefined ? countAll = 0 : countAll += card[i].amount
+        card[i].quantity === undefined ? countAll = 0 : countAll += card[i].quantity
     }
     return countAll
 }
@@ -61,10 +61,10 @@ export const countAllProduct = (card) => {
 export const totalMoney = (card) => {
     let total = 0;
     for (let i = 0; i < card.length; i++) {
-        if (card[i].price === undefined && card[i].amount === undefined)
+        if (card[i].price === undefined && card[i].quantity === undefined)
             total = 0
         else
-            total += (card[i].price * card[i].amount)
+            total += (card[i].price * card[i].quantity)
     }
     return total
 }

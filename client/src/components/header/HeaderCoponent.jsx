@@ -87,7 +87,7 @@ function HeaderComponent(props) {
                           to={`/category/${item.category_id}`}
                           key={item.category_id}
                         >
-                          {item.name} (1)
+                          {item.name}
                         </Link>
                       )
                     })

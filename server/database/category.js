@@ -11,9 +11,24 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-
+        status: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        image: {
+            type: DataTypes.INTEGER,
+            allowNull: false
+        },
+        // createdAt: {
+        //     type: DataTypes.Date,
+        //     allowNull: true
+        // },
+        // updateAt: {
+        //     type: DataTypes.Date,
+        //     allowNull: true
+        // }
     }, {
-        timestamps: true
+        timestamps: false
     });
     return category;
 };

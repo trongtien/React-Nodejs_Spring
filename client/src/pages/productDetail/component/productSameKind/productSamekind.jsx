@@ -47,6 +47,7 @@ function ProductSameKindComponent(props) {
     }
   }
 
+  /* Submit post comment */
   function handlPageChangeSamekind(newPage) {
     if (onPageChangeDetail) {
       onPageChangeDetail(newPage)
@@ -65,15 +66,6 @@ function ProductSameKindComponent(props) {
     }
   }
 
-  /* add view hitory */
-  // async function handleClickViewproduct(item) {
-  //   const viewCard = addViewCard(productView, item);
-  //   setProductView(viewCard)
-  //   await Cookies.set('viewProduct', JSON.stringify(viewCard))
-  //   localStorage.setItem('viewProduct', JSON.stringify(viewCard))
-  //   console.log('handleClick', viewCard)
-  // }
-
   return (
     <div className="product-kind-some">
       <Row xs="2" sm="2" md="2" lg="3" xl="3">
@@ -91,17 +83,17 @@ function ProductSameKindComponent(props) {
                       alt="Card image cap"
                     />
                     <CardBody>
-                      <CardTitle className={item.amount > 0 ? "out-of-stock" : "out-of-stock-kind-active"}>
+                      <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-kind-active"}>
                         Hết hàng
                     </CardTitle>
-                      <CardTitle>{item.product_name}</CardTitle>
+                      <CardTitle>{item.name}</CardTitle>
                       <CardSubtitle>{item.price} /kg</CardSubtitle>
                       <CardText className="price-sale-kind">{item.discount === undefined ? "" : item.discount}</CardText>
                     </CardBody>
 
                     <div className="card-footer-kind">
                       <div className="card-link-same-kind">
-                        <Link to={`/product/${item.product_id}`} onClick={() => handlClick(item.product_id)} > <img src={Icons.viewIcon} /></Link>
+                        <Link to={`/product/${item.product_id}`} onClick={() => handlClick(item.product_id)}> <img src={Icons.viewIcon} /></Link>
                         <CardLink
                           classstyle={{ borderRight: "1px solid #333333" }}
                         ></CardLink>
@@ -116,7 +108,7 @@ function ProductSameKindComponent(props) {
             })
         }
         {
-          Math.ceil(pagination._totalRows / pagination._limit) === 1 ? "" :
+          Math.ceil(pagination._totalRows / pagination._limit) === 0 ? "" :
             <PaginationComponent
               pagination={pagination}
               onPageChange={handlPageChangeSamekind}

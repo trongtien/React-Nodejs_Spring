@@ -6,40 +6,32 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             allowNull: false
         },
-        category_id: {
+        discount: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
-        product_name: {
+        name: {
             type: DataTypes.STRING,
-            allowNull: false
         },
         price: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
-        discount: {
-            type: DataTypes.INTEGER,
-            allowNull: true
-        },
-        amount: {
-            type: DataTypes.INTEGER,
-            allowNull: false
+        quantity: {
+            type: DataTypes.INTEGER
         },
         image: {
             type: DataTypes.STRING,
-            allowNull: false
         },
-        status_product: {
+        status: {
             type: DataTypes.INTEGER,
-            allowNull: false
         },
         content: {
             type: DataTypes.TEXT,
-            allowNull: false
-        }
+        },
+        category_id: {
+            type: DataTypes.INTEGER,
+        },
     }, {
-        timestamps: true
+        timestamps: false
     });
     return product;
 };

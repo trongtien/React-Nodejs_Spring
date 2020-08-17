@@ -20,8 +20,6 @@ function Category(props) {
     const { onPageChangeCatrgory } = props
     const listCategory = useRecoilValue(listCategoryState);
 
-
-
     function hanldeChange(category_id) {
         if (onPageChangeCatrgory) {
             onPageChangeCatrgory(category_id)
@@ -36,7 +34,6 @@ function Category(props) {
             </Row>
 
             <ListGroup>
-
                 {
                     listCategory === undefined ? "" :
                         listCategory.map(item => {
@@ -53,7 +50,6 @@ function Category(props) {
                             )
                         })
                 }
-
             </ListGroup>
         </di>
     )

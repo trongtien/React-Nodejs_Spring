@@ -36,10 +36,10 @@ function CardSelected(props) {
                                 <tbody>
                                     <tr className="list-cart-product" key={cardItem.product_id}>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{cardItem.product_name}</td>
+                                        <td>{cardItem.name}</td>
                                         <td>{cardItem.discount === null ? cardItem.price : cardItem.discount}</td>
-                                        <td><div className="input-count"> <span>{cardItem.amount}</span></div></td>
-                                        <td>{cardItem.discount === null ? cardItem.price * cardItem.amount : cardItem.discount * cardItem.amount}</td>
+                                        <td><div className="input-count"> <span>{cardItem.quantity}</span></div></td>
+                                        <td>{cardItem.discount === null ? cardItem.price * cardItem.quantity : cardItem.discount * cardItem.quantity}</td>
                                     </tr>
                                 </tbody>
                             )

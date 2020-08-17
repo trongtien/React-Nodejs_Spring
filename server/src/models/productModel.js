@@ -1,14 +1,19 @@
 const database = require('../../database')
 
 let amountProduct = async () => {
-    return await database.product.findAll({})
+    return await database.product.findAll({
+        where: {
+            status: 1,
+        },
+    })
 }
 
 let getAllPagination = async (limit, page) => {
+    console.log(limit, page)
     let skipPage = page - 1
     return await database.product.findAll({
         where: {
-            status_product: 1
+            status: 1
         }, limit: limit, offset: skipPage
     })
 

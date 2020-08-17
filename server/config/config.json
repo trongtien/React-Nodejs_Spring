@@ -2,7 +2,7 @@
   "development": {
     "username": "root",
     "password": null,
-    "database": "database_luanVan",
+    "database": "lvtn",
     "host": "localhost",
     "dialect": "mysql",
     "logging": false
@@ -10,7 +10,7 @@
   "test": {
     "username": "root",
     "password": null,
-    "database": "database_luanVan",
+    "database": "lvtn",
     "host": "localhost",
     "dialect": "mysql"
   },

@@ -86,6 +86,10 @@ function Product(props) {
                     ...paginational,
                     _totalRows: data.totalProductCategory
                 })
+                await setListComment({
+                    totalComment: dataComment.totalComment,
+                    dataComment: dataComment.data
+                })
 
             } catch (error) {
                 return error.message
@@ -98,13 +102,6 @@ function Product(props) {
         const product_id = await parseInt(Object.assign(props.match.params.productId))
         return setId_url(product_id)
     }
-    /* add view hitory */
-    // async function handleClickViewproduct(item) {
-    //     const viewCard = addViewCard(productView, item);
-    //     setProductView(viewCard)
-    //     localStorage.setItem('viewProduct', JSON.stringify(viewCard))
-    //     console.log('handleClick', viewCard)
-    // }
 
     async function onChangeUrl(product_id) {
         return setId_url(product_id)
@@ -122,20 +119,23 @@ function Product(props) {
         }
     }
 
-
-
+    /* post comment */
     function onHanleChangeComment(newComment) {
-
         commentAPI.postComment(newComment).then(async (result) => {
             let { data } = result
-            await setListComment({
-                ...commentList.dataComment,
-                dataComment: data
 
+            commentAPI.getById(id_url, commentPagination._limit, commentPagination._page).then(dataNewComment => {
+                setListComment({
+                    totalComment: dataNewComment.totalComment,
+                    dataComment: dataNewComment.data
+                })
+                console.log('data new list comment', commentList)
             })
         })
+
     }
 
+    console.log('url', id_url)
 
     return (
         <div>
@@ -147,7 +147,7 @@ function Product(props) {
                                 <div>
                                     <Row>
                                         <Col className="title-name">
-                                            <CardTitle>{item.product_name}</CardTitle>
+                                            <CardTitle>{item.name}</CardTitle>
                                         </Col>
                                     </Row>
 
@@ -171,7 +171,7 @@ function Product(props) {
                                                 wordBreak: "break-word",
                                                 overflowWrap: "break-word"
 
-                                            }}>{item.product_name} </CardTitle>
+                                            }}>{item.name} </CardTitle>
                                             <CardTitle style={{
                                                 fontSize: "30px",
                                                 color: "#f57224"
@@ -186,7 +186,7 @@ function Product(props) {
                                                 fontSize: "16px",
                                                 fontWeight: "normal",
                                                 verticalAlign: "top"
-                                            }}> {item.amount > 0 ? "Còn hàng" : "Hết hàng"} </CardTitle>
+                                            }}> {item.quantity > 0 ? "Còn hàng" : "Hết hàng"} </CardTitle>
 
                                             <Button color="danger" onClick={() => handleAddToCard(item)}>ĐẶT MUA SẢN PHẨM</Button>
                                         </Col>

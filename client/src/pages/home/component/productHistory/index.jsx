@@ -44,8 +44,8 @@ function ProductHistory() {
                                 <Card>
                                     <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
-                                        <CardTitle className={item.amount > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
-                                        <CardTitle>{item.product_name}</CardTitle>
+                                        <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
+                                        <CardTitle>{item.name}</CardTitle>
                                         <CardSubtitle>{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
                                         <CardText className="price-sale">{item.discount === null ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>

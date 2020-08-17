@@ -34,8 +34,8 @@ module.exports = (sequelize, Sequelize) => {
       allowNull: false
     }
   }, {
-    created_at: true,
-    updated_at: true
+    timestamps: false
   });
+
   return user;
 };

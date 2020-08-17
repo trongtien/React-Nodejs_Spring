@@ -37,7 +37,6 @@ function CardNew() {
     }, [])
 
     function handleDelete(order_id, status_order) {
-        console.log('handl delete', order_id, status_order)
         if (order_id && status_order != 2) {
             cardAPI.deleteById(order_id).then((result) => {
                 if (result.status === 200) {

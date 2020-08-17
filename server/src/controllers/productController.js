@@ -1,6 +1,5 @@
 const { productService } = require('./../services/index')
-const { request } = require('../app')
-const { response } = require('express')
+
 
 let getProduct = async (request, response) => {
     try {
@@ -8,7 +7,6 @@ let getProduct = async (request, response) => {
         let page = parseInt(request.query._page)
 
         let products = await productService.getAllProduct(limit, page)
-
         return response.status(200).json({ status: 200, message: "create new user successfully", data: products })
     } catch (error) {
         return response.status(400).json({ status: 400, message: error })

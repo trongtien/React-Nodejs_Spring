@@ -2,6 +2,7 @@ const productModel = require('./../models/productModel')
 const { transErrors } = require('../helperts/validateContent')
 
 const getAllProduct = (limit, page) => {
+    console.log('service', limit, page)
     return new Promise(async (resolve, reject) => {
         try {
             let product = await productModel.getAllPagination(limit, page)

@@ -62,7 +62,7 @@ export const addViewCard = (cart, item) => {
         discount: item.discount,
         price: item.price,
         image: item.image,
-        product_name: item.product_name,
+        name: item.name,
         amount: 1,
     });
 

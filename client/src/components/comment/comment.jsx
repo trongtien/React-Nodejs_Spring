@@ -1,15 +1,14 @@
 import { FastField, Form, Formik } from "formik";
 import Cookies from 'js-cookie';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import React from 'react';
-import moment from 'moment'
 import { withRouter } from 'react-router-dom';
 import { Button, Card, CardText, CardTitle, Col, Row } from 'reactstrap';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { statusAuthLogin } from '../../recoil/authState';
 import { listComment } from '../../recoil/comment';
 import { content, showAlertError, showMessageErrorAlert } from '../../recoil/contant';
-import commentAPI from './../../api/commentApi';
 import inputField from './../../components/formik/inputField';
 import './style.scss';
 
@@ -47,23 +46,13 @@ function Comment(props) {
                 if (onChangeComment) {
                     onChangeComment(newComment)
                 }
-                // commentAPI.postComment(newComment).then(async (result) => {
-
-                //     let { data } = result
-                //     console.log('data comment response', data)
-                //     await setCommentList({
-                //         ...commentList,
-                //         data
-                //     })
-                //     console.log('comment list 121', commentList)
-                // })
-
             }
         } else {
             showMessageErrorAlert("Đăng nhập để tham gia bình luận", setMsg, setShowMsgErr, showMsgErr)
             setAuthFormLogin(!AuthFormLogin)
         }
     }
+    console.log('list comment', commentList)
     return (
         <div>
             <Row>
@@ -74,7 +63,6 @@ function Comment(props) {
                 </Col>
                 <Col sm="12" className="list-comment">
                     {
-
                         commentList.dataComment === undefined ? "" :
                             commentList.dataComment.map(item => {
                                 return (
