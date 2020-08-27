@@ -8,8 +8,9 @@ import {
     Row
 } from 'reactstrap';
 import { useRecoilState, useSetRecoilState } from 'recoil';
+import swal from 'sweetalert';
 import Icons from '../../../../contants/icon';
-import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import { content } from '../../../../recoil/contant';
 import { addToCart, cardState } from './../../../../recoil/card';
 import { productViewState } from './../../../../recoil/product';
 import './style.scss';
@@ -17,20 +18,27 @@ import './style.scss';
 
 
 function ProductHistory() {
-
     const [productHistory, setProductHistory] = useRecoilState(productViewState);
     const [stateCard, setStatCard] = useRecoilState(cardState)
-    const [showMsg, setShowMsg] = useRecoilState(showAlert);
-    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
 
     function handleAddToCard(item) {
         if (item.status_product === 0) {
-            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+            swal({
+                title: "Sản phẩm đã hết hàng",
+                icon: "error",
+                buttons: false,
+                timer: 1000
+            });
         } else {
             const newCart = addToCart(stateCard, item);
             setStatCard(newCart);
-            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+            swal({
+                title: "Thêm giỏ hàng thành công",
+                icon: "success",
+                buttons: false,
+                timer: 1000
+            });
         }
     }
 
@@ -42,7 +50,7 @@ function ProductHistory() {
                         return (
                             <Col key={item.product_id} >
                                 <Card>
-                                    <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" />
+                                    <CardImg width="50%" height="50%" src={require(`../../../../assets/image/background-login.jpg`)} />
                                     <CardBody>
                                         <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.name}</CardTitle>

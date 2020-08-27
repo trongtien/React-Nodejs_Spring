@@ -1,12 +1,10 @@
-import React from 'react'
-import './style.scss'
 import Cookies from 'js-cookie';
-import { Table, Button } from 'reactstrap';
-import Icon from './../../../../contants/icon'
-import moment from 'moment'
-import cardAPI from './../../../../api/cardApi'
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import moment from 'moment';
+import React from 'react';
+import { Button, Table } from 'reactstrap';
+import swal from 'sweetalert';
+import cardAPI from './../../../../api/cardApi';
+import './style.scss';
 
 
 function CardNew() {
@@ -17,18 +15,12 @@ function CardNew() {
         _page: 1,
         _totalRows: 0
     })
-    const [showMsg, setShowMsg] = useRecoilState(showAlert);
-    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
-    const setMsg = useSetRecoilState(content);
-
 
     React.useEffect(() => {
         async function getListNewCard() {
             let user_id = await Cookies.get('user_id')
-            console.log('user_id list new card', user_id)
             if (user_id) {
                 cardAPI.getById(user_id, paginationCard._limit, paginationCard._page).then((result) => {
-                    console.log(result)
                     setNewCard(result.data)
                 })
             }
@@ -37,21 +29,49 @@ function CardNew() {
     }, [])
 
     function handleDelete(order_id, status_order) {
-        if (order_id && status_order != 2) {
-            cardAPI.deleteById(order_id).then((result) => {
-                if (result.status === 200) {
-                    let user_id = Cookies.get('user_id')
-                    cardAPI.getById(user_id, paginationCard._limit, paginationCard._page).then((result) => {
-                        setNewCard(result.data)
-                    })
-                    showMessageAlert("Hủy đơn hàng thàn công", setMsg, setShowMsg, showMsg)
-                } else {
-                    showMessageErrorAlert("Hủy đơn hàng thất bại, vui lòng thử lại", setMsg, setShowMsgErr, showMsgErr)
+        swal({
+            title: "Bạn có muốn hủy đơn hàng",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then(async (willDelete) => {
+                if (willDelete) {
+                    if (order_id && status_order !== 2) {
+                        cardAPI.deleteById(order_id).then((result) => {
+                            if (result.status === 200) {
+                                let user_id = Cookies.get('user_id')
+                                cardAPI.getById(user_id, paginationCard._limit, paginationCard._page).then((result) => {
+                                    setNewCard(result.data)
+                                })
+                                swal({
+                                    title: "Hủy đơn hàng thàn công",
+                                    icon: "success",
+                                    buttons: false,
+                                    timer: 1500
+                                });
+                            } else {
+                                swal({
+                                    title: "Hủy đơn hàng thất bại, vui lòng thử lại",
+                                    icon: "error",
+                                    buttons: false,
+                                    timer: 1500
+                                });
+                            }
+                        })
+                    } else {
+                        swal({
+                            title: "Hủy đơn hàng thất bại",
+                            text: "Đơn hàng đang được đi giao vui lòng liên hệ nhân viên để được hủy",
+                            icon: "error",
+                            buttons: false,
+                            timer: 1500
+                        });
+                    }
                 }
-            })
-        } else {
-            showMessageErrorAlert("Đơn hàng đang được đi giao vui lòng liên hệ nhân viên để được hủy", setMsg, setShowMsgErr, showMsgErr)
-        }
+            });
+
+
     }
 
     return (

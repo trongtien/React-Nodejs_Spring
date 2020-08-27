@@ -3,14 +3,14 @@ import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import {
   Card,
-  CardBody, CardImg,
+  CardBody,
   CardLink,
   CardSubtitle,
   CardText, CardTitle, Col,
   Row
 } from "reactstrap";
-import { useRecoilState, useSetRecoilState } from 'recoil';
-import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
+import { useRecoilState } from 'recoil';
+import swal from 'sweetalert';
 import { listProductCategory } from '../../../../recoil/product';
 import PaginationComponent from "./../../../../components/pagination/PaginationComponent";
 import Icons from "./../../../../contants/icon";
@@ -36,10 +36,6 @@ function ProductSameKindComponent(props) {
   const [listProduct, setListProduct] = useRecoilState(listProductCategory);
   const { pagination, onPageChangeDetail, onProductIdChane } = props
   const [stateCard, setStatCard] = useRecoilState(cardState)
-  const [showMsg, setShowMsg] = useRecoilState(showAlert);
-  const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
-  const setMsg = useSetRecoilState(content);
-
 
   async function handlClick(product_id) {
     if (onProductIdChane) {
@@ -57,12 +53,22 @@ function ProductSameKindComponent(props) {
   /* onSubmit add to cart */
   function handleAddToCard(item) {
     if (item.amount === 0) {
-      showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+      swal({
+        title: "Sản phẩm đã hết hàng",
+        icon: "error",
+        buttons: false,
+        timer: 1500
+      });
     } else {
       const newCart = addToCart(stateCard, item);
       setStatCard(newCart);
       localStorage.setItem('listCard', JSON.stringify(newCart))
-      showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+      swal({
+        title: "Thêm giỏ hàng thành công",
+        icon: "success",
+        buttons: false,
+        timer: 1500
+      });
     }
   }
 
@@ -76,12 +82,12 @@ function ProductSameKindComponent(props) {
               return (
                 <Col>
                   <Card className="card-kind-some" key={item.product_id}>
-                    <CardImg
+                    {/* <CardImg
                       width="50%"
                       height="50%"
                       src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)}
                       alt="Card image cap"
-                    />
+                    /> */}
                     <CardBody>
                       <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-kind-active"}>
                         Hết hàng

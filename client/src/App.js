@@ -87,7 +87,6 @@ function App(props) {
     async function getAllCategory() {
       try {
         let category = await categoryApi.getAll()
-        console.log('category', category)
         let { data } = category
         await setListCategory(data)
 

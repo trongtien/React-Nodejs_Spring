@@ -1,25 +1,25 @@
-import React from 'react'
 import Cookies from 'js-cookie';
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
 import {
-    Col, Card, CardImg, CardBody, CardLink,
-    CardTitle, CardSubtitle,
-    CardText, Row
+    Card, CardBody, CardLink,
+    CardSubtitle,
+    CardText, CardTitle, Col,
+    Row
 } from 'reactstrap';
-import { Link, withRouter } from 'react-router-dom'
-import './style.scss'
-import Icons from '../../../../contants/icon'
-import { content, showAlert, showMessageAlert, showAlertError, showMessageErrorAlert } from '../../../../recoil/contant';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+import swal from 'sweetalert';
+import Icons from '../../../../contants/icon';
+import { content } from '../../../../recoil/contant';
+import { addToCart, cardState } from './../../../../recoil/card';
+import { addViewCard, productPageHome, productViewState } from './../../../../recoil/product';
+import './style.scss';
 
-import { productPageHome, addViewCard, productViewState } from './../../../../recoil/product'
 
-import { cardState, addToCart } from './../../../../recoil/card'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 
 function Product() {
     const [productView, setProductView] = useRecoilState(productViewState);
     const [stateCard, setStatCard] = useRecoilState(cardState)
-    const [showMsg, setShowMsg] = useRecoilState(showAlert);
-    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
     const setMsg = useSetRecoilState(content);
 
 
@@ -30,13 +30,23 @@ function Product() {
 
     function handleAddToCard(item) {
         if (item.quantity === 0) {
-            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+            swal({
+                title: "Sản phẩm đã hết hàng",
+                icon: "error",
+                buttons: false,
+                timer: 1000
+            });
         } else {
             const newCart = addToCart(stateCard, item);
             setStatCard(newCart);
 
             localStorage.setItem('listCard', JSON.stringify(newCart))
-            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+            swal({
+                title: "Thêm giỏ hàng thành công",
+                icon: "success",
+                buttons: false,
+                timer: 1000
+            });
         }
     }
 

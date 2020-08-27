@@ -21,5 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
+
+    order.associate = models => order.hasMany(models.orderdetail)
     return order;
 };

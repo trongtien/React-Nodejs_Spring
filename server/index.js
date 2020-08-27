@@ -5,10 +5,9 @@ const port = process.env.port
 const database = require('./database')
 const gmail = require('./src/helperts/mail')
 
-
-
 database.sequelize.sync({ force: false }).then((err) => {
     if (err) throw err
+
     console.log('database connect successfull')
 })
 

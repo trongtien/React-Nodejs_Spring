@@ -36,6 +36,6 @@ module.exports = (sequelize, Sequelize) => {
   }, {
     timestamps: false
   });
-
+  // user.associate = models => user.hasMany(models.comment)
   return user;
 };

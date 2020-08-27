@@ -21,6 +21,13 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
-    // comment.hasMany(commentuser, { foreignKey: 'comment_id', sourceKey: 'comment_id' });
+    // comment.associate = models => {
+    //     comment.belongsTo(models.user, {
+    //         onDelete: 'CASECADE',
+    //         foreignkey: {
+    //             allowNull: false
+    //         }
+    //     })
+    // }
     return comment;
 };

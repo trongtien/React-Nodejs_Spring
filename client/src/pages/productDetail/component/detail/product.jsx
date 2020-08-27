@@ -1,24 +1,21 @@
-import React from 'react'
-import {
-    Row, Col, Card, CardImg, CardTitle, Button, CardText
-} from 'reactstrap';
 import classnames from 'classnames';
+import parse from 'html-react-parser';
+import React from 'react';
 import { withRouter } from "react-router-dom";
-import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
+import { Button, Card, CardText, CardTitle, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import { useRecoilState, useSetRecoilState } from "recoil";
-import parse from 'html-react-parser'
-import './style.scss'
-
-
-// import Images from '../../../../contants/image'
-import CommentComponent from './../../../../components/comment/comment'
-import ProductSameKindComponent from './../productSameKind/productSamekind'
-import { productDetail, listProductCategory, pagination, addViewCard, productViewState } from '../../../../recoil/product';
+import swal from 'sweetalert';
 import { listComment, paginationComment } from '../../../../recoil/comment';
-import { content, showAlert, showAlertError, showMessageAlert, showMessageErrorAlert } from '../../../../recoil/contant';
-import { addToCart, cardState, totalMoney } from './../../../../recoil/card';
-import productApi from './../../../../api/productApi'
-import commentAPI from './../../../../api/commentApi'
+import { listProductCategory, pagination, productDetail, productViewState } from '../../../../recoil/product';
+import commentAPI from './../../../../api/commentApi';
+import productApi from './../../../../api/productApi';
+// import Images from '../../../../contants/image'
+import CommentComponent from './../../../../components/comment/comment';
+import { addToCart, cardState } from './../../../../recoil/card';
+import ProductSameKindComponent from './../productSameKind/productSamekind';
+import './style.scss';
+
+
 
 
 
@@ -33,9 +30,6 @@ function Product(props) {
     const [activeTab, setActiveTab] = React.useState('1');
     const [paginational, setPaginational] = useRecoilState(pagination);
     const [stateCard, setStatCard] = useRecoilState(cardState)
-    const [showMsg, setShowMsg] = useRecoilState(showAlert);
-    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
-    const setMsg = useSetRecoilState(content);
     const [id_url, setId_url] = React.useState(null)
 
     const toggle = tab => {
@@ -110,12 +104,22 @@ function Product(props) {
 
     function handleAddToCard(item) {
         if (item.amount === 0) {
-            showMessageErrorAlert("Sản phẩm đã hết hàng", setMsg, setShowMsgErr, showMsgErr)
+            swal({
+                title: "Sản phẩm đã hết hàng",
+                icon: "error",
+                buttons: false,
+                timer: 1500
+            });
         } else {
             const newCart = addToCart(stateCard, item);
             setStatCard(newCart);
             localStorage.setItem('listCard', JSON.stringify(newCart))
-            showMessageAlert("Thêm giỏ hàng thành công", setMsg, setShowMsg, showMsg)
+            swal({
+                title: "Thêm giỏ hàng thành công",
+                icon: "success",
+                buttons: false,
+                timer: 1500
+            });
         }
     }
 
@@ -129,13 +133,10 @@ function Product(props) {
                     totalComment: dataNewComment.totalComment,
                     dataComment: dataNewComment.data
                 })
-                console.log('data new list comment', commentList)
             })
         })
 
     }
-
-    console.log('url', id_url)
 
     return (
         <div>
@@ -156,12 +157,12 @@ function Product(props) {
                                             borderBottom: "1px solid #eff0f5",
                                             boxSizing: "border-box"
                                         }}>
-                                            <CardImg top width="100%"
+                                            {/* <CardImg top width="100%"
                                                 style={{
                                                     border: "5px solid #ffa233"
                                                 }}
                                                 src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)}
-                                            />
+                                            /> */}
                                         </Col>
                                         <Col className="detail-product">
                                             <CardTitle style={{

@@ -3,6 +3,7 @@ import './style.scss'
 import { Table, CardImg, Input } from 'reactstrap';
 import Icon from './../../../../contants/icon'
 import { useRecoilState, useSetRecoilState } from "recoil";
+import swal from 'sweetalert';
 import { cardState, deleteCard, countAllProduct, totalMoney, billState } from '../../../../recoil/card';
 
 function ListCardComponent() {
@@ -28,27 +29,43 @@ function ListCardComponent() {
   }, [])
 
   async function handleDelete(item) {
-    const newCart = deleteCard(card, item)
-    let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
+    swal({
+      title: "Bạn có muốn xóa",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+      .then(async (willDelete) => {
+        if (willDelete) {
+          const newCart = deleteCard(card, item)
+          let getCardLocal = await JSON.parse(localStorage.getItem('listCard'))
 
-    setCard(newCart);
-    let global = localStorage.setItem('listCard', JSON.stringify(newCart))
-    if (global === undefined) {
-      setbill({
-        countProduct: 0,
-        totalMonney: 0
-      })
-    }
-    if (global) {
-      setbill({
-        countProduct: countAllProduct(global),
-        totalMonney: totalMoney(global)
-      })
-    }
-    if (getCardLocal.length <= 1) {
-      await localStorage.clear('listCard')
-    }
+          setCard(newCart);
+          let global = localStorage.setItem('listCard', JSON.stringify(newCart))
+          if (global === undefined) {
+            setbill({
+              countProduct: 0,
+              totalMonney: 0
+            })
+          }
+          if (global) {
+            setbill({
+              countProduct: countAllProduct(global),
+              totalMonney: totalMoney(global)
+            })
+          }
+          if (getCardLocal.length <= 1) {
+            await localStorage.clear('listCard')
+          }
+          swal({
+            title: "Xóa thành công",
+            icon: "success",
+            buttons: false,
+            timer: 1500
+          });
 
+        }
+      });
   }
 
   return (
@@ -68,11 +85,12 @@ function ListCardComponent() {
       {
         card.length > 0 ?
           card.map((cardItem, index) => {
+            console.log(cardItem)
             return (
               <tbody>
                 <tr className="list-cart-product" key={cardItem.product_id}>
                   <th scope="row">{index + 1}</th>
-                  <td> <CardImg center width="100%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${cardItem.image}`)} className="image-cart" /></td>
+                  {/* <td> <CardImg center width="100%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${cardItem.image}`)} className="image-cart" /></td> */}
                   <td>{cardItem.name}</td>
                   <td>{cardItem.discount === 0 ? cardItem.price : cardItem.discount}</td>
                   <td><div className="input-count"> <span>{cardItem.quantity}</span></div></td>

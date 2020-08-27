@@ -1,6 +1,7 @@
 import React from 'react';
 import { FastField, Form, Formik } from "formik";
 import { withRouter, Link } from "react-router-dom";
+import swal from 'sweetalert';
 import Cookies from 'js-cookie';
 import { Button, Card, Col, Row } from 'reactstrap';
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -64,13 +65,23 @@ function FormInfo(props) {
                 if (data.status === 200) {
                     localStorage.clear('listCard')
                     setCard([])
-                    showMessageAlert("Đặt hàng thành công", setMsg, setShowMsg, showMsg)
+                    swal({
+                        title: "Đặt hàng thành công",
+                        icon: "success",
+                        buttons: false,
+                        timer: 1000
+                    });
                     props.history.push('/')
                     await getInfo()
                 }
             }).catch(async error => {
                 if (error) {
-                    showMessageErrorAlert("Lỗi vui lòng thử lại", setMsg, setShowMsgErr, showMsgErr)
+                    swal({
+                        title: "Lỗi vui lòng thử lại",
+                        icon: "error",
+                        buttons: false,
+                        timer: 1000
+                    });
                     props.history.push('/pay');
                 }
             })
