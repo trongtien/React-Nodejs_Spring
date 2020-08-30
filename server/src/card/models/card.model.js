@@ -64,3 +64,26 @@ exports.deletUserIdOrder = async (order_id) => {
         { where: { order_id: order_id } }
     )
 }
+
+exports.getOrderDetailt = async (order_id) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let dataOrderDetailt
+            await database.orderdetail.findAll({
+                where: {
+                    order_id: parseInt(order_id),
+                },
+                include: [{
+                    model: database.product,
+                    require: true
+                }]
+            }).then(data => {
+                dataOrderDetailt = data
+            });
+
+            resolve(dataOrderDetailt)
+        } catch (error) {
+            reject(error)
+        }
+    });
+}

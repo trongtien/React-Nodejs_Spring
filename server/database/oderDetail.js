@@ -19,14 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
-    orderdetail.associate = models => {
-        orderdetail.belongsTo(models.order, {
-            onDelete: 'CASECADE',
-            foreignkey: {
-                allowNull: false
-            }
-        })
-    }
+    orderdetail.associate = (models) => {
+        orderdetail.belongsTo(models.product, { foreignKey: 'product_id' });
+    };
 
     return orderdetail;
 };

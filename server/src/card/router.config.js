@@ -20,4 +20,7 @@ exports.routerConfig = function (app) {
         ValidationMiddleware.validDeleteOrder,
         CardController.delete
     ])
+    app.post('/api/get-orderDetail', [
+        CardController.getOrderById
+    ])
 }

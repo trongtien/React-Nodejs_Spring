@@ -23,6 +23,7 @@ const getAllProduct = (limit, page) => {
 }
 
 const getProductById = (product_id, limit, page) => {
+    console.log('product service', product_id, limit, page)
     // console.log('service ', product_id, limit, page)
     return new Promise(async (resolve, reject) => {
         try {
@@ -33,12 +34,14 @@ const getProductById = (product_id, limit, page) => {
             let product = await productModel.findProductById(product_id)
 
             await productDetail.push(product)
+            console.log("product detail", productDetail)
 
             let category_id = product.category_id
 
             let productCategory = await productModel.findProductByCategory(category_id, limit, page)
 
             let dataToltalPage = await productModel.totalProductByCategory(category_id)
+
             // console.log('service produce', dataToltalPage)
             let totalProductCategory = dataToltalPage.length
 

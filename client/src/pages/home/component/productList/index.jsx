@@ -5,7 +5,7 @@ import {
     Card, CardBody, CardLink,
     CardSubtitle,
     CardText, CardTitle, Col,
-    Row
+    Row, CardImg
 } from 'reactstrap';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import swal from 'sweetalert';
@@ -14,8 +14,6 @@ import { content } from '../../../../recoil/contant';
 import { addToCart, cardState } from './../../../../recoil/card';
 import { addViewCard, productPageHome, productViewState } from './../../../../recoil/product';
 import './style.scss';
-
-
 
 function Product() {
     const [productView, setProductView] = useRecoilState(productViewState);
@@ -26,7 +24,6 @@ function Product() {
     // const dataProduct = useRecoilValue(listProductState)
     const dataProductHome = useRecoilValue(productPageHome)
     const { data } = dataProductHome
-    console.log('data product home', data)
 
     function handleAddToCard(item) {
         if (item.quantity === 0) {
@@ -52,6 +49,7 @@ function Product() {
 
     /* hitory view card */
     async function handleClick(item) {
+        console.log("item history", item)
         const viewCard = addViewCard(productView, item);
         setProductView(viewCard)
         await Cookies.set('viewProduct', JSON.stringify(viewCard))
@@ -67,12 +65,12 @@ function Product() {
                         return (
                             <Col key={item.product_id} >
                                 <Card>
-                                    {/* <CardImg width="50%" height="50%" src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" /> */}
+                                    <CardImg width="50%" height="50%" src={require(`../../../../assets/image/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
                                         <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.name}</CardTitle>
-                                        <CardSubtitle>{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
-                                        <CardText className="price-sale">{item.discount === null ? "" : `${item.price} /kg`} </CardText>
+                                        <CardSubtitle>{item.discount === 0 ? item.price : item.discount} /kg</CardSubtitle>
+                                        <CardText className="price-sale">{item.discount === 0 ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>
 
                                     <div className="card-footer">

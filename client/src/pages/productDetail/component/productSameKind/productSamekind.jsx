@@ -6,7 +6,7 @@ import {
   CardBody,
   CardLink,
   CardSubtitle,
-  CardText, CardTitle, Col,
+  CardText, CardTitle, Col, CardImg,
   Row
 } from "reactstrap";
 import { useRecoilState } from 'recoil';
@@ -82,19 +82,19 @@ function ProductSameKindComponent(props) {
               return (
                 <Col>
                   <Card className="card-kind-some" key={item.product_id}>
-                    {/* <CardImg
+                    <CardImg
                       width="50%"
                       height="50%"
-                      src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)}
+                      src={require(`../../../../assets/image/${item.image}`)}
                       alt="Card image cap"
-                    /> */}
+                    />
                     <CardBody>
                       <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-kind-active"}>
                         Hết hàng
                     </CardTitle>
                       <CardTitle>{item.name}</CardTitle>
                       <CardSubtitle>{item.price} /kg</CardSubtitle>
-                      <CardText className="price-sale-kind">{item.discount === undefined ? "" : item.discount}</CardText>
+                      <CardText className="price-sale-kind">{item.discount === 0 ? "" : item.discount}</CardText>
                     </CardBody>
 
                     <div className="card-footer-kind">

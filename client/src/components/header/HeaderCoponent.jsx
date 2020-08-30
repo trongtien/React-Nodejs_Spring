@@ -6,7 +6,7 @@ import {
   Button, Collapse,
   DropdownMenu, DropdownToggle,
   Input, InputGroup, InputGroupAddon, Nav, Navbar,
-  NavbarBrand, NavbarToggler,
+  NavbarBrand, NavbarToggler, Form,
   NavItem,
   UncontrolledDropdown
 } from "reactstrap";
@@ -25,6 +25,8 @@ function HeaderComponent(props) {
   const [isLoginUser, setisLoginUser] = useRecoilState(isLogin);
   const setUserInfo = useSetRecoilState(useInfo);
   const listCategory = useRecoilValue(listCategoryState);
+  const [searchTerm, setSearchTerm] = useState('');
+  const typingTimeOutRef = React.useRef(null)
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -45,10 +47,19 @@ function HeaderComponent(props) {
     window.location.reload();
   }
 
-  function handlCategory(idCatefory) {
-    console.log('1')
-    console.log(idCatefory)
+  function handlSerachTermChange(event) {
+    const value = event.target.value
+    setSearchTerm(value)
+    if (typingTimeOutRef.current) {
+      clearTimeout(typingTimeOutRef.current)
+    }
+
+    typingTimeOutRef.current = setTimeout(() => {
+      console.log(searchTerm)
+    }, 300)
+
   }
+
 
   return (
     <div>
@@ -93,17 +104,18 @@ function HeaderComponent(props) {
                     })
                 }
               </DropdownMenu>
-
-
             </UncontrolledDropdown>
           </Nav>
 
-          <InputGroup className="search">
-            <Input />
-            <InputGroupAddon addonType="append">
-              <Button color="secondary">Search</Button>
-            </InputGroupAddon>
-          </InputGroup>
+          <Form className="search">
+            <InputGroup >
+              <Input type="text" value={searchTerm} onChange={handlSerachTermChange} />
+              {/* <InputGroupAddon addonType="append">
+                <Button color="secondary">Search</Button>
+              </InputGroupAddon> */}
+            </InputGroup>
+          </Form>
+
 
 
           <Nav className="mr-right" navbar>
@@ -113,13 +125,14 @@ function HeaderComponent(props) {
               </Link>
             </NavItem>
             {
-              isLoginUser === false ?
+              Cookies.get('name') ?
+                ""
+                :
                 <NavItem>
                   <Link className="nav-link" to="/register">
                     Đăng ký
                   </Link>
                 </NavItem>
-                : ""
             }
             {
               // isLoginUser === false ?

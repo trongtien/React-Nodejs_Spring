@@ -23,8 +23,7 @@ exports.list = async (req, res) => {
             parseInt(req.body._limit),
             parseInt(req.body._page)
         )
-
-        return res.status(200).json({ status: 200, message: "get list comment successfull", dataComment: data });
+        return res.status(200).json({ status: 200, message: "get list comment successfull", data: data });
     } catch (error) {
         return res.status(500).json({ status: 500, message: error });
     }

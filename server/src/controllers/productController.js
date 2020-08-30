@@ -20,7 +20,7 @@ let getProductById = async (request, response) => {
         let page = parseInt(request.body._page)
 
         let data = await productService.getProductById(product_id, limit, page)
-
+        console.log("data", data)
         return response.status(200).json({ status: 200, message: "Get product successfull", data: data })
     } catch (error) {
         return response.status(400).json({ status: 400, message: error.message })

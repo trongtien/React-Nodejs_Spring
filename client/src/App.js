@@ -122,7 +122,7 @@ function App(props) {
         />
       </header>
 
-      <SliderComponent />
+      {/* <SliderComponent /> */}
       <Switch>
 
         <Route exact path="/">

@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import parse from 'html-react-parser';
 import React from 'react';
 import { withRouter } from "react-router-dom";
-import { Button, Card, CardText, CardTitle, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
+import { Button, Card, CardText, CardTitle, Col, Nav, NavItem, NavLink, Row, TabContent, TabPane, CardImg } from 'reactstrap';
 import { useRecoilState, useSetRecoilState } from "recoil";
 import swal from 'sweetalert';
 import { listComment, paginationComment } from '../../../../recoil/comment';
@@ -14,9 +14,6 @@ import CommentComponent from './../../../../components/comment/comment';
 import { addToCart, cardState } from './../../../../recoil/card';
 import ProductSameKindComponent from './../productSameKind/productSamekind';
 import './style.scss';
-
-
-
 
 
 
@@ -49,15 +46,23 @@ function Product(props) {
             try {
                 url()
                 let resData = await productApi.getById(id_url, paginational._limit, paginational._page)
-                let resComment = await commentAPI.getById(id_url, paginational._limit, paginational._page)
 
+
+                let resComment = await commentAPI.getById(id_url, paginational._limit, paginational._page)
+                console.log("res resComment", resComment)
                 let { data } = await resData
-                let { dataComment } = await resComment
-                await setListComment({
-                    totalComment: dataComment.totalComment,
-                    dataComment: dataComment.data
-                })
+                // let { dataComment } = await resComment
+
+                //product detailt
                 await setProduct(data.productDetail)
+
+                // list comment
+                await setListComment({
+                    totalComment: resComment.data.totalComment,
+                    dataComment: resComment.data.dataComment
+                })
+
+                //product cung loai
                 await setListProduct(data.productCategory)
 
             } catch (error) {
@@ -73,16 +78,16 @@ function Product(props) {
                 let product_id = await parseInt(Object.assign(props.match.params.productId))
                 let resData = await productApi.getById(product_id, paginational._limit, paginational._page)
                 let resComment = await commentAPI.getById(id_url, commentPagination._limit, commentPagination._page)
+
                 let { data } = await resData
-                let { dataComment } = await resComment
 
                 await setPaginational({
                     ...paginational,
                     _totalRows: data.totalProductCategory
                 })
                 await setListComment({
-                    totalComment: dataComment.totalComment,
-                    dataComment: dataComment.data
+                    totalComment: resComment.data.totalComment,
+                    dataComment: resComment.data.dataComment
                 })
 
             } catch (error) {
@@ -101,7 +106,7 @@ function Product(props) {
         return setId_url(product_id)
     }
 
-
+    console.log("product", product)
     function handleAddToCard(item) {
         if (item.amount === 0) {
             swal({
@@ -127,15 +132,7 @@ function Product(props) {
     function onHanleChangeComment(newComment) {
         commentAPI.postComment(newComment).then(async (result) => {
             let { data } = result
-
-            commentAPI.getById(id_url, commentPagination._limit, commentPagination._page).then(dataNewComment => {
-                setListComment({
-                    totalComment: dataNewComment.totalComment,
-                    dataComment: dataNewComment.data
-                })
-            })
         })
-
     }
 
     return (
@@ -157,12 +154,12 @@ function Product(props) {
                                             borderBottom: "1px solid #eff0f5",
                                             boxSizing: "border-box"
                                         }}>
-                                            {/* <CardImg top width="100%"
+                                            <CardImg top width="100%"
                                                 style={{
                                                     border: "5px solid #ffa233"
                                                 }}
-                                                src={require(`./../../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)}
-                                            /> */}
+                                                src={require(`../../../../assets/image/${item.image}`)}
+                                            />
                                         </Col>
                                         <Col className="detail-product">
                                             <CardTitle style={{
@@ -176,12 +173,12 @@ function Product(props) {
                                             <CardTitle style={{
                                                 fontSize: "30px",
                                                 color: "#f57224"
-                                            }}>{item.discount === null ? item.price : item.discount} đ</CardTitle>
+                                            }}>{item.discount === 0 ? item.price : item.discount} đ</CardTitle>
                                             <CardTitle style={{
                                                 fontSize: "20px",
                                                 color: "#f57224",
                                                 textDecoration: "line-through"
-                                            }}>{item.discount === null ? "" : `${item.price} /kg`}</CardTitle>
+                                            }}>{item.discount === 0 ? "" : `${item.price} /kg`}</CardTitle>
                                             <CardTitle style={{
                                                 color: "#757575",
                                                 fontSize: "16px",

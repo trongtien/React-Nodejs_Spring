@@ -36,6 +36,10 @@ module.exports = (sequelize, Sequelize) => {
   }, {
     timestamps: false
   });
-  // user.associate = models => user.hasMany(models.comment)
+
+  user.associate = (models) => {
+    user.belongsTo(models.comment, { foreignKey: 'user_id', as: 'user', constraints: false, allowNull: true, defaultValue: null });
+  };
+
   return user;
 };

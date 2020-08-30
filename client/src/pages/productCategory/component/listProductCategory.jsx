@@ -7,7 +7,7 @@ import {
     CardBody,
     CardLink,
     CardSubtitle,
-    CardText, CardTitle, Col,
+    CardText, CardTitle, Col, CardImg,
     Row
 } from "reactstrap";
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -24,7 +24,6 @@ import "./style.scss";
 
 ListProductCategory.propTypes = {
     url_state: PropTypes.object.isRequired,
-
 }
 
 function ListProductCategory(props) {
@@ -109,19 +108,19 @@ function ListProductCategory(props) {
                         return (
                             <Col >
                                 <Card className="card-product-category" key={item.product_id}>
-                                    {/* <CardImg width="50%" height="50%" src={require(`./../../../../../durian/durian/src/main/resources/public/imgae-product/${item.image}`)} alt="Card image cap" /> */}
+                                    <CardImg width="50%" height="50%" src={require(`../../../assets/image/${item.image}`)} alt="Card image cap" />
                                     <CardBody>
                                         <CardTitle className={item.quantity > 0 ? "out-of-stock-product-category" : "out-of-stock-product-category-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.name}</CardTitle>
                                         <CardSubtitle
                                             style={{ fontWeight: "600" }}
-                                        >{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
+                                        >{item.discount === 0 ? item.price : item.discount} /kg</CardSubtitle>
                                         <CardText style={{
                                             textDecoration: "line-through",
                                             fontSize: "16px",
                                             color: "red",
                                             fontWeight: "600"
-                                        }}>{item.discount === null ? "" : `${item.price} /kg`} </CardText>
+                                        }}>{item.discount === 0 ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>
 
                                     <div className="card-footer-product-category">

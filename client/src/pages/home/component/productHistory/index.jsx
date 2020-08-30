@@ -50,12 +50,12 @@ function ProductHistory() {
                         return (
                             <Col key={item.product_id} >
                                 <Card>
-                                    <CardImg width="50%" height="50%" src={require(`../../../../assets/image/background-login.jpg`)} />
+                                    <CardImg width="50%" height="50%" src={require(`../../../../assets/image/${item.image}`)} />
                                     <CardBody>
                                         <CardTitle className={item.quantity > 0 ? "out-of-stock" : "out-of-stock-active"}>Hết hàng</CardTitle>
                                         <CardTitle>{item.name}</CardTitle>
-                                        <CardSubtitle>{item.discount === null ? item.price : item.discount} /kg</CardSubtitle>
-                                        <CardText className="price-sale">{item.discount === null ? "" : `${item.price} /kg`} </CardText>
+                                        <CardSubtitle>{item.discount === 0 ? item.price : item.discount} /kg</CardSubtitle>
+                                        <CardText className="price-sale">{item.discount === 0 ? "" : `${item.price} /kg`} </CardText>
                                     </CardBody>
 
                                     <div className="card-footer">

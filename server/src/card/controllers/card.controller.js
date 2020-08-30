@@ -48,3 +48,14 @@ exports.delete = async (req, res) => {
         return res.status(500).json({ status: 500, message: error });
     }
 }
+
+exports.getOrderById = async (req, res) => {
+    try {
+        console.log('req.body.order_id cart', req.body.order_id)
+        let data = await CardModel.getOrderDetailt(req.body.order_id)
+
+        return res.status(200).json({ status: 200, message: "get data successfull", data: data });
+    } catch (error) {
+        return res.status(500).json({ status: 500, message: error });
+    }
+}

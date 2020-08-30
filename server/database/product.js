@@ -33,5 +33,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: false
     });
+
+    product.associate = (models) => {
+        product.belongsTo(models.orderdetail, { foreignKey: 'product_id', as: 'product', constraints: false, allowNull: true, defaultValue: null });
+    };
     return product;
 };

@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Card, CardText, CardTitle, Col, Row } from 'reactstrap';
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
+import swal from 'sweetalert';
 import { statusAuthLogin } from '../../recoil/authState';
 import { listComment } from '../../recoil/comment';
-import { content, showAlertError, showMessageErrorAlert } from '../../recoil/contant';
 import inputField from './../../components/formik/inputField';
 import './style.scss';
 
@@ -25,12 +25,10 @@ function Comment(props) {
     const { id_url, onChangeComment } = props
     const [commentList, setCommentList] = useRecoilState(listComment);
     const [AuthFormLogin, setAuthFormLogin] = useRecoilState(statusAuthLogin);
-    const [showMsgErr, setShowMsgErr] = useRecoilState(showAlertError);
-    const setMsg = useSetRecoilState(content);
-
     const initialValues = {
         content: ""
     }
+
     const hanldComment = async (values) => {
         let verity = await Cookies.get('node_access_token')
         if (verity) {
@@ -48,11 +46,18 @@ function Comment(props) {
                 }
             }
         } else {
-            showMessageErrorAlert("Đăng nhập để tham gia bình luận", setMsg, setShowMsgErr, showMsgErr)
-            setAuthFormLogin(!AuthFormLogin)
+            swal({
+                title: "Đăng nhập để tham gia bình luận",
+                icon: "error",
+                buttons: false,
+                timer: 1500
+            });
+            setTimeout(() => {
+                setAuthFormLogin(!AuthFormLogin)
+            }, 2000)
         }
     }
-    console.log('list comment', commentList)
+
     return (
         <div>
             <Row>
@@ -63,13 +68,14 @@ function Comment(props) {
                 </Col>
                 <Col sm="12" className="list-comment">
                     {
+
                         commentList.dataComment === undefined ? "" :
                             commentList.dataComment.map(item => {
                                 return (
                                     <Card key={item.comment_id}>
                                         <CardTitle>
                                             <Row>
-                                                <Col className="name-user">Tên người bình luận</Col>
+                                                <Col className="name-user">{item.user.fullname}</Col>
                                                 <Col className="time-content">{moment(item.updatedAt).format('MM/DD/YYYY,  h:mm a')}</Col>
                                             </Row>
                                         </CardTitle>

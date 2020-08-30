@@ -21,13 +21,9 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         timestamps: true
     });
-    // comment.associate = models => {
-    //     comment.belongsTo(models.user, {
-    //         onDelete: 'CASECADE',
-    //         foreignkey: {
-    //             allowNull: false
-    //         }
-    //     })
-    // }
+    comment.associate = (models) => {
+        comment.belongsTo(models.user, { foreignKey: 'user_id' });
+    };
+
     return comment;
 };
